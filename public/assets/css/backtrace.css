@@ -1,0 +1,90 @@
+body {
+    font-family: sans-serif;
+}
+
+.error-header,
+.backtrace__header {
+    display: flex;
+    align-items: center;
+}
+
+.error-type {
+    margin: 0;
+    font-size: 28px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-big {
+    flex: 1;
+}
+
+.flex-small {
+    flex: 0;
+}
+
+/*******************************************************************************
+ * Backtrace
+ ******************************************************************************/
+.err-msg {
+    white-space: pre-wrap;
+}
+
+.backtrace__header {
+    margin-top: 50px;
+}
+
+.backtrace__legend {
+    margin: 0;
+}
+
+#hl-theme-select {
+    width: 200px;
+}
+
+.backtrace__stages {
+    padding: 0;
+    list-style-position: inside;
+}
+
+.backtrace__stages > li {
+    margin: 0 0 15px;
+}
+
+.backtrace__stages .backtrace-empty {
+    margin: 10px 0;
+    list-style-type: none;
+    text-align: center;
+    font-weight: normal;
+    font-size: 32px;
+    color: gray;
+}
+
+.backtrace__stage .err-info {
+    display: inline-block;
+}
+
+.err-preview .varlens {
+    border-top: 1px solid black;
+}
+
+.err-preview .varlens-source {
+    display: none;
+}
+
+.messages {
+    margin-top: 15px;
+}
+
+.messages .element-invisible {
+    display: none;
+}
+
+.messages ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+

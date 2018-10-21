@@ -1,0 +1,26 @@
+{
+  "name": "tvanc/backtrace",
+  "description": "Useful error messages complete with file previews and syntax highlighting.",
+  "type": "library",
+  "license": "mit",
+  "version": "0.1.0-dev",
+  "authors": [
+    {
+      "name": "Travis Van Couvering",
+      "email": "travis@tvanc.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "tvanc\\backtrace\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tvanc\\backtrace\\Test\\": "test/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.4"
+  }
+}
