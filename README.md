@@ -30,18 +30,13 @@ composer require --dev tvanc/backtrace @dev
 ### Handle exceptions only
 Display an error message and backtrace for exceptions.
 ```php
-use RentecTravis\backtrace\ErrorInterceptor;
+use tvanc\backtrace\Error\Handle\HtmlErrorHandler;
+use tvanc\backtrace\Error\Listen\ErrorListener;
 
-ErrorInterceptor::handleAll();
-```
+// Create a listener with an HTML handler
+$listener = new ErrorListener([new HtmlErrorHandler()]);
 
-### Handle errors and exceptions
-**Think your code is clean?**
-Halt execution and display an error message and backtrace for exceptions *and errors/warnings*.
-
-```php
-use RentecTravis\backtrace\ErrorInterceptor;
-
-ErrorInterceptor::handleAll(true);
+// Listen
+$listener->listenForExceptions();
 ```
 
