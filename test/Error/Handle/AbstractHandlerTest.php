@@ -16,10 +16,4 @@ use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 abstract class AbstractHandlerTest extends TestCase
 {
     abstract public function getHandler(): ErrorHandlerInterface;
-
-
-    abstract public function testCatchThrowable();
-
-
-    abstract public function testHandleError();
 }
