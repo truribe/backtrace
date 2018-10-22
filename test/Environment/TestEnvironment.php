@@ -34,8 +34,34 @@ class TestEnvironment implements EnvironmentInterface
     }
 
 
+    /**
+     * @param bool $isCli
+     *
+     * @return TestEnvironment
+     */
+    public function setIsCli(bool $isCli): TestEnvironment
+    {
+        $this->isCli = $isCli;
+
+        return $this;
+    }
+
+
     public function isAjaxRequest(): bool
     {
         return $this->isAjaxRequest;
+    }
+
+
+    /**
+     * @param bool $isAjaxRequest
+     *
+     * @return TestEnvironment
+     */
+    public function setIsAjaxRequest(bool $isAjaxRequest): TestEnvironment
+    {
+        $this->isAjaxRequest = $isAjaxRequest;
+
+        return $this;
     }
 }
