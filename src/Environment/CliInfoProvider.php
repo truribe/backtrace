@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Utility;
+namespace tvanc\backtrace\Environment;
 
 /**
  * Class CliContextInfo
@@ -14,7 +14,7 @@ namespace tvanc\backtrace\Utility;
  */
 class CliInfoProvider
 {
-    public function getConsoleWidth()
+    public function getConsoleWidth(): int
     {
         return exec('tput cols');
     }
