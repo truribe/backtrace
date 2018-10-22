@@ -15,11 +15,11 @@ namespace tvanc\backtrace\Error\Handle;
 interface ErrorHandlerInterface
 {
     /**
-     * @param \Throwable $exception
+     * @param \Throwable $throwable
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $exception);
+    public function catchThrowable(\Throwable $throwable);
 
 
     /**

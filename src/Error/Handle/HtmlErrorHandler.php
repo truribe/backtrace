@@ -17,25 +17,25 @@ use tvanc\backtrace\Backtrace;
 class HtmlErrorHandler implements ErrorHandlerInterface
 {
     /**
-     * @param \Throwable $exception
+     * @param \Throwable $throwable
      */
-    public function catchThrowable(\Throwable $exception)
+    public function catchThrowable(\Throwable $throwable)
     {
-        $trace = $exception->getTrace();
+        $trace = $throwable->getTrace();
 
         // First element has same info as $ex->getFile() and $ex->getLine()
         $assetsDir = realpath('assets');
-        $shortType = Backtrace::getErrorType($exception);
+        $shortType = Backtrace::getErrorType($throwable);
 
         $first = [
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
+            'file' => $throwable->getFile(),
+            'line' => $throwable->getLine(),
         ];
         ?>
         <!DOCTYPE html>
         <html>
         <head>
-            <title><?= $shortType ?>: <?= $exception->getMessage() ?></title>
+            <title><?= $shortType ?>: <?= $throwable->getMessage() ?></title>
             <link rel="stylesheet"
                   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
                   integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
@@ -46,10 +46,10 @@ class HtmlErrorHandler implements ErrorHandlerInterface
         <body>
         <main class="container">
             <header class="page-header error-header">
-                <h1 class="error-type flex-big"><?= Backtrace::getErrorType($exception, false); ?></h1>
+                <h1 class="error-type flex-big"><?= Backtrace::getErrorType($throwable, false); ?></h1>
             </header>
 
-            <p class="err-msg lead"><?= $exception->getMessage(); ?></p>
+            <p class="err-msg lead"><?= $throwable->getMessage(); ?></p>
 
             <?= static::renderStage($first, 5, true); ?>
 
