@@ -8,7 +8,7 @@
 namespace tvanc\backtrace\Error\Handle;
 
 use tvanc\backtrace\Backtrace;
-use tvanc\backtrace\Utility\CliInfoProvider;
+use tvanc\backtrace\Environment\CliInfoProvider;
 
 /**
  * Class CliErrorHandler
