@@ -9,8 +9,8 @@ namespace tvanc\backtrace\Test\Error\Handle;
 
 use tvanc\backtrace\Error\Handle\CliErrorHandler;
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Test\Environment\TestCliInfoProvider;
 use tvanc\backtrace\Test\Error\Handle\Exception\ExampleException;
-use tvanc\backtrace\Utility\CliInfoProvider;
 
 /**
  * Class ErrorHandlerTest
@@ -57,17 +57,13 @@ class CliErrorHandlerTest extends AbstractHandlerTest
 
     /**
      * @return CliErrorHandler
-     * A CliErrorHandler with a mock CliContextInfo that returns a static
+     * A CliErrorHandler with a TestCliInfoProvider that returns a static
      * arbitrary width.
      */
     public function getHandler(): ErrorHandlerInterface
     {
-        /** @var CliInfoProvider $stub */
-        $stub = $this->createMock(CliInfoProvider::class);
-        $stub
-            ->method('getConsoleWidth')
-            ->willReturn(self::ARBITRARY_KNOWN_WIDTH);
-
-        return new CliErrorHandler($stub);
+        return new CliErrorHandler(
+            new TestCliInfoProvider(self::ARBITRARY_KNOWN_WIDTH)
+        );
     }
 }
