@@ -34,23 +34,23 @@ class CliErrorHandler implements ErrorHandlerInterface
 
 
     /**
-     * @param \Throwable $exception
+     * @param \Throwable $throwable
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $exception)
+    public function catchThrowable(\Throwable $throwable)
     {
-        $type = strtoupper(Backtrace::getErrorType($exception));
+        $type = strtoupper(Backtrace::getErrorType($throwable));
         $line = $this->makeDivider();
         echo <<<MSG
 
 $type
 $line
-{$exception->getMessage()}
+{$throwable->getMessage()}
 
 MSG;
 
-        foreach ($exception->getTrace() as $index => $stage) {
+        foreach ($throwable->getTrace() as $index => $stage) {
             echo "\n" . $this->makeLine("#$index ") . "\n";
             if (!isset($stage['file'])) {
                 $ignore = ['object', 'args'];
