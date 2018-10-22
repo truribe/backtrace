@@ -11,7 +11,8 @@ use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 
 /**
- * Class AbstractHandlerTest
+ * Just a convenience class for handler test cases to extend if they need the
+ * same handler multiple times.
  */
 abstract class AbstractHandlerTest extends TestCase
 {
