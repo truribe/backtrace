@@ -14,7 +14,7 @@ use tvanc\backtrace\Environment\EnvironmentInterface;
  *
  * @package tvanc\backtrace\Test\Environment
  */
-class MockEnvironment implements EnvironmentInterface
+class TestEnvironment implements EnvironmentInterface
 {
     private $isCli;
 
