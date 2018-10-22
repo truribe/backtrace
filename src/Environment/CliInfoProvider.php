@@ -16,6 +16,6 @@ class CliInfoProvider
 {
     public function getConsoleWidth(): int
     {
-        return exec('tput cols');
+        return +exec('tput cols');
     }
 }
