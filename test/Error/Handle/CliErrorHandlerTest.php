@@ -17,7 +17,6 @@ use tvanc\backtrace\Test\Error\Handle\Exception\ExampleException;
  */
 class CliErrorHandlerTest extends AbstractHandlerTest
 {
-
     const ARBITRARY_KNOWN_WIDTH = 40;
     const SEPARATOR = '-';
 
