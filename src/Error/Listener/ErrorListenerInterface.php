@@ -15,13 +15,13 @@ use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
  */
 interface ErrorListenerInterface extends ErrorResponderInterface
 {
-    public function setHandlers(array $handlers);
+    public function setResponders(array $handlers);
 
 
-    public function addHandler(ErrorResponderInterface $handler);
+    public function addResponder(ErrorResponderInterface $handler);
 
 
-    public function getHandlers(): array;
+    public function getResponders(): array;
 
 
     /**

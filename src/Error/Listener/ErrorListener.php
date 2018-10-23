@@ -75,7 +75,7 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function addHandler(ErrorResponderInterface $handler): ErrorListenerInterface
+    public function addResponder(ErrorResponderInterface $handler): ErrorListenerInterface
     {
         $this->handlers[] = $handler;
 
@@ -83,15 +83,15 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function getHandlers(): array
+    public function getResponders(): array
     {
         return $this->handlers;
     }
 
 
-    public function setHandlers(array $handlers): ErrorListenerInterface
+    public function setResponders(array $handlers): ErrorListenerInterface
     {
-        $this->setHandlers($handlers);
+        $this->setResponders($handlers);
 
         return $this;
     }
