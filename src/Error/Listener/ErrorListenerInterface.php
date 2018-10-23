@@ -25,6 +25,14 @@ interface ErrorListenerInterface extends ErrorResponderInterface
 
 
     /**
+     * @param ErrorResponderInterface $responder
+     *
+     * @return ErrorListenerInterface
+     */
+    public function setDefaultResponder(ErrorResponderInterface $responder): self;
+
+
+    /**
      * Listen for exceptions.
      *
      * @return ErrorListenerInterface
