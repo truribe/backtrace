@@ -9,8 +9,6 @@ namespace tvanc\backtrace\Test\Error\Handle\Exception;
 
 /**
  * Class ExampleException
- *
- * @package tvanc\backtrace\Test\Error\Handle\Exception
  */
 class ExampleException extends \Exception
 {

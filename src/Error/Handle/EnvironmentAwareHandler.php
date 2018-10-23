@@ -12,8 +12,6 @@ use tvanc\backtrace\Environment\EnvironmentInterface;
 /**
  * The temptation to name this class EnvironmentallyAwareHandler was all
  * but overpowering.
- *
- * @package tvanc\backtrace\Error\Handle
  */
 class EnvironmentAwareHandler implements ErrorHandlerInterface
 {

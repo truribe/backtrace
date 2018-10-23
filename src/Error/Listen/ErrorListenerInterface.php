@@ -12,8 +12,6 @@ use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 
 /**
  * Interface ErrorListenerInterface
- *
- * @package tvanc\backtrace\Error\Listen
  */
 interface ErrorListenerInterface extends ErrorHandlerInterface
 {

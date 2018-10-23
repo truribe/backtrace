@@ -11,8 +11,6 @@ use tvanc\backtrace\Environment\CliInfoProvider;
 
 /**
  * Class TestCliInfoProvider
- *
- * @package tvanc\backtrace\Test\Utility
  */
 class TestCliInfoProvider extends CliInfoProvider
 {

@@ -9,8 +9,6 @@ namespace tvanc\backtrace\Error\Listen\Exception;
 
 /**
  * Class UnhandledExceptionException
- *
- * @package tvanc\backtrace\Error\Listen
  */
 class UnhandledExceptionException extends \Exception
 {

@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Raymond Uribe <turibe@rentecdirect.com>
  * @copyright 2018 Rentec Direct
  * @license Proprietary
@@ -13,9 +11,7 @@ use tvanc\backtrace\Backtrace\HeavyBacktraceStagesTrait;
 use tvanc\backtrace\Error\Listen\ErrorListener;
 
 /**
- * Class ErrorInterceptor
- *
- * @package tvanc\backtrace
+ * A convenience interface for using this library.
  */
 final class Backtrace
 {

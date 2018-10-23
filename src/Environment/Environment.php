@@ -9,8 +9,6 @@ namespace tvanc\backtrace\Environment;
 
 /**
  * Class Environment
- *
- * @package tvanc\backtrace\Environment
  */
 class Environment implements EnvironmentInterface
 {

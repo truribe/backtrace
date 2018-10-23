@@ -11,8 +11,6 @@ use tvanc\backtrace\Environment\EnvironmentInterface;
 
 /**
  * Class MockEnvironment
- *
- * @package tvanc\backtrace\Test\Environment
  */
 class TestEnvironment implements EnvironmentInterface
 {

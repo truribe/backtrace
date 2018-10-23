@@ -11,8 +11,6 @@ use tvanc\backtrace\Backtrace;
 
 /**
  * Class HtmlErrorHandler
- *
- * @package tvanc\backtrace\Error\Handle
  */
 class HtmlErrorHandler implements ErrorHandlerInterface
 {

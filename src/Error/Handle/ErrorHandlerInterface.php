@@ -9,8 +9,6 @@ namespace tvanc\backtrace\Error\Handle;
 
 /**
  * Interface ErrorHandlerInterface
- *
- * @package tvanc\backtrace\Handler
  */
 interface ErrorHandlerInterface
 {

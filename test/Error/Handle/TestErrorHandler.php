@@ -11,8 +11,6 @@ use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 
 /**
  * Class TestErrorHandler
- *
- * @package tvanc\backtrace\Test\Error\Handle
  */
 class TestErrorHandler implements ErrorHandlerInterface
 {

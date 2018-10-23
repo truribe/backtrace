@@ -13,8 +13,6 @@ use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
 
 /**
  * Class ErrorListener
- *
- * @package tvanc\backtrace\Error\Listen
  */
 class ErrorListener implements ErrorListenerInterface
 {

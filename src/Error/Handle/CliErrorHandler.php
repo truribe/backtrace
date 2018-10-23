@@ -14,8 +14,6 @@ use tvanc\backtrace\Environment\CliInfoProvider;
  * Class CliErrorHandler
  *
  * TODO Integrate with symfony/console
- *
- * @package tvanc\backtrace\Error\Handle
  */
 class CliErrorHandler implements ErrorHandlerInterface
 {
