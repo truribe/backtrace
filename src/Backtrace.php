@@ -22,15 +22,15 @@ final class Backtrace
     /**
      * TODO Refactor this to be pretty.
      *
-     * @param \Throwable $ex
+     * @param \Throwable $throwable
      * @param bool       $shorten
      *
      * @return string
      */
-    static function getErrorType($ex, $shorten = true)
+    static function getErrorType($throwable, $shorten = true)
     {
-        if ($ex instanceof \ErrorException) {
-            $severity = $ex->getSeverity();
+        if ($throwable instanceof \ErrorException) {
+            $severity = $throwable->getSeverity();
 
             $typeNameMap = [
                 E_ERROR => 'Fatal error',
@@ -53,7 +53,7 @@ final class Backtrace
             return $typeNameMap[$severity];
         }
 
-        $className = get_class($ex);
+        $className = get_class($throwable);
         $slashPos = strrpos($className, '\\');
 
         if ($shorten && $slashPos !== false) {
