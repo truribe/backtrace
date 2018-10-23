@@ -5,12 +5,12 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
-use tvanc\backtrace\Error\Handle\CliErrorHandler;
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Handler\CliErrorHandler;
+use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
 use tvanc\backtrace\Test\Environment\TestCliInfoProvider;
-use tvanc\backtrace\Test\Error\Handle\Exception\ExampleException;
+use tvanc\backtrace\Test\Error\Handler\Exception\ExampleException;
 
 /**
  * Class ErrorHandlerTest

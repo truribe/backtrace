@@ -5,13 +5,18 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handle\EnvironmentAwareHandler;
+use tvanc\backtrace\Error\Handler\EnvironmentAwareHandler;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
 
+/**
+ * Class EnvironmentAwareHandlerTest
+ *
+ * @see EnvironmentAwareHandler
+ */
 class EnvironmentAwareHandlerTest extends TestCase
 {
     const ARBITRARY_WIDTH = 42;

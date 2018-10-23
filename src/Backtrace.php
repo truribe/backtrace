@@ -8,7 +8,7 @@
 namespace tvanc\backtrace;
 
 use tvanc\backtrace\Backtrace\HeavyBacktraceStagesTrait;
-use tvanc\backtrace\Error\Listen\ErrorListener;
+use tvanc\backtrace\Error\Listener\ErrorListener;
 
 /**
  * A convenience interface for using this library.

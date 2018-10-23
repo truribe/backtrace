@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
 
 interface HandlerTestInterface

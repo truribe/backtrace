@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handle;
+namespace tvanc\backtrace\Error\Handler;
 
 use tvanc\backtrace\Backtrace;
 use tvanc\backtrace\Environment\CliInfoProvider;

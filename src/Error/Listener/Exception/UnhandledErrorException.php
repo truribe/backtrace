@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listen\Exception;
+namespace tvanc\backtrace\Error\Listener\Exception;
 
 /**
  * Class UnhandledErrorException

@@ -5,13 +5,13 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Listen;
+namespace tvanc\backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
-use tvanc\backtrace\Error\Listen\ErrorListener;
-use tvanc\backtrace\Error\Listen\Exception\UnhandledErrorException;
-use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Listener\ErrorListener;
+use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
+use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
 
 /**
  * Class ErrorListenerTest
