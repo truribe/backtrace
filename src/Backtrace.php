@@ -20,7 +20,7 @@ use tvanc\backtrace\Error\Listen\ErrorListener;
 final class Backtrace
 {
     /**
-     * TODO Refactor this to be pretty.
+     * TODO Refactor this to somewhere better.
      *
      * @param \Throwable $throwable
      * @param bool       $shorten
