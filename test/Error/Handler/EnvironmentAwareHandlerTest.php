@@ -9,13 +9,13 @@ namespace tvanc\backtrace\Test\Error\Handler;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handler\EnvironmentAwareHandler;
+use tvanc\backtrace\Error\Responder\EnvironmentAwareResponder;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
 
 /**
  * Class EnvironmentAwareHandlerTest
  *
- * @see EnvironmentAwareHandler
+ * @see EnvironmentAwareResponder
  */
 class EnvironmentAwareHandlerTest extends TestCase
 {
@@ -27,14 +27,14 @@ class EnvironmentAwareHandlerTest extends TestCase
      */
     public function testEnvironmentalAwareness()
     {
-        /** @var EnvironmentAwareHandler|MockObject $awareHandler */
+        /** @var EnvironmentAwareResponder|MockObject $awareHandler */
         // Create test environment set to non-CLI, non-AJAX.
         $env = new TestEnvironment(false, false);
-        $awareHandler = new EnvironmentAwareHandler($env);
+        $awareHandler = new EnvironmentAwareResponder($env);
 
-        $defaultHandler = new TestErrorHandler();
-        $cliHandler = new TestErrorHandler();
-        $ajaxHandler = new TestErrorHandler();
+        $defaultHandler = new TestErrorResponder();
+        $cliHandler = new TestErrorResponder();
+        $ajaxHandler = new TestErrorResponder();
 
         $awareHandler->setDefaultHandler($defaultHandler);
         $awareHandler->setCliHandler($cliHandler);

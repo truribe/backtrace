@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handler;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Environment\EnvironmentInterface;
 
@@ -13,7 +13,7 @@ use tvanc\backtrace\Environment\EnvironmentInterface;
  * The temptation to name this class EnvironmentallyAwareHandler was all
  * but overpowering.
  */
-class EnvironmentAwareHandler implements ErrorHandlerInterface
+class EnvironmentAwareResponder implements ErrorResponderInterface
 {
     /**
      * @var EnvironmentInterface
@@ -21,17 +21,17 @@ class EnvironmentAwareHandler implements ErrorHandlerInterface
     private $environment;
 
     /**
-     * @var ErrorHandlerInterface
+     * @var ErrorResponderInterface
      */
     private $cliHandler;
 
     /**
-     * @var ErrorHandlerInterface
+     * @var ErrorResponderInterface
      */
     private $ajaxHandler;
 
     /**
-     * @var ErrorHandlerInterface
+     * @var ErrorResponderInterface
      */
     private $defaultHandler;
 
@@ -91,11 +91,11 @@ class EnvironmentAwareHandler implements ErrorHandlerInterface
 
 
     /**
-     * @param ErrorHandlerInterface $handler
+     * @param ErrorResponderInterface $handler
      *
-     * @return EnvironmentAwareHandler
+     * @return EnvironmentAwareResponder
      */
-    public function setCliHandler(ErrorHandlerInterface $handler): self
+    public function setCliHandler(ErrorResponderInterface $handler): self
     {
         $this->cliHandler = $handler;
 
@@ -104,11 +104,11 @@ class EnvironmentAwareHandler implements ErrorHandlerInterface
 
 
     /**
-     * @param ErrorHandlerInterface $ajaxHandler
+     * @param ErrorResponderInterface $ajaxHandler
      *
-     * @return EnvironmentAwareHandler
+     * @return EnvironmentAwareResponder
      */
-    public function setAjaxHandler(ErrorHandlerInterface $ajaxHandler): self
+    public function setAjaxHandler(ErrorResponderInterface $ajaxHandler): self
     {
         $this->ajaxHandler = $ajaxHandler;
 
@@ -117,11 +117,11 @@ class EnvironmentAwareHandler implements ErrorHandlerInterface
 
 
     /**
-     * @param ErrorHandlerInterface $defaultHandler
+     * @param ErrorResponderInterface $defaultHandler
      *
-     * @return EnvironmentAwareHandler
+     * @return EnvironmentAwareResponder
      */
-    public function setDefaultHandler(ErrorHandlerInterface $defaultHandler): self
+    public function setDefaultHandler(ErrorResponderInterface $defaultHandler): self
     {
         $this->defaultHandler = $defaultHandler;
 

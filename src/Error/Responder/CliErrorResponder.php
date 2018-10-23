@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handler;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Backtrace;
 use tvanc\backtrace\Environment\CliInfoProvider;
@@ -15,7 +15,7 @@ use tvanc\backtrace\Environment\CliInfoProvider;
  *
  * TODO Integrate with symfony/console
  */
-class CliErrorHandler implements ErrorHandlerInterface
+class CliErrorResponder implements ErrorResponderInterface
 {
     const DEFAULT_DIVIDER_LENGTH = 75;
 

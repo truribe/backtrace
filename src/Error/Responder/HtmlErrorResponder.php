@@ -5,14 +5,14 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handler;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Backtrace;
 
 /**
  * Class HtmlErrorHandler
  */
-class HtmlErrorHandler implements ErrorHandlerInterface
+class HtmlErrorResponder implements ErrorResponderInterface
 {
     /**
      * @param \Throwable $throwable

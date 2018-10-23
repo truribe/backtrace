@@ -7,12 +7,12 @@
 
 namespace tvanc\backtrace\Test\Error\Handler;
 
-use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Class TestErrorHandler
  */
-class TestErrorHandler implements ErrorHandlerInterface
+class TestErrorResponder implements ErrorResponderInterface
 {
     private $caughtThrowable = false;
     private $handledError = false;
@@ -30,9 +30,9 @@ class TestErrorHandler implements ErrorHandlerInterface
     /**
      * @param bool $caughtThrowable
      *
-     * @return TestErrorHandler
+     * @return TestErrorResponder
      */
-    public function setCaughtThrowable(bool $caughtThrowable): TestErrorHandler
+    public function setCaughtThrowable(bool $caughtThrowable): TestErrorResponder
     {
         $this->caughtThrowable = $caughtThrowable;
 
@@ -52,9 +52,9 @@ class TestErrorHandler implements ErrorHandlerInterface
     /**
      * @param bool $handledError
      *
-     * @return TestErrorHandler
+     * @return TestErrorResponder
      */
-    public function setHandledError(bool $handledError): TestErrorHandler
+    public function setHandledError(bool $handledError): TestErrorResponder
     {
         $this->handledError = $handledError;
 

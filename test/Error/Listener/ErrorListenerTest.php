@@ -8,7 +8,7 @@
 namespace tvanc\backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 use tvanc\backtrace\Error\Listener\ErrorListener;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
@@ -66,7 +66,7 @@ class ErrorListenerTest extends TestCase
     {
         // Create listener with override enabled and noop handler
         $listener = new ErrorListener([
-            $this->createMock(ErrorHandlerInterface::class)
+            $this->createMock(ErrorResponderInterface::class)
         ], false);
 
         // Register the error handler
@@ -92,7 +92,7 @@ class ErrorListenerTest extends TestCase
     {
         // Create listener with override enabled and noop handler
         $listener = new ErrorListener([
-            $this->createMock(ErrorHandlerInterface::class)
+            $this->createMock(ErrorResponderInterface::class)
         ], true);
 
         // Register the error handler

@@ -5,12 +5,12 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handler;
+namespace tvanc\backtrace\Error\Responder;
 
 /**
  * Interface ErrorHandlerInterface
  */
-interface ErrorHandlerInterface
+interface ErrorResponderInterface
 {
     /**
      * @param \Throwable $throwable

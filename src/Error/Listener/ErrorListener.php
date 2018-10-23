@@ -7,7 +7,7 @@
 
 namespace tvanc\backtrace\Error\Listener;
 
-use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
 
@@ -28,7 +28,7 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @var ErrorHandlerInterface[] Error handlers.
+     * @var ErrorResponderInterface[] Error handlers.
      */
     private $handlers;
 
@@ -75,7 +75,7 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function addHandler(ErrorHandlerInterface $handler): ErrorListenerInterface
+    public function addHandler(ErrorResponderInterface $handler): ErrorListenerInterface
     {
         $this->handlers[] = $handler;
 

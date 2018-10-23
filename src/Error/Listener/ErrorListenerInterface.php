@@ -8,17 +8,17 @@
 namespace tvanc\backtrace\Error\Listener;
 
 
-use tvanc\backtrace\Error\Handler\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Interface ErrorListenerInterface
  */
-interface ErrorListenerInterface extends ErrorHandlerInterface
+interface ErrorListenerInterface extends ErrorResponderInterface
 {
     public function setHandlers(array $handlers);
 
 
-    public function addHandler(ErrorHandlerInterface $handler);
+    public function addHandler(ErrorResponderInterface $handler);
 
 
     public function getHandlers(): array;
