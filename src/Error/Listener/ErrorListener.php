@@ -8,7 +8,6 @@
 namespace tvanc\backtrace\Error\Listener;
 
 use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
-use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
 
 /**
