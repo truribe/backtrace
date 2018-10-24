@@ -7,8 +7,9 @@
 
 namespace tvanc\backtrace\Error\Listener;
 
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Class ErrorListener
@@ -25,21 +26,86 @@ class ErrorListener implements ErrorListenerInterface
      */
     protected $override;
 
+    /**
+     * @var
+     */
+    protected $mode;
 
     /**
      * @var ErrorResponderInterface[] Error responders.
      */
     private $responders;
 
+    /**
+     * @var callable The exception handler this class displaces.
+     */
     private $displacedExceptionHandler;
 
+    /**
+     * @var callable The error handler this class displaces.
+     */
+    private $displacedErrorHandler;
 
+    /**
+     * @var bool Whether to exit after a non-fatal error.
+     */
+    private $exitAfterTrigger = true;
+
+    /**
+     * @var ErrorResponderInterface
+     * Fall back to this responder if no specialized one exists.
+     */
+    private $defaultResponder;
+
+
+    /**
+     * @param array $responders
+     * @param int   $mode Default E_ALL | E_STRICT
+     * @param bool  $override
+     *
+     * @see http://php.net/manual/en/errorfunc.constants.php
+     *
+     * @see http://php.net/manual/en/language.operators.bitwise.php
+     */
     public function __construct(
-        bool $override = false
         array $responders = [],
+        int $mode = null,
+        $override = true
     ) {
         $this->responders = $responders;
+        $this->mode = \is_null($mode) ? \E_ALL | \E_STRICT : $mode;
         $this->override = $override;
+    }
+
+
+    public function listen($types = ErrorListenerInterface::TYPE_ALL)
+    {
+        if ($types & static::TYPE_ERROR) {
+            $this->listenForErrors();
+        }
+
+        // @codeCoverageIgnoreStart
+        if ($types & static::TYPE_EXCEPTION) {
+            $this->listenForExceptions();
+        }
+        if ($types & static::TYPE_FATAL_ERROR) {
+            $this->listenForShutdown();
+        }
+
+        // @codeCoverageIgnoreEnd
+
+        return $this;
+    }
+
+
+    public function listenForErrors(): ErrorListenerInterface
+    {
+        $this->displacedErrorHandler = \set_error_handler(
+            [$this, 'handleError'],
+            $this->mode
+        );
+
+        return $this;
     }
 
 
@@ -58,9 +124,29 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function listenForErrors($types = \E_ALL | \E_STRICT): ErrorListenerInterface
+    /**
+     * Listen for shutdown.
+     *
+     * @return ErrorListenerInterface
+     */
+    public function listenForShutdown(): ErrorListenerInterface
     {
-        \set_error_handler([$this, 'handleError'], $types);
+        \register_shutdown_function([$this, 'handleShutdown']);
+
+        return $this;
+    }
+
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param bool $condition
+     *
+     * @return $this
+     */
+    public function exitAfterTrigger(bool $condition)
+    {
+        $this->exitAfterTrigger = $condition;
 
         return $this;
     }
@@ -124,35 +210,84 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function handleException(\Throwable $throwable)
     {
-        if ($throwable instanceof UnhandledExceptionException) {
-            exit($throwable->__toString());
+        $handled = false;
+
+        foreach ($this->responders as $responder) {
+            if ($responder->considerException($throwable)) {
+                $handled = true;
+                $responder->handleException($throwable);
+            }
         }
 
-        if (!$this->handlers) {
+        if (
+            !$handled
+            && $this->defaultResponder
+            && $this->defaultResponder->considerException($throwable)
+        ) {
+            $this->defaultResponder->handleException($throwable);
+        }
+        else if (!$handled) {
             throw new UnhandledExceptionException($throwable);
         }
 
-        foreach ($this->handlers as $handler) {
-            $handler->catchThrowable($throwable);
+        if ($this->exitAfterTrigger) {
+            exit(1);
         }
     }
 
 
     /**
+     * @return void
      *
+     * @throws UnhandledExceptionException
      */
+    public function handleShutdown(): void
     {
+        $error = \error_get_last();
+        if (!$error || !($error['type'] & $this->mode)) {
+            return;
+        }
+        if ($this->isFatalError($error['type'])) {
+            $this->handleException(
+                new ShutdownException(
+                    $error['message'],
+                    0, $error['type'],
+                    $error['file'],
+                    $error['line']
+                )
             );
         }
-
-        }
-
     }
 
 
     /**
+     * @codeCoverageIgnore
      *
+     * @param int $code
+     *
+     * @return bool
      */
+    private function isFatalError($code)
     {
+        foreach (static::FATAL_ERRORS as $fatalCode) {
+            if ($code & $fatalCode) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @param ErrorResponderInterface $responder
+     *
+     * @return ErrorListenerInterface
+     */
+    public function setDefaultResponder(ErrorResponderInterface $responder): ErrorListenerInterface
+    {
+        $this->defaultResponder = $responder;
+
+        return $this;
     }
 }

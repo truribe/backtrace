@@ -8,10 +8,10 @@
 namespace tvanc\backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 use tvanc\backtrace\Error\Listener\ErrorListener;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Class ErrorListenerTest
@@ -24,11 +24,11 @@ class ErrorListenerTest extends TestCase
      */
     public function testUnhandledError()
     {
-        $listener = new ErrorListener([], false);
+        $listener = new ErrorListener();
 
-        $listener->listenForErrors();
+        $listener->listen();
 
-        $this->expectException(UnhandledErrorException::class);
+        $this->expectException(UnhandledExceptionException::class);
 
         trigger_error('Testing', E_USER_NOTICE);
     }
@@ -47,7 +47,7 @@ class ErrorListenerTest extends TestCase
 
         $this->expectException(UnhandledExceptionException::class);
 
-        $listener->catchThrowable(new \Exception(
+        $listener->handleException(new \Exception(
             'Thrown an Exception; landed an UnhandledExceptionException'
         ));
     }
@@ -90,10 +90,11 @@ class ErrorListenerTest extends TestCase
      */
     public function testOverrideOn()
     {
+        $stub = $this->createMock(ErrorResponderInterface::class);
+        $stub->method('considerException')->willReturn(true);
+
         // Create listener with override enabled and noop handler
-        $listener = new ErrorListener([
-            $this->createMock(ErrorResponderInterface::class)
-        ], true);
+        $listener = new ErrorListener([$stub], \E_ALL | \E_STRICT, true);
 
         // Register the error handler
         $listener->listenForErrors();
