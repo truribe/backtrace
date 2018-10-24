@@ -65,6 +65,21 @@ interface ErrorListenerInterface
 
 
     /**
+     * Listen for shutdown.
+     *
+     * @return ErrorListenerInterface
+     */
+    public function listenForShutdown(): self;
+
+
+    public function handleException(\Throwable $throwable);
+
+    public function handleError($severity, $message, $file, $lineNumber);
+
+    public function handleShutdown();
+
+
+    /**
      * Enable or disable overriding native error handling.
      *
      * @param bool $override
