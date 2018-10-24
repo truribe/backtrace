@@ -5,16 +5,14 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Class TestErrorHandler
- *
- * @package tvanc\backtrace\Test\Error\Handle
  */
-class TestErrorHandler implements ErrorHandlerInterface
+class TestErrorResponder implements ErrorResponderInterface
 {
     private $caughtThrowable = false;
     private $handledError = false;
@@ -32,9 +30,9 @@ class TestErrorHandler implements ErrorHandlerInterface
     /**
      * @param bool $caughtThrowable
      *
-     * @return TestErrorHandler
+     * @return TestErrorResponder
      */
-    public function setCaughtThrowable(bool $caughtThrowable): TestErrorHandler
+    public function setCaughtThrowable(bool $caughtThrowable): TestErrorResponder
     {
         $this->caughtThrowable = $caughtThrowable;
 
@@ -54,9 +52,9 @@ class TestErrorHandler implements ErrorHandlerInterface
     /**
      * @param bool $handledError
      *
-     * @return TestErrorHandler
+     * @return TestErrorResponder
      */
-    public function setHandledError(bool $handledError): TestErrorHandler
+    public function setHandledError(bool $handledError): TestErrorResponder
     {
         $this->handledError = $handledError;
 
@@ -69,7 +67,7 @@ class TestErrorHandler implements ErrorHandlerInterface
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $this->caughtThrowable = true;
 
@@ -77,28 +75,7 @@ class TestErrorHandler implements ErrorHandlerInterface
     }
 
 
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        $this->handledError = true;
-
-        return true;
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
+    public function considerException(\Throwable $throwable): bool
     {
         return true;
     }

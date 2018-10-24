@@ -5,12 +5,12 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
-use tvanc\backtrace\Error\Handle\CliErrorHandler;
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\CliErrorResponder;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 use tvanc\backtrace\Test\Environment\TestCliInfoProvider;
-use tvanc\backtrace\Test\Error\Handle\Exception\ExampleException;
+use tvanc\backtrace\Test\Error\Handler\Exception\ExampleException;
 
 /**
  * Class ErrorHandlerTest
@@ -39,7 +39,7 @@ class CliErrorHandlerTest extends AbstractHandlerTest
 
         $this->expectOutputRegex($regex);
 
-        $handler->catchThrowable(new ExampleException($message));
+        $handler->handleException(new ExampleException($message));
     }
 
 
@@ -55,13 +55,13 @@ class CliErrorHandlerTest extends AbstractHandlerTest
 
 
     /**
-     * @return CliErrorHandler
+     * @return CliErrorResponder
      * A CliErrorHandler with a TestCliInfoProvider that returns a static
      * arbitrary width.
      */
-    public function getHandler(): ErrorHandlerInterface
+    public function getHandler(): ErrorResponderInterface
     {
-        return new CliErrorHandler(
+        return new CliErrorResponder(
             new TestCliInfoProvider(self::ARBITRARY_KNOWN_WIDTH)
         );
     }

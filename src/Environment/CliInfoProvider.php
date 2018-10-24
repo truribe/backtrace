@@ -9,8 +9,6 @@ namespace tvanc\backtrace\Environment;
 
 /**
  * Class CliContextInfo
- *
- * @package tvanc\backtrace\Utility
  */
 class CliInfoProvider
 {

@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Raymond Uribe <turibe@rentecdirect.com>
  * @copyright 2018 Rentec Direct
  * @license Proprietary
@@ -10,27 +8,25 @@
 namespace tvanc\backtrace;
 
 use tvanc\backtrace\Backtrace\HeavyBacktraceStagesTrait;
-use tvanc\backtrace\Error\Listen\ErrorListener;
+use tvanc\backtrace\Error\Listener\ErrorListener;
 
 /**
- * Class ErrorInterceptor
- *
- * @package tvanc\backtrace
+ * A convenience interface for using this library.
  */
 final class Backtrace
 {
     /**
-     * TODO Refactor this to be pretty.
+     * TODO Refactor this to somewhere better.
      *
-     * @param \Throwable $ex
+     * @param \Throwable $throwable
      * @param bool       $shorten
      *
      * @return string
      */
-    static function getErrorType($ex, $shorten = true)
+    static function getErrorType($throwable, $shorten = true)
     {
-        if ($ex instanceof \ErrorException) {
-            $severity = $ex->getSeverity();
+        if ($throwable instanceof \ErrorException) {
+            $severity = $throwable->getSeverity();
 
             $typeNameMap = [
                 E_ERROR => 'Fatal error',
@@ -53,7 +49,7 @@ final class Backtrace
             return $typeNameMap[$severity];
         }
 
-        $className = get_class($ex);
+        $className = get_class($throwable);
         $slashPos = strrpos($className, '\\');
 
         if ($shorten && $slashPos !== false) {

@@ -9,7 +9,7 @@ namespace tvanc\backtrace\Test;
 
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Backtrace;
-use tvanc\backtrace\Error\Listen\ErrorListenerInterface;
+use tvanc\backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * Class BacktraceTest

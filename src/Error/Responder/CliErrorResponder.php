@@ -5,7 +5,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handle;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Backtrace;
 use tvanc\backtrace\Environment\CliInfoProvider;
@@ -14,10 +14,8 @@ use tvanc\backtrace\Environment\CliInfoProvider;
  * Class CliErrorHandler
  *
  * TODO Integrate with symfony/console
- *
- * @package tvanc\backtrace\Error\Handle
  */
-class CliErrorHandler implements ErrorHandlerInterface
+class CliErrorResponder implements ErrorResponderInterface
 {
     const DEFAULT_DIVIDER_LENGTH = 75;
 
@@ -38,7 +36,7 @@ class CliErrorHandler implements ErrorHandlerInterface
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $type = strtoupper(Backtrace::getErrorType($throwable));
         $line = $this->makeDivider();
@@ -74,31 +72,6 @@ STAGE_RENDER;
         }
 
         echo "\n" . $this->makeLine() . "\n\n";
-    }
-
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        echo "[$severity@$fileName#$lineNumber] $message";
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
-        // TODO: Implement handleFatalError() method.
     }
 
 
@@ -139,5 +112,11 @@ STAGE_RENDER;
     public function getCliInfo(): CliInfoProvider
     {
         return $this->cliInfo;
+    }
+
+
+    public function considerException(\Throwable $throwable): bool
+    {
+        return true;
     }
 }

@@ -5,12 +5,10 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle\Exception;
+namespace tvanc\backtrace\Test\Error\Handler\Exception;
 
 /**
  * Class ExampleException
- *
- * @package tvanc\backtrace\Test\Error\Handle\Exception
  */
 class ExampleException extends \Exception
 {

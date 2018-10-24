@@ -5,21 +5,19 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handle;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Backtrace;
 
 /**
  * Class HtmlErrorHandler
- *
- * @package tvanc\backtrace\Error\Handle
  */
-class HtmlErrorHandler implements ErrorHandlerInterface
+class HtmlErrorResponder implements ErrorResponderInterface
 {
     /**
      * @param \Throwable $throwable
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $trace = $throwable->getTrace();
 
@@ -137,27 +135,8 @@ class HtmlErrorHandler implements ErrorHandlerInterface
     }
 
 
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
+    public function considerException(\Throwable $throwable): bool
     {
-        // TODO: Implement handleError() method.
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
-        // TODO: Implement handleFatalError() method.
+        return true;
     }
 }

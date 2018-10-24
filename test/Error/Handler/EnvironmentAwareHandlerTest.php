@@ -5,13 +5,17 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handle\EnvironmentAwareHandler;
+use tvanc\backtrace\Error\Responder\EnvironmentAwareResponder;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
 
+/**
+ * Class EnvironmentAwareHandlerTest
+ *
+ * @see EnvironmentAwareResponder
+ */
 class EnvironmentAwareHandlerTest extends TestCase
 {
     const ARBITRARY_WIDTH = 42;
@@ -22,21 +26,20 @@ class EnvironmentAwareHandlerTest extends TestCase
      */
     public function testEnvironmentalAwareness()
     {
-        /** @var EnvironmentAwareHandler|MockObject $awareHandler */
         // Create test environment set to non-CLI, non-AJAX.
         $env = new TestEnvironment(false, false);
-        $awareHandler = new EnvironmentAwareHandler($env);
+        $awareHandler = new EnvironmentAwareResponder($env);
 
-        $defaultHandler = new TestErrorHandler();
-        $cliHandler = new TestErrorHandler();
-        $ajaxHandler = new TestErrorHandler();
+        $defaultHandler = new TestErrorResponder();
+        $cliHandler = new TestErrorResponder();
+        $ajaxHandler = new TestErrorResponder();
 
         $awareHandler->setDefaultHandler($defaultHandler);
         $awareHandler->setCliHandler($cliHandler);
         $awareHandler->setAjaxHandler($ajaxHandler);
 
         // Trigger default handler
-        $awareHandler->catchThrowable(new \Exception(''));
+        $awareHandler->handleException(new \Exception(''));
 
         $this->assertTrue($defaultHandler->caughtThrowable());
         $this->assertFalse($cliHandler->caughtThrowable());
@@ -46,7 +49,7 @@ class EnvironmentAwareHandlerTest extends TestCase
 
         // // Trigger CLI handler
         $env->setIsCli(true);
-        $awareHandler->catchThrowable(new \Exception(''));
+        $awareHandler->handleException(new \Exception(''));
 
         $this->assertFalse($defaultHandler->caughtThrowable());
         $this->assertTrue($cliHandler->caughtThrowable());
@@ -57,7 +60,7 @@ class EnvironmentAwareHandlerTest extends TestCase
         // // Trigger AJAX handler
         $env->setIsCli(false);
         $env->setIsAjaxRequest(true);
-        $awareHandler->catchThrowable(new \Exception(''));
+        $awareHandler->handleException(new \Exception(''));
 
         $this->assertFalse($defaultHandler->caughtThrowable());
         $this->assertFalse($cliHandler->caughtThrowable());

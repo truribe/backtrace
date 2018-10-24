@@ -5,10 +5,10 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Handler;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Just a convenience class for handler test cases to extend if they need the
@@ -16,5 +16,5 @@ use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
  */
 abstract class AbstractHandlerTest extends TestCase implements HandlerTestInterface
 {
-    abstract public function getHandler(): ErrorHandlerInterface;
+    abstract public function getHandler(): ErrorResponderInterface;
 }
