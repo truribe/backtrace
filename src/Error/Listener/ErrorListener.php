@@ -28,19 +28,19 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @var ErrorResponderInterface[] Error handlers.
+     * @var ErrorResponderInterface[] Error responders.
      */
-    private $handlers;
+    private $responders;
 
     private $displacedExceptionHandler;
 
 
     public function __construct(
-        array $handlers = [],
         bool $override = false
+        array $responders = [],
     ) {
+        $this->responders = $responders;
         $this->override = $override;
-        $this->handlers = $handlers;
     }
 
 
@@ -77,7 +77,7 @@ class ErrorListener implements ErrorListenerInterface
 
     public function addResponder(ErrorResponderInterface $handler): ErrorListenerInterface
     {
-        $this->handlers[] = $handler;
+        $this->responders[] = $handler;
 
         return $this;
     }
@@ -85,7 +85,7 @@ class ErrorListener implements ErrorListenerInterface
 
     public function getResponders(): array
     {
-        return $this->handlers;
+        return $this->responders;
     }
 
 
