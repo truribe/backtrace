@@ -67,37 +67,10 @@ class TestErrorResponder implements ErrorResponderInterface
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $this->caughtThrowable = true;
 
-        return true;
-    }
-
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        $this->handledError = true;
-
-        return true;
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
         return true;
     }
 }

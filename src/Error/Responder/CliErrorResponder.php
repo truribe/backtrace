@@ -76,31 +76,6 @@ STAGE_RENDER;
 
 
     /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        echo "[$severity@$fileName#$lineNumber] $message";
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
-        // TODO: Implement handleFatalError() method.
-    }
-
-
-    /**
      * Make a textual divider.
      *
      * @param string   $label

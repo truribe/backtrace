@@ -17,7 +17,7 @@ class HtmlErrorResponder implements ErrorResponderInterface
     /**
      * @param \Throwable $throwable
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $trace = $throwable->getTrace();
 
@@ -132,30 +132,5 @@ class HtmlErrorResponder implements ErrorResponderInterface
         <?php
 
         return ob_get_clean();
-    }
-
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        // TODO: Implement handleError() method.
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
-        // TODO: Implement handleFatalError() method.
     }
 }

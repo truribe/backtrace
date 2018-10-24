@@ -39,7 +39,7 @@ class CliErrorHandlerTest extends AbstractHandlerTest
 
         $this->expectOutputRegex($regex);
 
-        $handler->catchThrowable(new ExampleException($message));
+        $handler->handleException(new ExampleException($message));
     }
 
 

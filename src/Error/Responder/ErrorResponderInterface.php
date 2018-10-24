@@ -17,24 +17,7 @@ interface ErrorResponderInterface
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $throwable);
+    public function handleException(\Throwable $throwable);
 
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber);
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error);
+    public function considerException (\Throwable $throwable): bool;
 }

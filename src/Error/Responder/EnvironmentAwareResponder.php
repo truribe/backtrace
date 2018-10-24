@@ -47,46 +47,21 @@ class EnvironmentAwareResponder implements ErrorResponderInterface
      *
      * @return bool
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         if ($this->environment->isCli() && $this->cliHandler) {
-            return $this->cliHandler->catchThrowable($throwable);
+            return $this->cliHandler->handleException($throwable);
         }
 
         if ($this->environment->isAjaxRequest() && $this->ajaxHandler) {
-            return $this->ajaxHandler->catchThrowable($throwable);
+            return $this->ajaxHandler->handleException($throwable);
         }
 
         if ($this->defaultHandler) {
-            return $this->defaultHandler->catchThrowable($throwable);
+            return $this->defaultHandler->handleException($throwable);
         }
 
         return false;
-    }
-
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return mixed
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        // TODO: Implement handleError() method.
-    }
-
-
-    /**
-     * @param array $error
-     *
-     * @return mixed
-     */
-    public function handleFatalError(array $error)
-    {
-        // TODO: Implement handleFatalError() method.
     }
 
 
