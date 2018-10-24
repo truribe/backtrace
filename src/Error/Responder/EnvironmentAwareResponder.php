@@ -102,4 +102,10 @@ class EnvironmentAwareResponder implements ErrorResponderInterface
 
         return $this;
     }
+
+
+    public function considerException(\Throwable $throwable): bool
+    {
+        return true;
+    }
 }

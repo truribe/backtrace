@@ -73,4 +73,10 @@ class TestErrorResponder implements ErrorResponderInterface
 
         return true;
     }
+
+
+    public function considerException(\Throwable $throwable): bool
+    {
+        return true;
+    }
 }

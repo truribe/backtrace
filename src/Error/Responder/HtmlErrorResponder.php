@@ -133,4 +133,10 @@ class HtmlErrorResponder implements ErrorResponderInterface
 
         return ob_get_clean();
     }
+
+
+    public function considerException(\Throwable $throwable): bool
+    {
+        return true;
+    }
 }

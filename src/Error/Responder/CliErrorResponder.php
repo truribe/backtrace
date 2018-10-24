@@ -113,4 +113,10 @@ STAGE_RENDER;
     {
         return $this->cliInfo;
     }
+
+
+    public function considerException(\Throwable $throwable): bool
+    {
+        return true;
+    }
 }
