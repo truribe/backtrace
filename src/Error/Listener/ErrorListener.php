@@ -98,6 +98,26 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
+     * @param $severity
+     * @param $message
+     * @param $file
+     * @param $lineNumber
+     *
+     * @return bool
+     *
+     * @throws UnhandledExceptionException
+     */
+    public function handleError($severity, $message, $file, $lineNumber)
+    {
+        $this->handleException(
+            new \ErrorException($message, 0, $severity, $file, $lineNumber)
+        );
+
+        return $this->override;
+    }
+
+
+    /**
      * @param \Throwable $throwable
      *
      * @throws UnhandledExceptionException
@@ -120,31 +140,14 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
      *
-     * @return bool
-     *
-     * @throws UnhandledErrorException
      */
-    public function handleError($severity, $message, $fileName, $lineNumber)
     {
-        if (!$this->handlers) {
-            throw new UnhandledErrorException(
-                $severity,
-                $message,
-                $fileName,
-                $lineNumber
             );
         }
 
-        foreach ($this->handlers as $handler) {
-            $handler->handleError($severity, $message, $fileName, $lineNumber);
         }
 
-        return $this->override;
     }
 
 
