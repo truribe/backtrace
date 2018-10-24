@@ -15,6 +15,22 @@ use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
  */
 interface ErrorListenerInterface extends ErrorResponderInterface
 {
+    const FATAL_ERRORS = [
+        \E_ERROR,
+        \E_PARSE,
+        \E_CORE_ERROR,
+        \E_CORE_WARNING,
+        \E_COMPILE_ERROR,
+        \E_COMPILE_WARNING,
+    ];
+
+    const TYPE_ERROR       = 1; // 0b0001
+    const TYPE_EXCEPTION   = 2; // 0b0010
+    const TYPE_FATAL_ERROR = 4; // 0b0100
+    const TYPE_ALL         = 7; // 0b0111
+
+
+
     public function setResponders(array $handlers);
 
 
