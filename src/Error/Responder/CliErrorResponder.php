@@ -36,7 +36,7 @@ class CliErrorResponder implements ErrorResponderInterface
      *
      * @return mixed
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         $type = strtoupper(Backtrace::getErrorType($throwable));
         $line = $this->makeDivider();
