@@ -13,7 +13,7 @@ use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 /**
  * Interface ErrorListenerInterface
  */
-interface ErrorListenerInterface extends ErrorResponderInterface
+interface ErrorListenerInterface
 {
     const FATAL_ERRORS = [
         \E_ERROR,
