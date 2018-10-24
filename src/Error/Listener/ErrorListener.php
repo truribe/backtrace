@@ -51,7 +51,7 @@ class ErrorListener implements ErrorListenerInterface
         // Set bogus handler so we we can restore later and be sure $result
         // won't be null unless there was an error.
         $this->displacedExceptionHandler = \set_exception_handler(
-            [$this, 'catchThrowable']
+            [$this, 'handleException']
         );
 
         return $this;
@@ -122,7 +122,7 @@ class ErrorListener implements ErrorListenerInterface
      * @throws UnhandledExceptionException
      * If no handlers exist to handle the exception.
      */
-    public function catchThrowable(\Throwable $throwable)
+    public function handleException(\Throwable $throwable)
     {
         if ($throwable instanceof UnhandledExceptionException) {
             exit($throwable->__toString());
@@ -151,12 +151,8 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @param array $error
      *
-     * @return mixed
      */
-    public function handleFatalError(array $error)
     {
-        // TODO: Implement handleFatalError() method.
     }
 }
