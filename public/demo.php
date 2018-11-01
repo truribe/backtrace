@@ -4,17 +4,12 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-use tvanc\backtrace\Error\Handle\HtmlErrorHandler;
-use tvanc\backtrace\Error\Listen\ErrorListener;
+use tvanc\backtrace\Backtrace;
 
-require '../vendor/autoload.php';
-require '../inc/example-include-1.php';
-require '../inc/example-include-2.php';
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../inc/example-include-1.php';
+require __DIR__ . '/../inc/example-include-2.php';
 
-$listener = new ErrorListener([
-    // Use an error handler that generates HTML
-    new HtmlErrorHandler()
-]);
-$listener->listenForExceptions();
+Backtrace::createListener()->listen();
 
 foo();
