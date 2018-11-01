@@ -34,14 +34,26 @@ class ErrorListener implements ErrorListenerInterface
      */
     private $handlers;
 
+    /**
+     * @var int
+     */
+    private $mode;
 
 
     public function __construct(
         array $handlers = [],
-        bool $override = false
+        bool $override = false,
+        int $mode = \E_ALL | \E_STRICT
     ) {
-        $this->override = $override;
         $this->handlers = $handlers;
+        $this->override = $override;
+
+        if (!\is_int($mode) && !\is_null($mode)) {
+            throw new \InvalidArgumentException('Argument $mode has to be integer or null!');
+        }
+
+        $this->mode = $mode;
+    }
     }
 
 
