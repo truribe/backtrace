@@ -34,7 +34,6 @@ class ErrorListener implements ErrorListenerInterface
      */
     private $handlers;
 
-    private $displacedExceptionHandler;
 
 
     public function __construct(
@@ -53,7 +52,7 @@ class ErrorListener implements ErrorListenerInterface
     {
         // Set bogus handler so we we can restore later and be sure $result
         // won't be null unless there was an error.
-        $this->displacedExceptionHandler = \set_exception_handler(
+        \set_exception_handler(
             [$this, 'catchThrowable']
         );
 
