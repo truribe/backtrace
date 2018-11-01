@@ -8,6 +8,7 @@
 namespace tvanc\backtrace\Error\Listen;
 
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Listen\Exception\ShutdownException;
 use tvanc\backtrace\Error\Listen\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
 
@@ -54,6 +55,32 @@ class ErrorListener implements ErrorListenerInterface
 
         $this->mode = $mode;
     }
+
+
+    public function listen(
+        $types = ErrorListenerInterface::TYPE_ALL
+    ): ErrorListenerInterface {
+        if ($types & static::TYPE_ERROR) {
+            $this->listenForErrors();
+        }
+        // @codeCoverageIgnoreStart
+        if ($types & static::TYPE_EXCEPTION) {
+            $this->listenForExceptions();
+        }
+        if ($types & static::TYPE_FATAL_ERROR) {
+            $this->listenForErrors();
+        }
+
+        // @codeCoverageIgnoreEnd
+        return $this;
+    }
+
+
+    public function listenForErrors(): ErrorListenerInterface
+    {
+        \set_error_handler([$this, 'handleError'], $this->mode);
+
+        return $this;
     }
 
 
@@ -72,9 +99,9 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function listenForErrors($types = \E_ALL | \E_STRICT): ErrorListenerInterface
+    public function listenForShutdown(): ErrorListenerInterface
     {
-        \set_error_handler([$this, 'handleError'], $types);
+        \register_shutdown_function([$this, 'handleShutdown']);
 
         return $this;
     }
@@ -140,22 +167,13 @@ class ErrorListener implements ErrorListenerInterface
      *
      * @return bool
      *
-     * @throws UnhandledErrorException
+     * @throws UnhandledExceptionException
      */
     public function handleError($severity, $message, $fileName, $lineNumber)
     {
-        if (!$this->handlers) {
-            throw new UnhandledErrorException(
-                $severity,
-                $message,
-                $fileName,
-                $lineNumber
-            );
-        }
-
-        foreach ($this->handlers as $handler) {
-            $handler->handleError($severity, $message, $fileName, $lineNumber);
-        }
+        $this->catchThrowable(
+            new \ErrorException($message, 0, $severity, $fileName, $lineNumber)
+        );
 
         return $this->override;
     }
@@ -165,9 +183,48 @@ class ErrorListener implements ErrorListenerInterface
      * @param array $error
      *
      * @return mixed
+     * @throws UnhandledExceptionException
      */
-    public function handleFatalError(array $error)
+    public function handleShutdown()
     {
-        // TODO: Implement handleFatalError() method.
+        $error = \error_get_last();
+        if (!$error || !($error['type'] & $this->mode)) {
+            return;
+        }
+        if ($this->isFatalError($error['type'])) {
+            $this->catchThrowable(
+                new ShutdownException($error['message'], 0, $error['type'], $error['file'], $error['line'])
+            );
+        }
+
+    }
+
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param int $code
+     *
+     * @return bool
+     */
+    private function isFatalError($code)
+    {
+        // Constant can be an array in PHP >=5.6
+        $fatalErrors = array(
+            \E_ERROR,
+            \E_PARSE,
+            \E_CORE_ERROR,
+            \E_CORE_WARNING,
+            \E_COMPILE_ERROR,
+            \E_COMPILE_WARNING,
+        );
+
+        foreach ($fatalErrors as $fatalCode) {
+            if ($code & $fatalCode) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
