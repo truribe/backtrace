@@ -19,22 +19,6 @@ use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
 class ErrorListenerTest extends TestCase
 {
     /**
-     * Verify listener throws a special exception if it hears an error and has
-     * no associated handlers.
-     */
-    public function testUnhandledError()
-    {
-        $listener = new ErrorListener([], false);
-
-        $listener->listenForErrors();
-
-        $this->expectException(UnhandledErrorException::class);
-
-        trigger_error('Testing', E_USER_NOTICE);
-    }
-
-
-    /**
      * Verify listener throws a special exception if it hears an exception and
      * has no associated handlers.
      *
