@@ -66,6 +66,18 @@ final class Backtrace
 
     public static function createListener()
     {
-        return new ErrorListener();
+        $handler = new DebugHandler(new EnvironmentAwareRenderer(
+            new Environment(),
+            new CliExceptionRenderer(new CliInfoProvider()),
+            new PlaintextExceptionRenderer(),
+            new HtmlExceptionRenderer(
+                realpath(__DIR__ . '/../view'),
+                realpath(__DIR__ . '/../public/assets'),
+                'throwable.php',
+                'stage.php'
+            )
+        ));
+
+        return new ErrorListener([$handler], true);
     }
 }
