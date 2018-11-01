@@ -17,6 +17,11 @@ use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
  */
 interface ErrorListenerInterface extends ErrorHandlerInterface
 {
+    const TYPE_ERROR       = 1; // 0b0001
+    const TYPE_EXCEPTION   = 2; // 0b0010
+    const TYPE_FATAL_ERROR = 4; // 0b0100
+    const TYPE_ALL         = 7; // 0b0111
+
     public function setHandlers(array $handlers);
 
 
@@ -24,6 +29,16 @@ interface ErrorListenerInterface extends ErrorHandlerInterface
 
 
     public function getHandlers(): array;
+
+
+    /**
+     * Listen for exceptions and errors.
+     *
+     * @param int $types
+     *
+     * @return ErrorListenerInterface
+     */
+    public function listen ($types = ErrorListenerInterface::TYPE_ALL): self;
 
 
     /**
@@ -40,6 +55,9 @@ interface ErrorListenerInterface extends ErrorHandlerInterface
      * @return ErrorListenerInterface
      */
     public function listenForErrors(): self;
+
+
+    public function listenForShutdown(): self;
 
 
     /**
