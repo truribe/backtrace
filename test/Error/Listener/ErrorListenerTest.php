@@ -23,7 +23,7 @@ class ErrorListenerTest extends TestCase
      *
      * @throws NoResponderException
      */
-    public function testUnhandledException()
+    public function testNoResponders()
     {
         // Create listener without responders
         $listener = new ErrorListener([], false);
