@@ -10,8 +10,7 @@ use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
 use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
- * A utility class that attempts to make dealing with errors as easy as
- * possible.
+ * A utility class for delegating errors and exceptions to responders.
  */
 class ErrorListener implements ErrorListenerInterface
 {
@@ -24,7 +23,6 @@ class ErrorListener implements ErrorListenerInterface
      * @var bool Whether to override PHP's internal error handler.
      */
     protected $override;
-
 
     /**
      * @var ErrorResponderInterface[] Error responders.
@@ -95,9 +93,29 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * Listen for shutdown.
+     *
+     * @return ErrorListenerInterface
+     */
     public function listenForShutdown(): ErrorListenerInterface
     {
         \register_shutdown_function([$this, 'handleShutdown']);
+
+        return $this;
+    }
+
+
+    /**
+     * @codeCoverageIgnore
+     *
+     * @param bool $condition
+     *
+     * @return $this
+     */
+    public function exitAfterTrigger(bool $condition)
+    {
+        $this->exitAfterTrigger = $condition;
 
         return $this;
     }
@@ -192,7 +210,6 @@ class ErrorListener implements ErrorListenerInterface
                 new ShutdownException($error['message'], 0, $error['type'], $error['file'], $error['line'])
             );
         }
-
     }
 
 
