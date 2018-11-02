@@ -1,14 +1,12 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Environment;
 
 /**
- * Class Environment
+ * Provides information about the environment in which PHP is being run.
  */
 class Environment implements EnvironmentInterface
 {
@@ -51,6 +49,10 @@ class Environment implements EnvironmentInterface
 
 
     /**
+     * Attempts to determine whether PHP is currently serving an AJAX request.
+     * This makes no attempt whatsoever to PROVE the point, because that's an
+     * impossible goal.
+     *
      * @return bool
      */
     public function isAjaxRequest(): bool
