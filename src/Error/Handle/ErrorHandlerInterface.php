@@ -5,7 +5,7 @@
 
 namespace tvanc\backtrace\Error\Handle;
 
-use tvanc\backtrace\Error\Listen\ErrorListenerInterface;
+use tvanc\backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * Interface for handlers of errors heard by a listener.

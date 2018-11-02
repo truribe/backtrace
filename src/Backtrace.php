@@ -10,7 +10,7 @@ namespace tvanc\backtrace;
 use tvanc\backtrace\Environment\CliInfoProvider;
 use tvanc\backtrace\Environment\Environment;
 use tvanc\backtrace\Error\Handle\DebugHandler;
-use tvanc\backtrace\Error\Listen\ErrorListener;
+use tvanc\backtrace\Error\Listener\ErrorListener;
 use tvanc\backtrace\Render\CliExceptionRenderer;
 use tvanc\backtrace\Render\EnvironmentAwareRenderer;
 use tvanc\backtrace\Render\HtmlExceptionRenderer;

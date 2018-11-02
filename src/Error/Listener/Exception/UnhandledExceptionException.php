@@ -3,12 +3,11 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listen\Exception;
+namespace tvanc\backtrace\Error\Listener\Exception;
 
 /**
- * Class UnhandledExceptionException
- *
- * @package tvanc\backtrace\Error\Listen
+ * An exception for when a listener hears an error or exception, but isn't
+ * equipped with an appropriate handler.
  */
 class UnhandledExceptionException extends \Exception
 {

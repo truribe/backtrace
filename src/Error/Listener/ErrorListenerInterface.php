@@ -3,7 +3,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listen;
+namespace tvanc\backtrace\Error\Listener;
 
 
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;

@@ -3,11 +3,11 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listen;
+namespace tvanc\backtrace\Error\Listener;
 
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
-use tvanc\backtrace\Error\Listen\Exception\ShutdownException;
-use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
+use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
 
 /**
  * A utility class that attempts to make dealing with errors as easy as
