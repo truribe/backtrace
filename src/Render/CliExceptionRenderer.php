@@ -46,7 +46,7 @@ class CliExceptionRenderer extends AbstractExceptionRenderer
     public function render(\Throwable $throwable): string
     {
         ob_start();
-        $type = Backtrace::getErrorType($throwable);
+        $type = static::getErrorType($throwable);
         $outerLine = $this->makeDivider(self::OUTER_DIVIDER_CHAR);
         $innerLine = $this->makeDivider(
             self::INNER_DIVIDER_CHAR,
