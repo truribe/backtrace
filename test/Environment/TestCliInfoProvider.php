@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -10,18 +8,23 @@ namespace tvanc\backtrace\Test\Environment;
 use tvanc\backtrace\Environment\CliInfoProvider;
 
 /**
- * Class TestCliInfoProvider
- *
- * @package tvanc\backtrace\Test\Utility
+ * A mock of CliInfoProvider to assist in testing.
  */
 class TestCliInfoProvider extends CliInfoProvider
 {
     /**
      * @var int
+     * Whatever value you want for testing.
      */
     private $consoleWidth;
 
 
+    /**
+     * TestCliInfoProvider constructor.
+     *
+     * @param int $consoleWidth
+     * Whatever value you want for testing.
+     */
     public function __construct(int $consoleWidth)
     {
         $this->consoleWidth = $consoleWidth;

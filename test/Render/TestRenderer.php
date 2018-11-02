@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for TestRendererInterface.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -18,7 +16,10 @@ class TestRenderer implements ExceptionRendererInterface
 
 
     /**
+     * Did render() get called?
+     *
      * @return bool
+     * True if yes, false if no.
      */
     public function isRendered(): bool
     {
@@ -27,6 +28,9 @@ class TestRenderer implements ExceptionRendererInterface
 
 
     /**
+     * Use between assertions to pretend render() was never called. Or to
+     * pretend it was. Whatever floats your boat.
+     *
      * @param bool $rendered
      *
      * @return TestRenderer
@@ -39,6 +43,14 @@ class TestRenderer implements ExceptionRendererInterface
     }
 
 
+    /**
+     * Don't actually render anything. Just set a flag so we know this
+     * method was called.
+     *
+     * @param \Throwable $throwable
+     *
+     * @return string
+     */
     public function render(\Throwable $throwable): string
     {
         $this->rendered = true;
@@ -47,6 +59,13 @@ class TestRenderer implements ExceptionRendererInterface
     }
 
 
+    /**
+     * Don't render anything. Just implementing to fulfill conditions.
+     *
+     * @param array $stage
+     *
+     * @return string
+     */
     public function renderStage(array $stage): string
     {
         return '';

@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for DebugHandlerTest.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 

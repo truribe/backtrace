@@ -1,14 +1,13 @@
 <?php
 /**
- * TODO Add @file block for PlaintextBacktraceRenderer.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render;
 
 /**
- * TODO Document class PlaintextBacktraceRenderer
+ * Renders exceptions in plaintext format, using only text-based visual
+ * formatting, if any.
  */
 class PlaintextExceptionRenderer extends AbstractExceptionRenderer
 {

@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 

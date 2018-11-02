@@ -1,14 +1,13 @@
 <?php
 /**
- * TODO Add @file block for AbstractExceptionRenderer.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render;
 
 /**
- * TODO Document class AbstractExceptionRenderer
+ * Provide a base that defines methods that can also be used by concrete
+ * descendants.
  */
 abstract class AbstractExceptionRenderer implements ExceptionRendererInterface
 {

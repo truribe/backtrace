@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for DebugHandler.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -10,12 +8,14 @@ namespace tvanc\backtrace\Error\Handle;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
 
 /**
- * TODO Document class DebugHandler
+ * A handler to aid in debugging errors by passing the errors to a renderer
+ * and echoing its output.
  */
 class DebugHandler implements ErrorHandlerInterface
 {
     /**
      * @var ExceptionRendererInterface
+     * The class to use to render throwables received by this class.
      */
     private $renderer;
 
@@ -27,9 +27,12 @@ class DebugHandler implements ErrorHandlerInterface
 
 
     /**
+     * Renders the thrown object - hopefully in a helpful way, though
+     * ultimately that's up to the renderer.
+     *
      * @param \Throwable $throwable
      *
-     * @return mixed
+     * @see ExceptionRendererInterface::render()
      */
     public function catchThrowable(\Throwable $throwable)
     {

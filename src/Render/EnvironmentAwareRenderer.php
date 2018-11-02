@@ -1,17 +1,16 @@
 <?php
 /**
- * TODO Add @file block for EnvironmentAwareRenderer.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render;
 
+use tvanc\backtrace\Environment\Environment;
 use tvanc\backtrace\Environment\EnvironmentInterface;
 use tvanc\backtrace\Render\Exception\NoRendererException;
 
 /**
- * TODO Document class EnvironmentAwareRenderer
+ * Renders exceptions in the optimum format for the current environment.
  */
 class EnvironmentAwareRenderer extends AbstractExceptionRenderer
 {
@@ -22,16 +21,29 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
 
     /**
      * @var ExceptionRendererInterface
+     * The renderer to use if the current environment is determined to be CLI.
+     *
+     * @see CliExceptionRenderer
+     * @see Environment::isCli()
      */
     private $cliRenderer;
 
     /**
      * @var ExceptionRendererInterface
+     * The renderer to use if the current environment is determined to be an
+     * AJAX request.
+     *
+     * @see PlaintextExceptionRenderer
+     * @see Environment::isAjaxRequest()
      */
     private $ajaxRenderer;
 
     /**
      * @var ExceptionRendererInterface
+     * The renderer to use if the current environment is determined NOT to be
+     * a CLI, or an AJAX request. OR no more-specific renderer was available.
+     *
+     * @see HtmlExceptionRenderer
      */
     private $defaultRenderer;
 

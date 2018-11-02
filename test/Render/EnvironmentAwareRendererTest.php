@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -13,13 +11,16 @@ use tvanc\backtrace\Render\EnvironmentAwareRenderer;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
 use tvanc\backtrace\Test\Render\TestRenderer;
 
+/**
+ * Test renderer's environmental awareness.
+ */
 class EnvironmentAwareRendererTest extends TestCase
 {
     const ARBITRARY_WIDTH = 42;
 
 
     /**
-     * Verify handler is as aware as it says it is.
+     * Verify handler is as aware as it says it is. =O
      */
     public function testEnvironmentalAwareness()
     {

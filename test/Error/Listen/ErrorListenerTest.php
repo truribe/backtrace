@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -10,11 +8,12 @@ namespace tvanc\backtrace\Test\Error\Listen;
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 use tvanc\backtrace\Error\Listen\ErrorListener;
-use tvanc\backtrace\Error\Listen\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
 
 /**
- * Class ErrorListenerTest
+ * Tests ErrorListener
+ *
+ * @see ErrorListener
  */
 class ErrorListenerTest extends TestCase
 {

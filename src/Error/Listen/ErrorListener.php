@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -9,13 +7,11 @@ namespace tvanc\backtrace\Error\Listen;
 
 use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 use tvanc\backtrace\Error\Listen\Exception\ShutdownException;
-use tvanc\backtrace\Error\Listen\Exception\UnhandledErrorException;
 use tvanc\backtrace\Error\Listen\Exception\UnhandledExceptionException;
 
 /**
- * Class ErrorListener
- *
- * @package tvanc\backtrace\Error\Listen
+ * A utility class that attempts to make dealing with errors as easy as
+ * possible.
  */
 class ErrorListener implements ErrorListenerInterface
 {
@@ -138,6 +134,26 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
+     * @param $severity
+     * @param $message
+     * @param $fileName
+     * @param $lineNumber
+     *
+     * @return bool
+     *
+     * @throws UnhandledExceptionException
+     */
+    public function handleError($severity, $message, $fileName, $lineNumber)
+    {
+        $this->catchThrowable(
+            new \ErrorException($message, 0, $severity, $fileName, $lineNumber)
+        );
+
+        return $this->override;
+    }
+
+
+    /**
      * @param \Throwable $throwable
      *
      * @throws UnhandledExceptionException
@@ -156,26 +172,6 @@ class ErrorListener implements ErrorListenerInterface
         foreach ($this->handlers as $handler) {
             $handler->catchThrowable($throwable);
         }
-    }
-
-
-    /**
-     * @param $severity
-     * @param $message
-     * @param $fileName
-     * @param $lineNumber
-     *
-     * @return bool
-     *
-     * @throws UnhandledExceptionException
-     */
-    public function handleError($severity, $message, $fileName, $lineNumber)
-    {
-        $this->catchThrowable(
-            new \ErrorException($message, 0, $severity, $fileName, $lineNumber)
-        );
-
-        return $this->override;
     }
 
 

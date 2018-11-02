@@ -1,14 +1,12 @@
 <?php
 /**
- * TODO Add @file block for HtmlBacktraceRenderer.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render;
 
 /**
- * TODO Document class HtmlBacktraceRenderer
+ * Renders exceptions in glorious HTML format.
  */
 class HtmlExceptionRenderer extends AbstractExceptionRenderer
 {
@@ -61,6 +59,14 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     }
 
 
+    /**
+     * Load and return the result of an executed template file.
+     *
+     * @param string $templateFile
+     * @param array  $vars
+     *
+     * @return string
+     */
     private function loadTemplate(string $templateFile, array $vars): string
     {
         extract($vars);

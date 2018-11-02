@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file documentation
- *
  * @author Travis Raymond Uribe <turibe@rentecdirect.com>
  * @copyright 2018 Rentec Direct
  * @license Proprietary
@@ -9,7 +7,6 @@
 
 namespace tvanc\backtrace;
 
-use tvanc\backtrace\Backtrace\HeavyBacktraceStagesTrait;
 use tvanc\backtrace\Environment\CliInfoProvider;
 use tvanc\backtrace\Environment\Environment;
 use tvanc\backtrace\Error\Handle\DebugHandler;
@@ -20,15 +17,11 @@ use tvanc\backtrace\Render\HtmlExceptionRenderer;
 use tvanc\backtrace\Render\PlaintextExceptionRenderer;
 
 /**
- * Class ErrorInterceptor
- *
- * @package tvanc\backtrace
+ * Provides convenience methods for interacting with this package.
  */
 final class Backtrace
 {
     /**
-     * TODO Refactor this to be pretty.
-     *
      * @param \Throwable $throwable
      * @param bool       $shorten
      *

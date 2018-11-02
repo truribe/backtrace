@@ -1,14 +1,17 @@
 <?php
 /**
- * TODO Add @file block for NoRendererException.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render\Exception;
 
+use tvanc\backtrace\Render\EnvironmentAwareRenderer;
+
 /**
- * TODO Document class NoRendererException
+ * An exception for when an EnvironmentAwareRenderer doesn't have a handler
+ * for the reported environment.
+ *
+ * @see EnvironmentAwareRenderer::selectRenderer()
  */
 class NoRendererException extends \Exception
 {

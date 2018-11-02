@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for CliBacktraceRenderer.php
- *
  * @author Travis Uribe <travis@tvanc.com>
  */
 
@@ -11,7 +9,7 @@ use tvanc\backtrace\Backtrace;
 use tvanc\backtrace\Environment\CliInfoProvider;
 
 /**
- * TODO Document class CliBacktraceRenderer
+ * Renders an exception in a CLI-optimized format.
  */
 class CliExceptionRenderer extends AbstractExceptionRenderer
 {
@@ -25,12 +23,26 @@ class CliExceptionRenderer extends AbstractExceptionRenderer
     private $cliInfo;
 
 
+    /**
+     * CliExceptionRenderer constructor.
+     *
+     * @param CliInfoProvider $cliInfo
+     * Provides information about the console session, which this class uses
+     * to optimize rendering.
+     */
     public function __construct(CliInfoProvider $cliInfo)
     {
         $this->cliInfo = $cliInfo;
     }
 
 
+    /**
+     * Render the exception in CLI-optimized format.
+     *
+     * @param \Throwable $throwable
+     *
+     * @return string
+     */
     public function render(\Throwable $throwable): string
     {
         ob_start();
@@ -92,6 +104,13 @@ MSG;
     }
 
 
+    /**
+     * Render an indivual backtrace stage in CLI-optimized format.
+     *
+     * @param array $stage
+     *
+     * @return string
+     */
     public function renderStage(array $stage): string
     {
         if (isset($stage['file'])) {

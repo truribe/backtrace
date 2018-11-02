@@ -7,17 +7,27 @@ namespace tvanc\backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
+use tvanc\backtrace\Render\HtmlExceptionRenderer;
 use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
- * Tests for any exception-renderer implementation. Not really so much the
- * EnvironmentAwareRendererer though.
+ * Tests any basic exception-renderer implementation. We care about the
+ * same details being in the output no matter the format so really the same
+ * tests can work for almost any renderer.
  *
  * @see ExceptionRendererInterface
+ * @see HtmlExceptionRendererTest
+ * @see CliExceptionRendererTest
  */
 abstract class AbstractExceptionRendererTest extends TestCase
     implements ExceptionRendererTestInterface
 {
+    /**
+     * Test the render output. How do you test render output? You check that
+     * the things you care about are somewhere in the output.
+     *
+     * @throws \ReflectionException
+     */
     public function testRender()
     {
         $testMessage = \uniqid('boogiewoogie-test-blarp');
@@ -53,6 +63,8 @@ abstract class AbstractExceptionRendererTest extends TestCase
 
 
     /**
+     * Test that the renderStage() method outputs all the right info.
+     *
      * @see \debug_backtrace()
      * @see http://php.net/manual/en/function.debug-backtrace.php
      */
