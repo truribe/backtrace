@@ -82,7 +82,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     public function renderStage(array $stage): string
     {
         return $this->loadTemplate($this->stageTemplate, [
-            'stage' => $stage,
+            'stage'  => $stage,
             'radius' => 3,
         ]);
     }

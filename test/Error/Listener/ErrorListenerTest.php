@@ -6,9 +6,9 @@
 namespace tvanc\backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
 use tvanc\backtrace\Error\Listener\ErrorListener;
-use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Tests ErrorListener
@@ -19,16 +19,16 @@ class ErrorListenerTest extends TestCase
 {
     /**
      * Verify listener throws a special exception if it hears an exception and
-     * has no associated handlers.
+     * has no associated responders.
      *
-     * @throws UnhandledExceptionException
+     * @throws NoResponderException
      */
     public function testUnhandledException()
     {
-        // Create listener without handlers
+        // Create listener without responders
         $listener = new ErrorListener([], false);
 
-        $this->expectException(UnhandledExceptionException::class);
+        $this->expectException(NoResponderException::class);
 
         $listener->catchThrowable(new \Exception(
             'Thrown an Exception; landed an UnhandledExceptionException'
@@ -47,9 +47,9 @@ class ErrorListenerTest extends TestCase
      */
     public function testOverrideOff()
     {
-        // Create listener with override enabled and noop handler
+        // Create listener with override enabled and noop responder
         $listener = new ErrorListener([
-            $this->createMock(ErrorHandlerInterface::class)
+            $this->createMock(ErrorResponderInterface::class)
         ], false);
 
         // Register the error handler
@@ -73,9 +73,9 @@ class ErrorListenerTest extends TestCase
      */
     public function testOverrideOn()
     {
-        // Create listener with override enabled and noop handler
+        // Create listener with override enabled and noop responder
         $listener = new ErrorListener([
-            $this->createMock(ErrorHandlerInterface::class)
+            $this->createMock(ErrorResponderInterface::class)
         ], true);
 
         // Register the error handler

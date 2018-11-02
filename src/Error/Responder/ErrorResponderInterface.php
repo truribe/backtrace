@@ -3,16 +3,16 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handle;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
- * Interface for handlers of errors heard by a listener.
+ * Interface for responders to errors heard by a listener.
  *
  * @see ErrorListenerInterface
  */
-interface ErrorHandlerInterface
+interface ErrorResponderInterface
 {
     /**
      * When an error/exception gets thrown, and a listener is registered to

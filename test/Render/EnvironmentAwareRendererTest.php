@@ -3,7 +3,7 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Handle;
+namespace tvanc\backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ class EnvironmentAwareRendererTest extends TestCase
 
 
     /**
-     * Verify handler is as aware as it says it is. =O
+     * Verify responder is as aware as it says it is. =O
      */
     public function testEnvironmentalAwareness()
     {
@@ -29,16 +29,16 @@ class EnvironmentAwareRendererTest extends TestCase
         $env = new TestEnvironment(false, false);
 
         $defaultRenderer = new TestRenderer();
-        $cliRenderer = new TestRenderer();
-        $ajaxRenderer = new TestRenderer();
-        $awareRenderer = new EnvironmentAwareRenderer(
+        $cliRenderer     = new TestRenderer();
+        $ajaxRenderer    = new TestRenderer();
+        $awareRenderer   = new EnvironmentAwareRenderer(
             $env,
             $cliRenderer,
             $ajaxRenderer,
             $defaultRenderer
         );
 
-        // Trigger default handler
+        // Trigger default responder
         $awareRenderer->render(new \Exception(''));
 
         $this->assertTrue($defaultRenderer->isRendered());
@@ -47,7 +47,7 @@ class EnvironmentAwareRendererTest extends TestCase
 
         $defaultRenderer->setRendered(false);
 
-        // // Trigger CLI handler
+        // Trigger CLI renderer
         $env->setIsCli(true);
         $awareRenderer->render(new \Exception(''));
 
@@ -57,7 +57,7 @@ class EnvironmentAwareRendererTest extends TestCase
 
         $cliRenderer->setRendered(false);
 
-        // // Trigger AJAX handler
+        // // Trigger AJAX renderer
         $env->setIsCli(false);
         $env->setIsAjaxRequest(true);
         $awareRenderer->render(new \Exception(''));

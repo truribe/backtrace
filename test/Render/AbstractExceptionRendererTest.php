@@ -7,7 +7,6 @@ namespace tvanc\backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
-use tvanc\backtrace\Render\HtmlExceptionRenderer;
 use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
@@ -70,7 +69,7 @@ abstract class AbstractExceptionRendererTest extends TestCase
      */
     public function testRenderStage()
     {
-        $renderer  = $this->getRenderer();
+        $renderer = $this->getRenderer();
 
         foreach (\debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS) as $stage) {
             $render = $renderer->renderStage($stage);

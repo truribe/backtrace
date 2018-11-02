@@ -9,8 +9,8 @@ namespace tvanc\backtrace;
 
 use tvanc\backtrace\Environment\CliInfoProvider;
 use tvanc\backtrace\Environment\Environment;
-use tvanc\backtrace\Error\Handle\DebugHandler;
 use tvanc\backtrace\Error\Listener\ErrorListener;
+use tvanc\backtrace\Error\Responder\DebugResponder;
 use tvanc\backtrace\Render\CliExceptionRenderer;
 use tvanc\backtrace\Render\EnvironmentAwareRenderer;
 use tvanc\backtrace\Render\HtmlExceptionRenderer;
@@ -23,7 +23,7 @@ final class Backtrace
 {
     public static function createListener()
     {
-        $handler = new DebugHandler(new EnvironmentAwareRenderer(
+        $responder = new DebugResponder(new EnvironmentAwareRenderer(
             new Environment(),
             new CliExceptionRenderer(new CliInfoProvider()),
             new PlaintextExceptionRenderer(),
@@ -35,6 +35,6 @@ final class Backtrace
             )
         ));
 
-        return new ErrorListener([$handler], true);
+        return new ErrorListener([$responder], true);
     }
 }

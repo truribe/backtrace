@@ -53,11 +53,10 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
         ExceptionRendererInterface $cliRenderer,
         ExceptionRendererInterface $ajaxRenderer,
         ExceptionRendererInterface $defaultRenderer
-    )
-    {
-        $this->environment = $environment;
-        $this->cliRenderer = $cliRenderer;
-        $this->ajaxRenderer = $ajaxRenderer;
+    ) {
+        $this->environment     = $environment;
+        $this->cliRenderer     = $cliRenderer;
+        $this->ajaxRenderer    = $ajaxRenderer;
         $this->defaultRenderer = $defaultRenderer;
     }
 
@@ -94,7 +93,7 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
      * @return ExceptionRendererInterface
      * @throws NoRendererException
      */
-    private function selectRenderer (
+    private function selectRenderer(
         \Throwable $throwable = null
     ): ExceptionRendererInterface {
         if ($this->environment->isCli() && $this->cliRenderer) {
@@ -115,8 +114,7 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
                 $throwable->getCode(),
                 $throwable
             );
-        }
-        else {
+        } else {
             throw new NoRendererException("No renderer is configured");
         }
     }

@@ -21,7 +21,7 @@ final class BacktraceTest extends TestCase
         $this->assertInstanceOf(ErrorListenerInterface::class, $listener);
 
         $this->assertNotEmpty(
-            $listener->getHandlers(), 'Has at least one handler'
+            $listener->getResponders(), 'Has at least one responder'
         );
     }
 }

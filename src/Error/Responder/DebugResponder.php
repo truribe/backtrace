@@ -3,15 +3,15 @@
  * @author Travis Uribe <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Handle;
+namespace tvanc\backtrace\Error\Responder;
 
 use tvanc\backtrace\Render\ExceptionRendererInterface;
 
 /**
- * A handler to aid in debugging errors by passing the errors to a renderer
+ * A responder to aid in debugging errors by passing the errors to a renderer
  * and echoing its output.
  */
-class DebugHandler implements ErrorHandlerInterface
+class DebugResponder implements ErrorResponderInterface
 {
     /**
      * @var ExceptionRendererInterface

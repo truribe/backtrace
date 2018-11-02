@@ -20,7 +20,7 @@ class TestEnvironment implements EnvironmentInterface
 
     public function __construct(bool $isCli, bool $isAjaxRequest)
     {
-        $this->isCli = $isCli;
+        $this->isCli         = $isCli;
         $this->isAjaxRequest = $isAjaxRequest;
     }
 

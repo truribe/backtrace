@@ -5,9 +5,9 @@
 
 namespace tvanc\backtrace\Error\Listener;
 
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
 use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
-use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * A utility class that attempts to make dealing with errors as easy as
@@ -27,9 +27,9 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @var ErrorHandlerInterface[] Error handlers.
+     * @var ErrorResponderInterface[] Error responders.
      */
-    private $handlers;
+    private $responders;
 
     /**
      * @var int
@@ -38,12 +38,12 @@ class ErrorListener implements ErrorListenerInterface
 
 
     public function __construct(
-        array $handlers = [],
+        array $responders = [],
         bool $override = false,
         int $mode = \E_ALL | \E_STRICT
     ) {
-        $this->handlers = $handlers;
-        $this->override = $override;
+        $this->responders = $responders;
+        $this->override   = $override;
 
         if (!\is_int($mode) && !\is_null($mode)) {
             throw new \InvalidArgumentException('Argument $mode has to be integer or null!');
@@ -59,6 +59,7 @@ class ErrorListener implements ErrorListenerInterface
         if ($types & static::TYPE_ERROR) {
             $this->listenForErrors();
         }
+
         // @codeCoverageIgnoreStart
         if ($types & static::TYPE_EXCEPTION) {
             $this->listenForExceptions();
@@ -68,6 +69,7 @@ class ErrorListener implements ErrorListenerInterface
         }
 
         // @codeCoverageIgnoreEnd
+
         return $this;
     }
 
@@ -85,8 +87,6 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function listenForExceptions(): ErrorListenerInterface
     {
-        // Set bogus handler so we we can restore later and be sure $result
-        // won't be null unless there was an error.
         \set_exception_handler(
             [$this, 'catchThrowable']
         );
@@ -111,23 +111,23 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
-    public function addHandler(ErrorHandlerInterface $handler): ErrorListenerInterface
+    public function addResponder(ErrorResponderInterface $responder): ErrorListenerInterface
     {
-        $this->handlers[] = $handler;
+        $this->responders[] = $responder;
 
         return $this;
     }
 
 
-    public function getHandlers(): array
+    public function getResponders(): array
     {
-        return $this->handlers;
+        return $this->responders;
     }
 
 
-    public function setHandlers(array $handlers): ErrorListenerInterface
+    public function setResponders(array $responders): ErrorListenerInterface
     {
-        $this->setHandlers($handlers);
+        $this->setResponders($responders);
 
         return $this;
     }
@@ -141,7 +141,7 @@ class ErrorListener implements ErrorListenerInterface
      *
      * @return bool
      *
-     * @throws UnhandledExceptionException
+     * @throws NoResponderException
      */
     public function handleError($severity, $message, $fileName, $lineNumber)
     {
@@ -156,21 +156,21 @@ class ErrorListener implements ErrorListenerInterface
     /**
      * @param \Throwable $throwable
      *
-     * @throws UnhandledExceptionException
-     * If no handlers exist to handle the exception.
+     * @throws NoResponderException
+     * If no responders exist to handle the exception.
      */
     public function catchThrowable(\Throwable $throwable)
     {
-        if ($throwable instanceof UnhandledExceptionException) {
+        if ($throwable instanceof NoResponderException) {
             exit($throwable->__toString());
         }
 
-        if (!$this->handlers) {
-            throw new UnhandledExceptionException($throwable);
+        if (!$this->responders) {
+            throw new NoResponderException($throwable);
         }
 
-        foreach ($this->handlers as $handler) {
-            $handler->catchThrowable($throwable);
+        foreach ($this->responders as $responder) {
+            $responder->catchThrowable($throwable);
         }
     }
 
@@ -179,7 +179,7 @@ class ErrorListener implements ErrorListenerInterface
      * @param array $error
      *
      * @return mixed
-     * @throws UnhandledExceptionException
+     * @throws NoResponderException
      */
     public function handleShutdown()
     {

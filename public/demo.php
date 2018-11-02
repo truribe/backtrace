@@ -1,6 +1,6 @@
 <?php
 /**
- * @file Demonstrate simple error handler usage and utility.
+ * @file Demonstrate simple error responder usage and utility.
  * @author Travis Uribe <travis@tvanc.com>
  */
 

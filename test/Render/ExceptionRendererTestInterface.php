@@ -35,6 +35,7 @@ interface ExceptionRendererTestInterface
 
     /**
      * Get the renderer implementation for this suite of tests.
+     *
      * @return ExceptionRendererInterface
      */
     public function getRenderer(): ExceptionRendererInterface;

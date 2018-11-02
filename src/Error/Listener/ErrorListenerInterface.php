@@ -6,48 +6,48 @@
 namespace tvanc\backtrace\Error\Listener;
 
 
-use tvanc\backtrace\Error\Handle\ErrorHandlerInterface;
+use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
- * Defines a protocol for classes that delegate errors to one or more handlers.
+ * Defines a protocol for classes that delegate errors to one or more responders.
  */
-interface ErrorListenerInterface extends ErrorHandlerInterface
+interface ErrorListenerInterface extends ErrorResponderInterface
 {
-    const TYPE_ERROR       = 1; // 0b0001
-    const TYPE_EXCEPTION   = 2; // 0b0010
+    const TYPE_ERROR = 1; // 0b0001
+    const TYPE_EXCEPTION = 2; // 0b0010
     const TYPE_FATAL_ERROR = 4; // 0b0100
-    const TYPE_ALL         = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_FATAL_ERROR; // 0b0111
+    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_FATAL_ERROR; // 0b0111
 
 
     /**
-     * Set all handlers at once, overwriting ALL that may have been previously
+     * Set all responders at once, overwriting ALL that may have been previously
      * set.
      *
-     * @param ErrorHandlerInterface[] $handlers
-     * An array of error handlers.
+     * @param ErrorResponderInterface[] $responders
+     * An array of error responders.
      *
      * @return $this
      */
-    public function setHandlers(array $handlers): self;
+    public function setResponders(array $responders): self;
 
 
     /**
-     * Add a single error handler, without displacing or overwriting any
-     * previously set handlers.
+     * Add a single error responder, without displacing or overwriting any
+     * previously set responders.
      *
-     * @param ErrorHandlerInterface $handler
+     * @param ErrorResponderInterface $responder
      *
      * @return $this
      */
-    public function addHandler(ErrorHandlerInterface $handler): self;
+    public function addResponder(ErrorResponderInterface $responder): self;
 
 
     /**
-     * Get all handlers previously registered to this listener.
+     * Get all responders previously registered to this listener.
      *
      * @return array
      */
-    public function getHandlers(): array;
+    public function getResponders(): array;
 
 
     /**
@@ -60,10 +60,12 @@ interface ErrorListenerInterface extends ErrorHandlerInterface
      * - ErrorListenerInterface::TYPE_FATAL_ERROR
      * Additionally, you can simply provide ErrorListenerInterface::TYPE_ALL,
      * which, as you should expect, is a shortcut for the following:
-     * ErrorListenerInterface::TYPE_ERROR | ErrorListenerInterface::TYPE_EXCEPTION | ErrorListenerInterface::TYPE_FATAL_ERROR
+     * ErrorListenerInterface::TYPE_ERROR | ErrorListenerInterface::TYPE_EXCEPTION |
+     *     ErrorListenerInterface::TYPE_FATAL_ERROR
+     *
      * @return $this
      */
-    public function listen ($types = ErrorListenerInterface::TYPE_ALL): self;
+    public function listen($types = ErrorListenerInterface::TYPE_ALL): self;
 
 
     /**
@@ -87,7 +89,7 @@ interface ErrorListenerInterface extends ErrorHandlerInterface
 
 
     /**
-     * Register this listener as a shutdown handler.
+     * Register this listener as a shutdown responder.
      *
      * @see \register_shutdown_function()
      *
