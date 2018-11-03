@@ -37,6 +37,13 @@ class ErrorListener implements ErrorListenerInterface
      */
     private $mode;
 
+    /**
+     * @var bool
+     * Whether to halt execution immediately after detecting an error
+     * or exception.
+     */
+    private $exitAfterTrigger;
+
 
     public function __construct(
         array $responders = [],
@@ -88,9 +95,7 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function listenForExceptions(): ErrorListenerInterface
     {
-        \set_exception_handler(
-            [$this, 'catchThrowable']
-        );
+        \set_exception_handler([$this, 'catchThrowable']);
 
         return $this;
     }
@@ -193,6 +198,12 @@ class ErrorListener implements ErrorListenerInterface
         foreach ($this->responders as $responder) {
             $responder->catchThrowable($throwable);
         }
+
+        // @codeCoverageIgnoreStart
+        if ($this->exitAfterTrigger) {
+            exit(1);
+        }
+        // @codeCoverageIgnoreEnd
     }
 
 
