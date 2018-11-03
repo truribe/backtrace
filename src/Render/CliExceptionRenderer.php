@@ -112,23 +112,10 @@ MSG;
      */
     public function renderStage(array $stage): string
     {
-        if (isset($stage['file'])) {
-            return <<<STAGE_RENDER
+        return <<<STAGE_RENDER
 File:  {$stage['file']}
 Line:  {$stage['line']}
 Calls: {$stage['function']}
 STAGE_RENDER;
-        }
-
-        $ignore = ['object', 'args'];
-        $render = [];
-        foreach ($stage as $key => $value) {
-            if (in_array($key, $ignore)) {
-                continue;
-            }
-            $render[] = str_pad(ucwords($key) . ':', 10, ' ') . $value;
-        }
-
-        return implode(\DIRECTORY_SEPARATOR, $render);
     }
 }
