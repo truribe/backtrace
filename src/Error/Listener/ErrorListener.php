@@ -20,7 +20,10 @@ class ErrorListener implements ErrorListenerInterface
     protected $errorEscalation;
 
     /**
-     * @var bool Whether to override PHP's internal error handler.
+     * @var bool
+     * Whether to override PHP's internal error handler.
+     * False indicates do NOT override: Native error handling WILL resume.
+     * True indicates DO override: Native error handling will NOT resume.
      */
     protected $override;
 
@@ -194,9 +197,6 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @param array $error
-     *
-     * @return mixed
      * @throws NoResponderException
      */
     public function handleShutdown()

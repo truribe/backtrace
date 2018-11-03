@@ -48,7 +48,7 @@ class ErrorListenerTest extends TestCase
      */
     public function testOverrideOff()
     {
-        // Create listener with override enabled and noop responder
+        // Create listener with override DISABLED and noop responder
         $listener = new ErrorListener([
             $this->createMock(ErrorResponderInterface::class)
         ], false);
@@ -56,7 +56,7 @@ class ErrorListenerTest extends TestCase
         // Register the listener as an error handler
         $listener->listenForErrors();
 
-        $message = 'This error should go to native error handler.';
+        $message = 'This error SHOULD go to native error handler.';
 
         $this->expectException(Warning::class);
         $this->expectExceptionMessage($message);
@@ -77,7 +77,7 @@ class ErrorListenerTest extends TestCase
      */
     public function testOverrideOn()
     {
-        // Create listener with override enabled and noop responder
+        // Create listener with override ENABLED and noop responder
         $listener = new ErrorListener([
             $this->createMock(ErrorResponderInterface::class)
         ], true);
