@@ -187,10 +187,6 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function catchThrowable(\Throwable $throwable)
     {
-        if ($throwable instanceof NoResponderException) {
-            exit($throwable->__toString());
-        }
-
         if (!$this->responders) {
             throw new NoResponderException($throwable);
         }
