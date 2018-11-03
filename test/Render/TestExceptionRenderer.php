@@ -5,12 +5,13 @@
 
 namespace tvanc\backtrace\Test\Render;
 
+use tvanc\backtrace\Render\AbstractExceptionRenderer;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A no-op class that satisfies test conditions.
  */
-class TestRenderer implements ExceptionRendererInterface
+class TestExceptionRenderer extends AbstractExceptionRenderer implements ExceptionRendererInterface
 {
     private $rendered = false;
 
@@ -33,9 +34,9 @@ class TestRenderer implements ExceptionRendererInterface
      *
      * @param bool $rendered
      *
-     * @return TestRenderer
+     * @return TestExceptionRenderer
      */
-    public function setRendered(bool $rendered): TestRenderer
+    public function setRendered(bool $rendered): TestExceptionRenderer
     {
         $this->rendered = $rendered;
 

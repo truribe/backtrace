@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Render\EnvironmentAwareRenderer;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
-use tvanc\backtrace\Test\Render\TestRenderer;
+use tvanc\backtrace\Test\Render\TestExceptionRenderer;
 
 /**
  * Test renderer's environmental awareness.
@@ -28,9 +28,9 @@ class EnvironmentAwareRendererTest extends TestCase
         // Create test environment set to non-CLI, non-AJAX.
         $env = new TestEnvironment(false, false);
 
-        $defaultRenderer = new TestRenderer();
-        $cliRenderer     = new TestRenderer();
-        $ajaxRenderer    = new TestRenderer();
+        $defaultRenderer = new TestExceptionRenderer();
+        $cliRenderer     = new TestExceptionRenderer();
+        $ajaxRenderer    = new TestExceptionRenderer();
         $awareRenderer   = new EnvironmentAwareRenderer(
             $env,
             $cliRenderer,
