@@ -5,6 +5,7 @@
 
 namespace tvanc\backtrace\Test\Error\Listener;
 
+use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Error\Listener\ErrorListener;
 use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
@@ -52,11 +53,14 @@ class ErrorListenerTest extends TestCase
             $this->createMock(ErrorResponderInterface::class)
         ], false);
 
-        // Register the error handler
+        // Register the listener as an error handler
         $listener->listenForErrors();
 
         $message = 'This error should go to native error handler.';
-        $this->expectOutputRegex("/Warning: $message/");
+
+        $this->expectException(Warning::class);
+        $this->expectExceptionMessage($message);
+
         trigger_error($message, E_USER_WARNING);
     }
 
@@ -78,7 +82,7 @@ class ErrorListenerTest extends TestCase
             $this->createMock(ErrorResponderInterface::class)
         ], true);
 
-        // Register the error handler
+        // Register the listener as an error handler
         $listener->listenForErrors();
 
         $message = 'This error should NOT go to native error handler.';

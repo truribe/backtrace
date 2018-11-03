@@ -7,7 +7,7 @@ namespace tvanc\backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Error\Responder\DebugResponder;
-use tvanc\backtrace\Test\Render\TestRenderer;
+use tvanc\backtrace\Test\Render\TestExceptionRenderer;
 
 /**
  * Covers DebugResponder
@@ -24,7 +24,7 @@ class DebugResponderTest extends TestCase
      */
     public function testCatchThrowable()
     {
-        $renderer  = new TestRenderer();
+        $renderer  = new TestExceptionRenderer();
         $responder = new DebugResponder($renderer);
 
         $responder->catchThrowable(new \Exception('Testing'));
