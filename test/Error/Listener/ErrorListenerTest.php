@@ -53,7 +53,7 @@ class ErrorListenerTest extends TestCase
             $this->createMock(ErrorResponderInterface::class)
         ], false);
 
-        // Register the error handler
+        // Register the listener as an error handler
         $listener->listenForErrors();
 
         $message = 'This error should go to native error handler.';
@@ -82,7 +82,7 @@ class ErrorListenerTest extends TestCase
             $this->createMock(ErrorResponderInterface::class)
         ], true);
 
-        // Register the error handler
+        // Register the listener as an error handler
         $listener->listenForErrors();
 
         $message = 'This error should NOT go to native error handler.';
