@@ -62,12 +62,7 @@ class ErrorListener implements ErrorListenerInterface
     ) {
         $this->responders = $responders;
         $this->override   = $override;
-
-        if (!\is_int($mode) && !\is_null($mode)) {
-            throw new \InvalidArgumentException('Argument $mode has to be integer or null!');
-        }
-
-        $this->mode = $mode;
+        $this->mode       = $mode;
     }
 
 
