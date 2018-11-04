@@ -72,7 +72,8 @@ class ErrorListener implements ErrorListenerInterface
         if ($types & static::TYPE_EXCEPTION) {
             $this->listenForExceptions();
         }
-        if ($types & static::TYPE_FATAL_ERROR) {
+
+        if ($types & static::TYPE_SHUTDOWN) {
             $this->listenForErrors();
         }
 

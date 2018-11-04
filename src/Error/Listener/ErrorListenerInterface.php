@@ -15,8 +15,8 @@ interface ErrorListenerInterface extends ErrorResponderInterface
 {
     const TYPE_ERROR = 1; // 0b0001
     const TYPE_EXCEPTION = 2; // 0b0010
-    const TYPE_FATAL_ERROR = 4; // 0b0100
-    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_FATAL_ERROR; // 0b0111
+    const TYPE_SHUTDOWN = 4; // 0b0100
+    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_SHUTDOWN; // 0b0111
 
 
     /**
