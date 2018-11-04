@@ -7,6 +7,8 @@ namespace tvanc\backtrace\Environment;
 
 /**
  * Provides information about the environment in which PHP is being run.
+ *
+ * @codeCoverageIgnore
  */
 class Environment implements EnvironmentInterface
 {

@@ -7,6 +7,8 @@ namespace tvanc\backtrace\Environment;
 
 /**
  * Provides info about the current console session.
+ *
+ * @codeCoverageIgnore
  */
 class CliInfoProvider
 {
