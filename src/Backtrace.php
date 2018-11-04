@@ -1,8 +1,8 @@
 <?php
 /**
- * @author Travis Raymond Uribe <turibe@rentecdirect.com>
- * @copyright 2018 Rentec Direct
- * @license Proprietary
+ * @author Travis Van Couvering <travis@tvanc.com>
+ * @copyright 2018 Travis Van Couvering
+ * @license MIT
  */
 
 namespace tvanc\backtrace;
