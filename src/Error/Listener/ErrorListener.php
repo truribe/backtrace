@@ -39,7 +39,13 @@ class ErrorListener implements ErrorListenerInterface
     private $responders;
     /**
      * @var int
-     */
+     * The types of errors to handle. This will be the second parameter to
+     * `\set_error_handler()`. And to determine whether to trigger responders
+     * if an error occurred before shutdown.
+     *
+     * @see \set_error_handler()
+     * @see ErrorListener::handleShutdown()
+     */ 
     private $mode;
     /**
      * @var bool
