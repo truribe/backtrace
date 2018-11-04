@@ -45,6 +45,16 @@ class ErrorListener implements ErrorListenerInterface
     private $exitAfterTrigger;
 
 
+    private const FATAL_ERRORS = [
+        \E_ERROR,
+        \E_PARSE,
+        \E_CORE_ERROR,
+        \E_CORE_WARNING,
+        \E_COMPILE_ERROR,
+        \E_COMPILE_WARNING,
+    ];
+
+
     public function __construct(
         array $responders = [],
         bool $override = false,
@@ -203,6 +213,8 @@ class ErrorListener implements ErrorListenerInterface
 
     /**
      * @throws NoResponderException
+     *
+     * @codeCoverageIgnore
      */
     public function handleShutdown()
     {
@@ -210,6 +222,7 @@ class ErrorListener implements ErrorListenerInterface
         if (!$error || !($error['type'] & $this->mode)) {
             return;
         }
+
         if ($this->isFatalError($error['type'])) {
             $this->catchThrowable(
                 new ShutdownException($error['message'], 0, $error['type'], $error['file'], $error['line'])
@@ -227,17 +240,7 @@ class ErrorListener implements ErrorListenerInterface
      */
     private function isFatalError($code)
     {
-        // Constant can be an array in PHP >=5.6
-        $fatalErrors = array(
-            \E_ERROR,
-            \E_PARSE,
-            \E_CORE_ERROR,
-            \E_CORE_WARNING,
-            \E_COMPILE_ERROR,
-            \E_COMPILE_WARNING,
-        );
-
-        foreach ($fatalErrors as $fatalCode) {
+        foreach (self::FATAL_ERRORS as $fatalCode) {
             if ($code & $fatalCode) {
                 return true;
             }
