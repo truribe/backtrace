@@ -6,6 +6,7 @@
 namespace tvanc\backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
+use tvanc\backtrace\Render\AbstractExceptionRenderer;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
 use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
@@ -22,8 +23,50 @@ abstract class AbstractExceptionRendererTest extends TestCase
     implements ExceptionRendererTestInterface
 {
     /**
-     * Test the render output. How do you test render output? You check that
-     * the things you care about are somewhere in the output.
+     * Test the static getErrorDisplayType() method
+     *
+     * @see ExceptionRendererInterface::getErrorDisplayType()
+     * @see AbstractExceptionRenderer::getErrorDisplayType()
+     */
+    public function testGetErrorDisplayType()
+    {
+        /** @var ExceptionRendererInterface $class */
+        $class        = get_class($this->getRenderer());
+        $regException = new ExceptionWithUnlikelyStringForName('');
+        $errException = new \ErrorException('', 0, \E_USER_ERROR);
+
+        $regExceptionReflection = new \ReflectionClass($regException);
+        $regExceptionShortName  = $regExceptionReflection->getShortName();
+
+        $this->assertEquals(
+            ExceptionWithUnlikelyStringForName::class,
+            $class::getErrorDisplayType($regException, false),
+            'Name is left "ugly"'
+        );
+
+        $this->assertEquals(
+            $regExceptionShortName,
+            $class::getErrorDisplayType($regException, true),
+            'Name  is made "pretty" by reducing to short name'
+        );
+
+        $this->assertEquals(
+            \ErrorException::class,
+            $class::getErrorDisplayType($errException, false),
+            'Even ErrorException is left "ugly" when specified'
+        );
+
+        $this->assertNotEquals(
+            \ErrorException::class,
+            $class::getErrorDisplayType($errException, true),
+            'For `ErrorException`s, a friendly string is used instead'
+        );
+    }
+
+
+    /**
+     * Test the render output. How do you test output? You test that the
+     * information you care about is in the output.
      *
      * @throws \ReflectionException
      */

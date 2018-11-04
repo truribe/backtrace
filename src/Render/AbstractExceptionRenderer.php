@@ -13,13 +13,15 @@ abstract class AbstractExceptionRenderer implements ExceptionRendererInterface
 {
     /**
      * @param \Throwable $throwable
-     * @param bool       $shorten
+     * @param bool       $pretty
      *
      * @return string
      */
-    public static function getErrorType(\Throwable $throwable, $shorten = true): string
-    {
-        if ($throwable instanceof \ErrorException) {
+    public static function getErrorDisplayType(
+        \Throwable $throwable,
+        bool $pretty = true
+    ): string {
+        if ($pretty && $throwable instanceof \ErrorException) {
             $severity = $throwable->getSeverity();
 
             $typeNameMap = [
@@ -43,14 +45,16 @@ abstract class AbstractExceptionRenderer implements ExceptionRendererInterface
             return $typeNameMap[$severity];
         }
 
-        if ($shorten) {
+        if ($pretty) {
             try {
                 $reflection = new \ReflectionClass($throwable);
 
                 return $reflection->getShortName();
+                // @codeCoverageIgnoreStart
             } catch (\Exception $exception) {
                 // If exception is thrown just return the plain ol' FQCN
             }
+            // @codeCoverageIgnoreEnd
         }
 
         return get_class($throwable);

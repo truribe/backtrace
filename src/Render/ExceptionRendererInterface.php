@@ -11,7 +11,16 @@ namespace tvanc\backtrace\Render;
  */
 interface ExceptionRendererInterface
 {
-    public static function getErrorType(\Throwable $throwable): string;
+    /**
+     * @param \Throwable $throwable
+     * @param bool       $pretty
+     *
+     * @return string
+     */
+    public static function getErrorDisplayType(
+        \Throwable $throwable,
+        bool $pretty = true
+    ): string;
 
 
     public function render(\Throwable $throwable): string;
