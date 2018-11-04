@@ -14,6 +14,7 @@ use tvanc\backtrace\Render\ExceptionRendererInterface;
 class TestExceptionRenderer extends AbstractExceptionRenderer implements ExceptionRendererInterface
 {
     private $rendered = false;
+    private $stageRendered = false;
 
 
     /**
@@ -33,12 +34,39 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
      * pretend it was. Whatever floats your boat.
      *
      * @param bool $rendered
+     * @param bool $stageRendered
      *
      * @return TestExceptionRenderer
      */
-    public function setRendered(bool $rendered): TestExceptionRenderer
-    {
+    public function setRendered(
+        bool $rendered,
+        bool $stageRendered = null
+    ): TestExceptionRenderer {
         $this->rendered = $rendered;
+
+        if (isset($stageRendered)) {
+            $this->stageRendered = $stageRendered;
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Did renderStage() get called?
+     *
+     * @return bool
+     * True if yes, false if no.
+     */
+    public function isStageRendered(): bool
+    {
+        return $this->stageRendered;
+    }
+
+
+    public function setStageRendered(bool $stageRendered): TestExceptionRenderer
+    {
+        $this->stageRendered = $stageRendered;
 
         return $this;
     }
@@ -69,6 +97,8 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
      */
     public function renderStage(array $stage): string
     {
+        $this->stageRendered = true;
+
         return '';
     }
 }

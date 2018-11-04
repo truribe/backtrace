@@ -50,13 +50,46 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
 
     public function __construct(
         EnvironmentInterface $environment,
-        ExceptionRendererInterface $cliRenderer,
-        ExceptionRendererInterface $ajaxRenderer,
-        ExceptionRendererInterface $defaultRenderer
+        ExceptionRendererInterface $cliRenderer = null,
+        ExceptionRendererInterface $ajaxRenderer = null,
+        ExceptionRendererInterface $defaultRenderer = null
     ) {
         $this->environment     = $environment;
         $this->cliRenderer     = $cliRenderer;
         $this->ajaxRenderer    = $ajaxRenderer;
+        $this->defaultRenderer = $defaultRenderer;
+    }
+
+
+    /**
+     * @param ExceptionRendererInterface $cliRenderer
+     *
+     * @codeCoverageIgnore
+     */
+    public function setCliRenderer(ExceptionRendererInterface $cliRenderer): void
+    {
+        $this->cliRenderer = $cliRenderer;
+    }
+
+
+    /**
+     * @param ExceptionRendererInterface $ajaxRenderer
+     *
+     * @codeCoverageIgnore
+     */
+    public function setAjaxRenderer(ExceptionRendererInterface $ajaxRenderer): void
+    {
+        $this->ajaxRenderer = $ajaxRenderer;
+    }
+
+
+    /**
+     * @param ExceptionRendererInterface $defaultRenderer
+     *
+     * @codeCoverageIgnore
+     */
+    public function setDefaultRenderer(ExceptionRendererInterface $defaultRenderer): void
+    {
         $this->defaultRenderer = $defaultRenderer;
     }
 
@@ -70,18 +103,6 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
     public function render(\Throwable $throwable): string
     {
         return $this->selectRenderer($throwable)->render($throwable);
-    }
-
-
-    /**
-     * @param array $stage
-     *
-     * @return string
-     * @throws NoRendererException
-     */
-    public function renderStage(array $stage): string
-    {
-        return $this->selectRenderer()->render($stage);
     }
 
 
@@ -117,5 +138,17 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
         } else {
             throw new NoRendererException("No renderer is configured");
         }
+    }
+
+
+    /**
+     * @param array $stage
+     *
+     * @return string
+     * @throws NoRendererException
+     */
+    public function renderStage(array $stage): string
+    {
+        return $this->selectRenderer()->renderStage($stage);
     }
 }
