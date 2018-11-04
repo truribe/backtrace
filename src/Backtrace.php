@@ -7,7 +7,6 @@
 
 namespace tvanc\backtrace;
 
-use tvanc\backtrace\Environment\CliInfoProvider;
 use tvanc\backtrace\Environment\Environment;
 use tvanc\backtrace\Error\Listener\ErrorListener;
 use tvanc\backtrace\Error\Responder\DebugResponder;
@@ -25,7 +24,7 @@ final class Backtrace
     {
         $responder = new DebugResponder(new EnvironmentAwareRenderer(
             new Environment(),
-            new CliExceptionRenderer(new CliInfoProvider()),
+            new CliExceptionRenderer(),
             new PlaintextExceptionRenderer(),
             new HtmlExceptionRenderer(
                 realpath(__DIR__ . '/../view'),
