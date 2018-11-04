@@ -32,7 +32,10 @@ $reflection = new \ReflectionClass($throwable);
 <body>
 <main class="container">
     <header class="page-header error-header">
-        <h1 class="error-type flex-big"><?= static::getErrorType($throwable, false); ?></h1>
+        <h1 class="error-type flex-big"><?=
+            /** @noinspection PhpUndefinedClassInspection */
+            static::getErrorDisplayType($throwable, false);
+            ?></h1>
     </header>
 
     <p class="err-msg lead"><?= $throwable->getMessage(); ?></p>
