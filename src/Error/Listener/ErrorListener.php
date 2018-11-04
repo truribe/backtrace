@@ -14,37 +14,6 @@ use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
  */
 class ErrorListener implements ErrorListenerInterface
 {
-    /**
-     * @var bool Whether to escalate errors to exceptions.
-     */
-    protected $errorEscalation;
-
-    /**
-     * @var bool
-     * Whether to override PHP's internal error handler.
-     * False indicates do NOT override: Native error handling WILL resume.
-     * True indicates DO override: Native error handling will NOT resume.
-     */
-    protected $override;
-
-    /**
-     * @var ErrorResponderInterface[] Error responders.
-     */
-    private $responders;
-
-    /**
-     * @var int
-     */
-    private $mode;
-
-    /**
-     * @var bool
-     * Whether to halt execution immediately after detecting an error
-     * or exception.
-     */
-    private $exitAfterTrigger;
-
-
     private const FATAL_ERRORS = [
         \E_ERROR,
         \E_PARSE,
@@ -53,6 +22,31 @@ class ErrorListener implements ErrorListenerInterface
         \E_COMPILE_ERROR,
         \E_COMPILE_WARNING,
     ];
+    /**
+     * @var bool Whether to escalate errors to exceptions.
+     */
+    protected $errorEscalation;
+    /**
+     * @var bool
+     * Whether to override PHP's internal error handler.
+     * False indicates do NOT override: Native error handling WILL resume.
+     * True indicates DO override: Native error handling will NOT resume.
+     */
+    protected $override;
+    /**
+     * @var ErrorResponderInterface[] Error responders.
+     */
+    private $responders;
+    /**
+     * @var int
+     */
+    private $mode;
+    /**
+     * @var bool
+     * Whether to halt execution immediately after detecting an error
+     * or exception.
+     */
+    private $exitAfterTrigger;
 
 
     public function __construct(
