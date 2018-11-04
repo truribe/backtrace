@@ -59,9 +59,10 @@ interface ErrorListenerInterface extends ErrorResponderInterface
      * - ErrorListenerInterface::TYPE_EXCEPTION
      * - ErrorListenerInterface::TYPE_FATAL_ERROR
      * Additionally, you can simply provide ErrorListenerInterface::TYPE_ALL,
-     * which, as you should expect, is a shortcut for the following:
-     * ErrorListenerInterface::TYPE_ERROR | ErrorListenerInterface::TYPE_EXCEPTION |
-     *     ErrorListenerInterface::TYPE_FATAL_ERROR
+     * which is a shortcut for the following:
+     * ErrorListenerInterface::TYPE_ERROR
+     * | ErrorListenerInterface::TYPE_EXCEPTION
+     * | ErrorListenerInterface::TYPE_FATAL_ERROR
      *
      * @return $this
      */
