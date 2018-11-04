@@ -68,7 +68,6 @@ class ErrorListener implements ErrorListenerInterface
             $this->listenForErrors();
         }
 
-        // @codeCoverageIgnoreStart
         if ($types & static::TYPE_EXCEPTION) {
             $this->listenForExceptions();
         }
@@ -76,8 +75,6 @@ class ErrorListener implements ErrorListenerInterface
         if ($types & static::TYPE_SHUTDOWN) {
             $this->listenForShutdown();
         }
-
-        // @codeCoverageIgnoreEnd
 
         return $this;
     }
