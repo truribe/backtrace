@@ -126,6 +126,13 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @param bool $override
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function setOverride(bool $override): ErrorListenerInterface
     {
         $this->override = $override;
@@ -134,6 +141,13 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @param ErrorResponderInterface $responder
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function addResponder(ErrorResponderInterface $responder): ErrorListenerInterface
     {
         $this->responders[] = $responder;
@@ -142,12 +156,24 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @return array
+     *
+     * @codeCoverageIgnore
+     */
     public function getResponders(): array
     {
         return $this->responders;
     }
 
 
+    /**
+     * @param array $responders
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function setResponders(array $responders): ErrorListenerInterface
     {
         $this->setResponders($responders);
