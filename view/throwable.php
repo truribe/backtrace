@@ -1,7 +1,7 @@
 <?php
 /**
  * @file Template for a full Throwable.
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  *
  * @var HtmlExceptionRenderer $this
  * This template is required from within an object context.

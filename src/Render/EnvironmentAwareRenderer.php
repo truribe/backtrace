@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
 namespace tvanc\backtrace\Render;

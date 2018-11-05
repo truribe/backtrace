@@ -1,7 +1,7 @@
 <?php
 /**
  * @file Provide an alternate file with more code for a pretty example.
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
 

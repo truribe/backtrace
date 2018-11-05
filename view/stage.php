@@ -1,7 +1,7 @@
 <?php
 /**
  * @file Template for individual stages of a backtrace.
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  *
  * @var int $radius
  * The number of lines to show before and after the line indicated in $stage

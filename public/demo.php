@@ -1,7 +1,7 @@
 <?php
 /**
  * @file Demonstrate simple error responder usage and utility.
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
 use tvanc\backtrace\Backtrace;
