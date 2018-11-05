@@ -18,6 +18,15 @@ class TestResponder implements ErrorResponderInterface
 
 
     /**
+     * @return bool
+     */
+    public function caughtThrowable(): bool
+    {
+        return $this->caughtThrowable;
+    }
+
+
+    /**
      * When an error/exception gets thrown, and a listener is registered to
      * hear it, it's gonna land in an implementation of this method.
      *
@@ -25,19 +34,6 @@ class TestResponder implements ErrorResponderInterface
      */
     public function catchThrowable(\Throwable $throwable)
     {
-        // TODO: Implement catchThrowable() method.
-    }
-
-
-    /**
-     * Go back to the way things were. Pretend nothing ever happened.
-     *
-     * @return $this
-     */
-    public function reset()
-    {
-        $this->caughtThrowable = false;
-
-        return $this;
+        $this->caughtThrowable = true;
     }
 }

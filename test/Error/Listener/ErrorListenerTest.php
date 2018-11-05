@@ -18,25 +18,23 @@ use tvanc\backtrace\Test\Error\Responder\TestResponder;
 class ErrorListenerTest extends TestCase
 {
     /**
-     *
+     * Test that the listener actually hears and delegates to the responder
      */
-    public function testListeningTypes()
+    public function testHearing()
     {
         $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
         $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
-        $shutdownListener  = $this->getListener(ErrorListener::TYPE_SHUTDOWN);
 
-        $this->assertTrue($errorListener->isListeningForErrors());
-        $this->assertFalse($errorListener->isListeningForExceptions());
-        $this->assertFalse($errorListener->isListeningForShutdown());
+        /** @var TestResponder $errorResponder */
+        /** @var TestResponder $exceptionResponder */
+        $errorResponder     = reset($errorListener->getResponders());
+        $exceptionResponder = reset($exceptionListener->getResponders());
 
-        $this->assertFalse($exceptionListener->isListeningForErrors());
-        $this->assertTrue($exceptionListener->isListeningForExceptions());
-        $this->assertFalse($exceptionListener->isListeningForShutdown());
+        $errorListener->handleError(\E_USER_ERROR, 'whatevs', 'any', 1);
+        $exceptionListener->catchThrowable(new \ErrorException());
 
-        $this->assertFalse($shutdownListener->isListeningForErrors());
-        $this->assertFalse($shutdownListener->isListeningForExceptions());
-        $this->assertTrue($shutdownListener->isListeningForShutdown());
+        $this->assertTrue($errorResponder->caughtThrowable());
+        $this->assertTrue($exceptionResponder->caughtThrowable());
     }
 
 
@@ -55,6 +53,30 @@ class ErrorListenerTest extends TestCase
         $listener->listen($type);
 
         return $listener;
+    }
+
+
+    /**
+     * Test that the listener starts listening for the right things
+     * according to the value passed to listen()
+     */
+    public function testListeningTypes()
+    {
+        $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
+        $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
+        $shutdownListener  = $this->getListener(ErrorListener::TYPE_SHUTDOWN);
+
+        $this->assertTrue($errorListener->isListeningForErrors());
+        $this->assertFalse($errorListener->isListeningForExceptions());
+        $this->assertFalse($errorListener->isListeningForShutdown());
+
+        $this->assertFalse($exceptionListener->isListeningForErrors());
+        $this->assertTrue($exceptionListener->isListeningForExceptions());
+        $this->assertFalse($exceptionListener->isListeningForShutdown());
+
+        $this->assertFalse($shutdownListener->isListeningForErrors());
+        $this->assertFalse($shutdownListener->isListeningForExceptions());
+        $this->assertTrue($shutdownListener->isListeningForShutdown());
     }
 
 
