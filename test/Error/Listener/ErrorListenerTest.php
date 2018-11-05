@@ -20,7 +20,7 @@ class ErrorListenerTest extends TestCase
     /**
      * Test that the listener actually hears and delegates to the responder
      */
-    public function testHearing()
+    public function testDelegation()
     {
         $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
         $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
