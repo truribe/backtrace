@@ -45,7 +45,7 @@ class ErrorListener implements ErrorListenerInterface
      *
      * @see \set_error_handler()
      * @see ErrorListener::handleShutdown()
-     */ 
+     */
     private $mode;
     /**
      * @var bool
@@ -163,7 +163,7 @@ class ErrorListener implements ErrorListenerInterface
 
 
     /**
-     * @return array
+     * @return ErrorResponderInterface[]
      *
      * @codeCoverageIgnore
      */
