@@ -40,12 +40,15 @@ $reflection = new \ReflectionClass($throwable);
 
     <p class="err-msg lead"><?= $throwable->getMessage(); ?></p>
 
-    <?= $this->renderStage([
+    <?php
+    // Big preview for the source
+    echo $this->renderSourcePreview([
         'file' => $throwable->getFile(),
         'line' => $throwable->getLine()
-    ]); ?>
+    ]);
 
-    <?php if ($trace) { ?>
+    if ($trace) {
+        ?>
         <section class="err-backtrace">
             <header class="backtrace__header">
                 <h3 class="backtrace__legend flex-big">Backtrace</h3>
@@ -53,12 +56,14 @@ $reflection = new \ReflectionClass($throwable);
             <ol class="backtrace__stages">
                 <?php foreach ($trace as $stage) { ?>
                     <li class="backtrace__stage">
-                        <?= $this->renderStage($stage); ?>
+                        <?= $this->renderFramePreview($stage); ?>
                     </li>
                 <?php } ?>
             </ol>
         </section>
-    <?php } ?>
+        <?php
+    }
+    ?>
 </main>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
