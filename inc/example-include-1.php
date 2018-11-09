@@ -11,13 +11,3 @@ function foo()
 {
     bar();
 }
-
-/**
- * Call a function that throws an exception so we can get a backtrace.
- *
- * @throws \Exception
- */
-function bar()
-{
-    baz();
-}
