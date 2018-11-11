@@ -3,11 +3,11 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Error\Responder;
+namespace TVanC\Backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Error\Responder\DebugResponder;
-use tvanc\Backtrace\Test\Render\Mock\TestExceptionRenderer;
+use TVanC\Backtrace\Error\Responder\DebugResponder;
+use TVanC\Backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Covers DebugResponder

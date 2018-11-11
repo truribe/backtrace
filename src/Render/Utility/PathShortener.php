@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Render\Utility;
+namespace TVanC\Backtrace\Render\Utility;
 
-use tvanc\Backtrace\Render\Utility\Exception\InvalidDirectorySeparatorException;
+use TVanC\Backtrace\Render\Utility\Exception\InvalidDirectorySeparatorException;
 
 /**
  * A class for shortening paths for display.

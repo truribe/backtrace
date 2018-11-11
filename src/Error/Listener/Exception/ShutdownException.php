@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Error\Listener\Exception;
+namespace TVanC\Backtrace\Error\Listener\Exception;
 
-use tvanc\Backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * An exception just for when a listener "hears" a shutdown "event".

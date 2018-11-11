@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
-use tvanc\Backtrace\Render\CliExceptionRenderer;
-use tvanc\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\CliExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A test case to verify that exceptions rendered for CLI output are rendered

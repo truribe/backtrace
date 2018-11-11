@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Error\Listener;
+namespace TVanC\Backtrace\Test\Error\Listener;
 
-use tvanc\Backtrace\Error\Listener\ErrorListener;
-use tvanc\Backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * A test error listener that

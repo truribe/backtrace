@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Error\Listener;
+namespace TVanC\Backtrace\Error\Listener;
 
 
-use tvanc\Backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Defines a protocol for classes that delegate errors to one or more responders.

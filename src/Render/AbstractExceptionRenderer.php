@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Render;
+namespace TVanC\Backtrace\Render;
 
 /**
  * Provide a base that defines methods that can also be used by concrete

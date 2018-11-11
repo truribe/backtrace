@@ -3,11 +3,11 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Render;
+namespace TVanC\Backtrace\Render;
 
-use tvanc\Backtrace\Environment\Environment;
-use tvanc\Backtrace\Environment\EnvironmentInterface;
-use tvanc\Backtrace\Render\Exception\NoRendererException;
+use TVanC\Backtrace\Environment\Environment;
+use TVanC\Backtrace\Environment\EnvironmentInterface;
+use TVanC\Backtrace\Render\Exception\NoRendererException;
 
 /**
  * Renders exceptions in the optimum format for the current environment.

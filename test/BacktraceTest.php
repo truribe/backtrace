@@ -3,11 +3,11 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test;
+namespace TVanC\Backtrace\Test;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Backtrace;
-use tvanc\Backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Backtrace;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * Test of the Backtrace class, which doesn't actually do a whole lot.

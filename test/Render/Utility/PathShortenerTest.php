@@ -3,11 +3,11 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Render\Utility;
+namespace TVanC\Backtrace\Test\Render\Utility;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Render\Utility\Exception\InvalidDirectorySeparatorException;
-use tvanc\Backtrace\Render\Utility\PathShortener;
+use TVanC\Backtrace\Render\Utility\Exception\InvalidDirectorySeparatorException;
+use TVanC\Backtrace\Render\Utility\PathShortener;
 
 /**
  * A test case for the {@link PathShortener} class.

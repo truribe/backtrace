@@ -4,7 +4,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-use tvanc\Backtrace\Backtrace;
+use TVanC\Backtrace\Backtrace;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../inc/example-include-1.php';

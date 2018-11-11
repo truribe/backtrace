@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Error\Listener\Exception;
+namespace TVanC\Backtrace\Error\Listener\Exception;
 
 /**
  * An exception for when a listener hears an error or exception, but isn't

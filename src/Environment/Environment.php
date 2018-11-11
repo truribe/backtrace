@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Environment;
+namespace TVanC\Backtrace\Environment;
 
 /**
  * Provides information about the environment in which PHP is being run.

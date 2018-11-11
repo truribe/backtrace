@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
-use tvanc\Backtrace\Render\ExceptionRendererInterface;
-use tvanc\Backtrace\Render\HtmlExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\HtmlExceptionRenderer;
 
 /**
  * Test for HtmlExceptionRenderer. Tests are actually defined in the parent

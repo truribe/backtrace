@@ -3,12 +3,12 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Render\AbstractExceptionRenderer;
-use tvanc\Backtrace\Render\ExceptionRendererInterface;
-use tvanc\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
+use TVanC\Backtrace\Render\AbstractExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
  * Tests any basic exception-renderer implementation. We care about the
@@ -35,17 +35,6 @@ abstract class AbstractExceptionRendererTest extends TestCase
         require_once realpath($path);
     }
 
-
-    private function getException (string $message) {
-        try {
-            \tvanc\Backtrace\Fixture\foo($message);
-        }
-        catch (ExceptionWithUnlikelyStringForName $ex) {
-            return $ex;
-        }
-
-        throw new \Exception('Excepted exception not caught.');
-    }
 
     /**
      * Test the static getErrorDisplayType() method
@@ -152,5 +141,17 @@ abstract class AbstractExceptionRendererTest extends TestCase
                 'Render of each frame contains the line number'
             );
         }
+    }
+
+
+    private function getException(string $message)
+    {
+        try {
+            \TVanC\Backtrace\Fixture\foo($message);
+        } catch (ExceptionWithUnlikelyStringForName $ex) {
+            return $ex;
+        }
+
+        throw new \Exception('Excepted exception not caught.');
     }
 }

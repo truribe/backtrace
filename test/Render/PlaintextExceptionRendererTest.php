@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
-use tvanc\Backtrace\Render\ExceptionRendererInterface;
-use tvanc\Backtrace\Render\PlaintextExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\PlaintextExceptionRenderer;
 
 /**
  * Test formatting of plaintext exception rendering

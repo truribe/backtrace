@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Environment;
+namespace TVanC\Backtrace\Test\Environment;
 
-use tvanc\Backtrace\Environment\EnvironmentInterface;
+use TVanC\Backtrace\Environment\EnvironmentInterface;
 
 /**
  * A mock of EnvironmentInterface for when you need your test to "believe"

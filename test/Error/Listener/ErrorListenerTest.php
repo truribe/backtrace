@@ -3,12 +3,12 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Error\Listener;
+namespace TVanC\Backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Error\Listener\ErrorListener;
-use tvanc\Backtrace\Error\Listener\Exception\NoResponderException;
-use tvanc\Backtrace\Test\Error\Responder\TestResponder;
+use TVanC\Backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Error\Listener\Exception\NoResponderException;
+use TVanC\Backtrace\Test\Error\Responder\TestResponder;
 
 /**
  * Tests ErrorListener

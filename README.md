@@ -25,7 +25,7 @@ format automatically selected according to the environment in which the error
 or exception is thrown.
 
 ```php
-use tvanc\Backtrace\Backtrace;
+use TVanC\Backtrace\Backtrace;
 
 // Register a listener that detects your environment type and automatically
 // selects the appropriate format to use for rendering errors.
@@ -43,11 +43,11 @@ $listener  = new Backtrace\Error\Listener\ErrorListener([$responder], true);
 ```
 
 To create your own renderer, implement
-`tvanc\Backtrace\Render\ExceptionRendererInterface` 
-or extend `tvanc\Backtrace\Render\AbstractExceptionRenderer`.
+`TVanC\Backtrace\Render\ExceptionRendererInterface` 
+or extend `TVanC\Backtrace\Render\AbstractExceptionRenderer`.
 
 Technically you don't even have to render exceptions if you don't want to.
-Implement `tvanc\Backtrace\Error\Responder\ErrorResponderInterface` and add it 
+Implement `TVanC\Backtrace\Error\Responder\ErrorResponderInterface` and add it 
 to your listener.
 
 ## Coming Soon

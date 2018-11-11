@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Error\Responder;
+namespace TVanC\Backtrace\Error\Responder;
 
-use tvanc\Backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * Interface for responders to errors heard by a listener.

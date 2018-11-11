@@ -3,14 +3,14 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\Backtrace\Test\Error\Responder;
+namespace TVanC\Backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use tvanc\Backtrace\Render\EnvironmentAwareRenderer;
-use tvanc\Backtrace\Render\Exception\NoRendererException;
-use tvanc\Backtrace\Test\Environment\TestEnvironment;
-use tvanc\Backtrace\Test\Render\Mock\TestExceptionRenderer;
+use TVanC\Backtrace\Render\EnvironmentAwareRenderer;
+use TVanC\Backtrace\Render\Exception\NoRendererException;
+use TVanC\Backtrace\Test\Environment\TestEnvironment;
+use TVanC\Backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Test renderer's environmental awareness.
