@@ -22,7 +22,7 @@ class Demonstration
 
     private static function staticDemo()
     {
-        throw new \Exception('How about a nice crispy backtrace?');
+        throw new \Exception('How about a nice, crispy backtrace?');
     }
 
 
