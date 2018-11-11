@@ -7,7 +7,7 @@ namespace tvanc\backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Error\Responder\DebugResponder;
-use tvanc\backtrace\Test\Render\TestExceptionRenderer;
+use tvanc\backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Covers DebugResponder

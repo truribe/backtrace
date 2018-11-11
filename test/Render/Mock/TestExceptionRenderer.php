@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace tvanc\backtrace\Test\Render\Mock;
 
 use tvanc\backtrace\Render\AbstractExceptionRenderer;
 use tvanc\backtrace\Render\ExceptionRendererInterface;

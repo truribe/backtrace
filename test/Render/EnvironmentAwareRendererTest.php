@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Render\EnvironmentAwareRenderer;
 use tvanc\backtrace\Render\Exception\NoRendererException;
 use tvanc\backtrace\Test\Environment\TestEnvironment;
-use tvanc\backtrace\Test\Render\TestExceptionRenderer;
+use tvanc\backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Test renderer's environmental awareness.
