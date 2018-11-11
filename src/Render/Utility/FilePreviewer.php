@@ -10,6 +10,18 @@ namespace tvanc\backtrace\Render\Utility;
  */
 class FilePreviewer
 {
+    public function getText(string $path, int $startLine, int $endLine): string
+    {
+        return $this->readFromFile($path, $startLine, $endLine, false);
+    }
+
+
+    public function getLines(string $path, int $startLine, int $endLine): array
+    {
+        return $this->readFromFile($path, $startLine, $endLine, true);
+    }
+
+
     /**
      * @param string $path
      * The path to the file to preview.
@@ -19,25 +31,35 @@ class FilePreviewer
      *
      * @param int    $endLine
      *
-     * @return string
+     * @param bool   $asArray
+     *
+     * @return string|string[]
      */
-    public function previewFile(
+    private function readFromFile(
         string $path,
         int $startLine,
-        int $endLine
-    ): string {
-        $lines = '';
-        $file  = new \SplFileObject($path);
-
+        int $endLine,
+        bool $asArray
+    ) {
+        $file = new \SplFileObject($path, 'r');
         $file->seek($startLine);
+        $lines = '';
+
+        if ($asArray) {
+            $lines = [];
+        }
 
         do {
-            $lines .= $file->current();
+            $line = $file->current();
+
+            if ($asArray) {
+                $lines[$file->key()] = str_replace(["\r", "\n"], '', $line);
+            } else {
+                $lines .= $line;
+            }
+
             $file->next();
         } while ($file->key() <= $endLine && $file->valid());
-
-        // Destroy reference. Someone on the internet said you should
-        $file = null;
 
         return $lines;
     }

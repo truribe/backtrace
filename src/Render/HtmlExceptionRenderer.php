@@ -104,7 +104,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
 
         return $this->loadTemplate($this->stageTemplate, [
             'stage' => $stage,
-            'lines' => $previewer->previewFile($stage['file'], $start, $end),
+            'lines' => $previewer->getText($stage['file'], $start, $end),
             'line'  => $reportedFocalPoint,
             'start' => $start,
         ]);
