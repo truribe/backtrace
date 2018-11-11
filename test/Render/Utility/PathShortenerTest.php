@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for PathShortenerTest.php
- *
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
@@ -11,6 +9,11 @@ use PHPUnit\Framework\TestCase;
 use tvanc\backtrace\Render\Utility\Exception\InvalidDirectorySeparatorException;
 use tvanc\backtrace\Render\Utility\PathShortener;
 
+/**
+ * A test case for the {@link PathShortener} class.
+ *
+ * @see PathShortener
+ */
 class PathShortenerTest extends TestCase
 {
 

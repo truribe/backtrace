@@ -9,7 +9,8 @@ use tvanc\backtrace\Render\CliExceptionRenderer;
 use tvanc\backtrace\Render\ExceptionRendererInterface;
 
 /**
- * TODO Document CliExceptionRendererText
+ * A test case to verify that exceptions rendered for CLI output are rendered
+ * correctly.
  */
 class CliExceptionRendererTest extends AbstractExceptionRendererTest
 {

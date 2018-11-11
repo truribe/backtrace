@@ -9,7 +9,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 /**
- * TODO Document ConsoleFormatter
+ * A formatter populated with several custom styles.
  */
 class ConsoleFormatter extends OutputFormatter
 {

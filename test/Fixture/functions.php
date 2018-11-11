@@ -1,7 +1,7 @@
 <?php
 /**
- * TODO Add @file block for functions.php
- *
+ * @file Declares functions to be used in test cases that need non-method
+ * functions in their backtrace to achieve full coverage.
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
@@ -15,7 +15,8 @@ use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
  *
  * @throws ExceptionWithUnlikelyStringForName
  */
-function foo (string $message) {
+function foo(string $message)
+{
     bar($message);
 }
 
@@ -24,7 +25,8 @@ function foo (string $message) {
  *
  * @throws ExceptionWithUnlikelyStringForName
  */
-function bar (string $message) {
+function bar(string $message)
+{
     $class = new ExceptionThrowingClass();
 
     $class->throwException($message);

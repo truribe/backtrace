@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for PlaintextExceptionRendererTest.php
- *
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 

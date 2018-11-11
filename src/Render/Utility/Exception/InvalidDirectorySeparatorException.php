@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO Add @file block for InvalidDirectorySeparatorException.php
- *
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
@@ -10,7 +8,8 @@ namespace tvanc\backtrace\Render\Utility\Exception;
 use Throwable;
 
 /**
- * TODO Document InvalidDirectorySeparatorException
+ * Describes an error where one of a limited set of directory separators is
+ * expected but the one received is not among that set.
  */
 class InvalidDirectorySeparatorException extends \InvalidArgumentException
 {
