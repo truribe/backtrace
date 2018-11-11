@@ -26,5 +26,5 @@ interface ExceptionRendererInterface
     public function render(\Throwable $throwable): string;
 
 
-    public function renderStage(array $stage): string;
+    public function renderFrame(array $frame): string;
 }

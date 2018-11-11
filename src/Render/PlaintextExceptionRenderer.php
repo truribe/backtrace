@@ -56,9 +56,9 @@ $innerLine
 {$throwable->getMessage()}
 
 MSG;
-        foreach ($throwable->getTrace() as $index => $stage) {
+        foreach ($throwable->getTrace() as $index => $frame) {
             echo "\n" . $this->makeLine("#$index ") . "\n";
-            echo $this->renderStage($stage);
+            echo $this->renderFrame($frame);
         }
         echo "\n" . $outerLine . "\n\n";
 
@@ -67,19 +67,19 @@ MSG;
 
 
     /**
-     * Render an indivual backtrace stage in CLI-optimized format.
+     * Render an indivual backtrace frame in CLI-optimized format.
      *
-     * @param array $stage
+     * @param array $frame
      *
      * @return string
      */
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
-        return <<<STAGE_RENDER
-File:  {$stage['file']}
-Line:  {$stage['line']}
-Calls: {$stage['function']}
-STAGE_RENDER;
+        return <<<FRAME_RENDER
+File:  {$frame['file']}
+Line:  {$frame['line']}
+Calls: {$frame['function']}
+FRAME_RENDER;
     }
 
 

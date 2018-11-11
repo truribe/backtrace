@@ -25,7 +25,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     /**
      * @var string
      */
-    private $stageTemplate;
+    private $frameTemplate;
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
      * @param string $viewDir
      * @param string $assetsDir
      * @param string $traceTemplate
-     * @param string $stageTemplate
+     * @param string $frameTemplate
      * @param int    $sourceRadius
      * @param int    $frameRadius
      */
@@ -62,7 +62,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
         string $viewDir,
         string $assetsDir,
         string $traceTemplate,
-        string $stageTemplate,
+        string $frameTemplate,
         int $sourceRadius = 5,
         int $frameRadius = 3
     ) {
@@ -70,7 +70,7 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
         $this->assetsDir    = $assetsDir;
 
         $this->traceTemplate = $traceTemplate;
-        $this->stageTemplate = $stageTemplate;
+        $this->frameTemplate = $frameTemplate;
         $this->sourceRadius  = $sourceRadius;
         $this->frameRadius   = $frameRadius;
     }
@@ -88,37 +88,37 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     }
 
 
-    public function renderSourcePreview(array $stage)
+    public function renderSourcePreview(array $frame)
     {
         $this->previewRadius = $this->sourceRadius;
 
-        return $this->renderStage($stage);
+        return $this->renderFrame($frame);
     }
 
 
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
         $previewer          = new FilePreviewer();
-        $reportedFocalPoint = $stage['line'];
+        $reportedFocalPoint = $frame['line'];
         $focalPoint         = $reportedFocalPoint - 1;
         $radius             = $this->previewRadius ?? $this->frameRadius;
         $start              = max($focalPoint - $radius, 0);
         $end                = $focalPoint + $radius;
 
-        return $this->loadTemplate($this->stageTemplate, [
-            'stage' => $stage,
-            'lines' => $previewer->getText($stage['file'], $start, $end),
+        return $this->loadTemplate($this->frameTemplate, [
+            'frame' => $frame,
+            'lines' => $previewer->getText($frame['file'], $start, $end),
             'line'  => $reportedFocalPoint,
             'start' => $start,
         ]);
     }
 
 
-    public function renderFramePreview(array $stage)
+    public function renderFramePreview(array $frame)
     {
         $this->previewRadius = $this->frameRadius;
 
-        return $this->renderStage($stage);
+        return $this->renderFrame($frame);
     }
 
 

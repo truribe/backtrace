@@ -65,7 +65,7 @@ class CliExceptionRenderer extends AbstractExceptionRenderer
         $io->newLine();
 
         foreach ($trace as $frame) {
-            $io->write($this->renderStage($frame));
+            $io->write($this->renderFrame($frame));
             $io->newLine();
         }
 
@@ -73,20 +73,20 @@ class CliExceptionRenderer extends AbstractExceptionRenderer
     }
 
 
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
         $this->init();
 
         $radius     = 3;
-        $focalPoint = $stage['line'] - 1;
+        $focalPoint = $frame['line'] - 1;
         $start      = max($focalPoint - $radius, 0);
         $end        = $focalPoint + $radius;
         $numLength  = strlen((string)$end);
-        $lines      = $this->previewer->getLines($stage['file'], $start, $end);
+        $lines      = $this->previewer->getLines($frame['file'], $start, $end);
 
         $io = $this->getNewStyle($this->frameOutput);
 
-        $io->text($this->summarizeFrame($stage));
+        $io->text($this->summarizeFrame($frame));
 
         foreach ($lines as $lineNumber => $line) {
             $displayNumber = str_pad($lineNumber + 1, $numLength, ' ', \STR_PAD_LEFT);

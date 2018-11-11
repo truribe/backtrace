@@ -59,10 +59,10 @@ use tvanc\backtrace\Render\HtmlExceptionRenderer;
             <header class="backtrace__header">
                 <h3 class="backtrace__legend flex-big">Backtrace</h3>
             </header>
-            <ol class="backtrace__stages">
-                <?php foreach ($trace as $stage) { ?>
-                    <li class="backtrace__stage">
-                        <?= $this->renderFramePreview($stage); ?>
+            <ol class="backtrace__frames">
+                <?php foreach ($trace as $frame) { ?>
+                    <li class="backtrace__frame">
+                        <?= $this->renderFramePreview($frame); ?>
                     </li>
                 <?php } ?>
             </ol>

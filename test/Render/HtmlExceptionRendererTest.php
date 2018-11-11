@@ -26,7 +26,7 @@ class HtmlExceptionRendererTest extends AbstractExceptionRendererTest
             realpath(__DIR__ . '/../../view'),
             realpath(__DIR__ . '/../../public/assets'),
             'throwable.php',
-            'stage.php'
+            'frame.php'
         );
     }
 }

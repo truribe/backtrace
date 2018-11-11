@@ -117,39 +117,39 @@ abstract class AbstractExceptionRendererTest extends TestCase
             'Render contains (at least) the full exception message'
         );
 
-        foreach ($trace as $stage) {
+        foreach ($trace as $frame) {
             $this->assertContains(
-                $renderer->renderStage($stage),
+                $renderer->renderFrame($frame),
                 $render,
-                'The full render contains each rendered stage'
+                'The full render contains each rendered frame'
             );
         }
     }
 
 
     /**
-     * Test that the renderStage() method outputs all the right info.
+     * Test that the renderFrame() method outputs all the right info.
      *
      * @see \debug_backtrace()
      * @see http://php.net/manual/en/function.debug-backtrace.php
      */
-    public function testRenderStage()
+    public function testRenderFrame()
     {
         $renderer = $this->getRenderer();
 
-        foreach (\debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS) as $stage) {
-            $render = $renderer->renderStage($stage);
+        foreach (\debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS) as $frame) {
+            $render = $renderer->renderFrame($frame);
 
             $this->assertContains(
-                basename($stage['file']),
+                basename($frame['file']),
                 $render,
                 'Render contains at least the basename (path may be ellided)'
             );
 
             $this->assertContains(
-                $stage['line'] . '',
+                $frame['line'] . '',
                 $render,
-                'Render of each stage contains the line number'
+                'Render of each frame contains the line number'
             );
         }
     }

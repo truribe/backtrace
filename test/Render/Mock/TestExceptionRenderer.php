@@ -14,7 +14,7 @@ use tvanc\backtrace\Render\ExceptionRendererInterface;
 class TestExceptionRenderer extends AbstractExceptionRenderer implements ExceptionRendererInterface
 {
     private $rendered = false;
-    private $stageRendered = false;
+    private $frameRendered = false;
 
 
     /**
@@ -34,18 +34,18 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
      * pretend it was. Whatever floats your boat.
      *
      * @param bool $rendered
-     * @param bool $stageRendered
+     * @param bool $frameRendered
      *
      * @return TestExceptionRenderer
      */
     public function setRendered(
         bool $rendered,
-        bool $stageRendered = null
+        bool $frameRendered = null
     ): TestExceptionRenderer {
         $this->rendered = $rendered;
 
-        if (isset($stageRendered)) {
-            $this->stageRendered = $stageRendered;
+        if (isset($frameRendered)) {
+            $this->frameRendered = $frameRendered;
         }
 
         return $this;
@@ -53,20 +53,20 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
 
 
     /**
-     * Did renderStage() get called?
+     * Did renderFrame() get called?
      *
      * @return bool
      * True if yes, false if no.
      */
-    public function isStageRendered(): bool
+    public function isFrameRendered(): bool
     {
-        return $this->stageRendered;
+        return $this->frameRendered;
     }
 
 
-    public function setStageRendered(bool $stageRendered): TestExceptionRenderer
+    public function setFrameRendered(bool $frameRendered): TestExceptionRenderer
     {
-        $this->stageRendered = $stageRendered;
+        $this->frameRendered = $frameRendered;
 
         return $this;
     }
@@ -91,13 +91,13 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
     /**
      * Don't render anything. Just implementing to fulfill conditions.
      *
-     * @param array $stage
+     * @param array $frame
      *
      * @return string
      */
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
-        $this->stageRendered = true;
+        $this->frameRendered = true;
 
         return '';
     }

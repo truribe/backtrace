@@ -26,11 +26,11 @@ interface ExceptionRendererTestInterface
 
 
     /**
-     * Test the rendered stage for the expected info.
+     * Test the rendered frame for the expected info.
      *
-     * @see ExceptionRendererInterface::renderStage()
+     * @see ExceptionRendererInterface::renderFrame()
      */
-    public function testRenderStage();
+    public function testRenderFrame();
 
 
     /**

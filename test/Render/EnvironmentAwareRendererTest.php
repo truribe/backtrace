@@ -41,22 +41,22 @@ class EnvironmentAwareRendererTest extends TestCase
 
         // Trigger default responder
         $awareRenderer->render(new \Exception(''));
-        $awareRenderer->renderStage([]);
+        $awareRenderer->renderFrame([]);
 
         $this->assertTrue($defaultRenderer->isRendered());
         $this->assertFalse($cliRenderer->isRendered());
         $this->assertFalse($ajaxRenderer->isRendered());
 
-        $this->assertTrue($defaultRenderer->isStageRendered());
-        $this->assertFalse($cliRenderer->isStageRendered());
-        $this->assertFalse($ajaxRenderer->isStageRendered());
+        $this->assertTrue($defaultRenderer->isFrameRendered());
+        $this->assertFalse($cliRenderer->isFrameRendered());
+        $this->assertFalse($ajaxRenderer->isFrameRendered());
 
         $defaultRenderer->setRendered(false, false);
 
         // Trigger CLI renderer
         $env->setIsCli(true);
         $awareRenderer->render(new \Exception(''));
-        $awareRenderer->renderStage([]);
+        $awareRenderer->renderFrame([]);
 
 
         $this->assertFalse($defaultRenderer->isRendered());
@@ -69,7 +69,7 @@ class EnvironmentAwareRendererTest extends TestCase
         $env->setIsCli(false);
         $env->setIsAjaxRequest(true);
         $awareRenderer->render(new \Exception(''));
-        $awareRenderer->renderStage([]);
+        $awareRenderer->renderFrame([]);
 
         $this->assertFalse($defaultRenderer->isRendered());
         $this->assertFalse($cliRenderer->isRendered());
@@ -84,10 +84,10 @@ class EnvironmentAwareRendererTest extends TestCase
     }
 
 
-    public function testRenderStageWithoutRendererThrowsNoRendererException()
+    public function testRenderFrameWithoutRendererThrowsNoRendererException()
     {
         $this->expectException(NoRendererException::class);
-        $this->getRendererLessRenderer()->renderStage([]);
+        $this->getRendererLessRenderer()->renderFrame([]);
     }
 
 

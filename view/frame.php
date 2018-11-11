@@ -1,10 +1,10 @@
 <?php
 /**
- * @file Template for individual stages of a backtrace.
+ * @file Template for individual frames of a backtrace.
  * @author Travis Van Couvering <travis@tvanc.com>
  *
  * @var int    $radius
- * The number of lines to show before and after the line indicated in $stage
+ * The number of lines to show before and after the line indicated in $frame
  * INCLUDING that line. In other words, a value of 0 (zero) will result in no
  * lines being displayed. A value of 1 will show only the line indicated. A
  * value of 2 will show a total of three lines, the line before, THE line, and
@@ -14,7 +14,7 @@
  * @var int    $line
  * @var string $lines
  *
- * @var array  $stage
+ * @var array  $frame
  * An associative array with ALMOST any of the following potential elements:
  * - line
  * - file
@@ -28,16 +28,16 @@
  */
 $humanStart = $start + 1;
 ?>
-<?php if (isset($stage['file'])) { ?>
+<?php if (isset($frame['file'])) { ?>
     <div class="err-info">
-        <span class="err-file"><?= $stage['file'] ?></span><span
+        <span class="err-file"><?= $frame['file'] ?></span><span
                 class="err-file-line-joint">:</span><span
-                class="err-line"><?= $stage['line'] ?></span>
+                class="err-line"><?= $frame['line'] ?></span>
     </div>
 <?php } ?>
 <div class="err-preview">
     <?php
-    if (!isset($stage['file']) || !file_exists($stage['file'])) {
+    if (!isset($frame['file']) || !file_exists($frame['file'])) {
         ?>
         <div class="err-preview-line">
             <code class="err-preview-code">{closure}</code>

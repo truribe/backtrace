@@ -107,14 +107,14 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
 
 
     /**
-     * @param array $stage
+     * @param array $frame
      *
      * @return string
      * @throws NoRendererException
      */
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
-        return $this->selectRenderer()->renderStage($stage);
+        return $this->selectRenderer()->renderFrame($frame);
     }
 
 
