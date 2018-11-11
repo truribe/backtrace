@@ -1,12 +1,14 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Environment;
+namespace TVanC\Backtrace\Environment;
 
 /**
  * Provides information about the environment in which PHP is being run.
+ *
+ * @codeCoverageIgnore
  */
 class Environment implements EnvironmentInterface
 {

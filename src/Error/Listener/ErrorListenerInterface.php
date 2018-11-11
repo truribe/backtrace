@@ -1,12 +1,12 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener;
+namespace TVanC\Backtrace\Error\Listener;
 
 
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * Defines a protocol for classes that delegate errors to one or more responders.
@@ -15,8 +15,8 @@ interface ErrorListenerInterface extends ErrorResponderInterface
 {
     const TYPE_ERROR = 1; // 0b0001
     const TYPE_EXCEPTION = 2; // 0b0010
-    const TYPE_FATAL_ERROR = 4; // 0b0100
-    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_FATAL_ERROR; // 0b0111
+    const TYPE_SHUTDOWN = 4; // 0b0100
+    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_SHUTDOWN; // 0b0111
 
 
     /**
@@ -59,9 +59,10 @@ interface ErrorListenerInterface extends ErrorResponderInterface
      * - ErrorListenerInterface::TYPE_EXCEPTION
      * - ErrorListenerInterface::TYPE_FATAL_ERROR
      * Additionally, you can simply provide ErrorListenerInterface::TYPE_ALL,
-     * which, as you should expect, is a shortcut for the following:
-     * ErrorListenerInterface::TYPE_ERROR | ErrorListenerInterface::TYPE_EXCEPTION |
-     *     ErrorListenerInterface::TYPE_FATAL_ERROR
+     * which is a shortcut for the following:
+     * ErrorListenerInterface::TYPE_ERROR
+     * | ErrorListenerInterface::TYPE_EXCEPTION
+     * | ErrorListenerInterface::TYPE_FATAL_ERROR
      *
      * @return $this
      */

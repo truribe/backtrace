@@ -1,15 +1,16 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Responder;
+namespace TVanC\Backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Render\EnvironmentAwareRenderer;
-use tvanc\backtrace\Test\Environment\TestEnvironment;
-use tvanc\backtrace\Test\Render\TestExceptionRenderer;
+use TVanC\Backtrace\Render\EnvironmentAwareRenderer;
+use TVanC\Backtrace\Render\Exception\NoRendererException;
+use TVanC\Backtrace\Test\Environment\TestEnvironment;
+use TVanC\Backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Test renderer's environmental awareness.
@@ -40,30 +41,63 @@ class EnvironmentAwareRendererTest extends TestCase
 
         // Trigger default responder
         $awareRenderer->render(new \Exception(''));
+        $awareRenderer->renderFrame([]);
 
         $this->assertTrue($defaultRenderer->isRendered());
         $this->assertFalse($cliRenderer->isRendered());
         $this->assertFalse($ajaxRenderer->isRendered());
 
-        $defaultRenderer->setRendered(false);
+        $this->assertTrue($defaultRenderer->isFrameRendered());
+        $this->assertFalse($cliRenderer->isFrameRendered());
+        $this->assertFalse($ajaxRenderer->isFrameRendered());
+
+        $defaultRenderer->setRendered(false, false);
 
         // Trigger CLI renderer
         $env->setIsCli(true);
         $awareRenderer->render(new \Exception(''));
+        $awareRenderer->renderFrame([]);
+
 
         $this->assertFalse($defaultRenderer->isRendered());
         $this->assertTrue($cliRenderer->isRendered());
         $this->assertFalse($ajaxRenderer->isRendered());
 
-        $cliRenderer->setRendered(false);
+        $cliRenderer->setRendered(false, false);
 
         // // Trigger AJAX renderer
         $env->setIsCli(false);
         $env->setIsAjaxRequest(true);
         $awareRenderer->render(new \Exception(''));
+        $awareRenderer->renderFrame([]);
 
         $this->assertFalse($defaultRenderer->isRendered());
         $this->assertFalse($cliRenderer->isRendered());
         $this->assertTrue($ajaxRenderer->isRendered());
+    }
+
+
+    public function testRenderWithoutRendererThrowsNoRendererException()
+    {
+        $this->expectException(NoRendererException::class);
+        $this->getRendererLessRenderer()->render(new \Exception());
+    }
+
+
+    public function testRenderFrameWithoutRendererThrowsNoRendererException()
+    {
+        $this->expectException(NoRendererException::class);
+        $this->getRendererLessRenderer()->renderFrame([]);
+    }
+
+
+    /**
+     * Get an EnvironmentAwareRenderer without any renderers.
+     */
+    private function getRendererLessRenderer()
+    {
+        $env = new TestEnvironment(false, false);
+
+        return new EnvironmentAwareRenderer($env);
     }
 }

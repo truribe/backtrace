@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Responder;
+namespace TVanC\Backtrace\Error\Responder;
 
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A responder to aid in debugging errors by passing the errors to a renderer

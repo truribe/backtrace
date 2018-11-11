@@ -1,134 +1,228 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render;
+namespace TVanC\Backtrace\Render;
 
-use tvanc\backtrace\Environment\CliInfoProvider;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\StreamOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Terminal;
+use TVanC\Backtrace\Render\Utility\ConsoleFormatter;
+use TVanC\Backtrace\Render\Utility\FilePreviewer;
+use TVanC\Backtrace\Render\Utility\PathShortener;
 
 /**
  * Renders an exception in a CLI-optimized format.
  */
 class CliExceptionRenderer extends AbstractExceptionRenderer
 {
-    const DEFAULT_DIVIDER_LENGTH = 75;
-    const OUTER_DIVIDER_CHAR = '=';
-    const INNER_DIVIDER_CHAR = '-';
-
     /**
-     * @var CliInfoProvider
+     * @var bool
+     * Whether dependencies have been initialized.
      */
-    private $cliInfo;
+    private $initialized = false;
+
+    /** @var PathShortener */
+    private $pathShortener;
+
+    /** @var FilePreviewer */
+    private $previewer;
+
+    /** @var StreamOutput */
+    private $frameOutput;
+
+    /** @var StreamOutput */
+    private $mainOutput;
 
 
-    /**
-     * CliExceptionRenderer constructor.
-     *
-     * @param CliInfoProvider $cliInfo
-     * Provides information about the console session, which this class uses
-     * to optimize rendering.
-     */
-    public function __construct(CliInfoProvider $cliInfo)
-    {
-        $this->cliInfo = $cliInfo;
-    }
-
-
-    /**
-     * Render the exception in CLI-optimized format.
-     *
-     * @param \Throwable $throwable
-     *
-     * @return string
-     */
     public function render(\Throwable $throwable): string
     {
-        ob_start();
-        $type      = static::getErrorType($throwable);
-        $outerLine = $this->makeDivider(self::OUTER_DIVIDER_CHAR);
-        $innerLine = $this->makeDivider(
-            self::INNER_DIVIDER_CHAR,
-            min($this->cliInfo->getConsoleWidth(), strlen($type))
+        $this->init();
+
+        $trace = $throwable->getTrace();
+        $io    = $this->getNewStyle($this->mainOutput);
+
+        $io->block(
+            $throwable->getMessage(),
+            static::getErrorDisplayType($throwable, true),
+            'fg=white;bg=red',
+            ' ',
+            true
         );
 
-        echo <<<MSG
-$outerLine
-$type
-$innerLine
-{$throwable->getMessage()}
+        array_unshift($trace, [
+            'file' => $throwable->getFile(),
+            'line' => $throwable->getLine(),
+        ]);
 
-MSG;
-        foreach ($throwable->getTrace() as $index => $stage) {
-            echo "\n" . $this->makeLine("#$index ") . "\n";
-            echo $this->renderStage($stage);
+        foreach ($trace as $index => $frame) {
+            $io->text("#$index " . $this->summarizeFrame($frame));
         }
-        echo "\n" . $outerLine . "\n\n";
 
-        return ob_get_clean();
+        $io->newLine();
+
+        foreach ($trace as $frame) {
+            $io->write($this->renderFrame($frame));
+            $io->newLine();
+        }
+
+        return $this->getDisplay($io);
     }
 
 
-    private function makeDivider($char = '-', $len = null)
+    public function renderFrame(array $frame): string
     {
-        return $this->makeLine('', $char, $len);
-    }
+        $this->init();
 
+        $radius     = 3;
+        $focalPoint = $frame['line'] - 1;
+        $start      = max($focalPoint - $radius, 0);
+        $end        = $focalPoint + $radius;
+        $numLength  = strlen((string)$end);
+        $lines      = $this->previewer->getLines($frame['file'], $start, $end);
 
-    /**
-     * Make a textual divider.
-     *
-     * @param string $label
-     * The text to output at the start of the divider. Optional - defaults to an empty string.
-     *
-     * @param string $char
-     * The character or characters to use for padding.
-     *
-     * @param int    $len
-     * The maximum final length of the string. Leave blank to
-     * default to 75, or the console width in CLI mode.
-     *
-     * @return string
-     */
-    private function makeLine(
-        string $label = '',
-        string $char = '-',
-        int $len = null
-    ) {
-        if (is_null($len)) {
-            $len = $this->cliInfo->getConsoleWidth();
-        }
+        $io = $this->getNewStyle($this->frameOutput);
 
-        return str_pad($label, $len, $char, STR_PAD_RIGHT);
-    }
+        $io->text($this->summarizeFrame($frame));
 
+        foreach ($lines as $lineNumber => $line) {
+            $displayNumber = str_pad($lineNumber + 1, $numLength, ' ', \STR_PAD_LEFT);
+            $displayText   = "$displayNumber | $line";
 
-    /**
-     * Render an indivual backtrace stage in CLI-optimized format.
-     *
-     * @param array $stage
-     *
-     * @return string
-     */
-    public function renderStage(array $stage): string
-    {
-        if (isset($stage['file'])) {
-            return <<<STAGE_RENDER
-File:  {$stage['file']}
-Line:  {$stage['line']}
-Calls: {$stage['function']}
-STAGE_RENDER;
-        }
+            if ($lineNumber === $focalPoint) {
+                $width       = (new Terminal())->getWidth() - 9;
+                $displayText = str_pad($displayText, $width, ' ', \STR_PAD_RIGHT);
 
-        $ignore = ['object', 'args'];
-        $render = [];
-        foreach ($stage as $key => $value) {
-            if (in_array($key, $ignore)) {
-                continue;
+                $io->text("<error>$displayText</error>");
+            } else {
+                $io->text("$displayText");
             }
-            $render[] = str_pad(ucwords($key) . ':', 10, ' ') . $value;
         }
 
-        return implode(\DIRECTORY_SEPARATOR, $render);
+        return $this->getDisplay($io);
+    }
+
+
+    /**
+     * Gets the output so far.
+     *
+     * @param SymfonyStyle $style
+     *
+     * @return string The display
+     */
+    private function getDisplay(SymfonyStyle $style)
+    {
+        $reflectedSymfonyStyle   = new \ReflectionObject($style);
+        $reflectedParent         = $reflectedSymfonyStyle->getParentClass();
+        $reflectedOutputProperty = $reflectedParent->getProperty('output');
+
+        $reflectedOutputProperty->setAccessible(true);
+
+        $output = $reflectedOutputProperty->getValue($style);
+        $stream = $output->getStream();
+
+        rewind($stream);
+        $display = stream_get_contents($stream);
+        ftruncate($stream, 0);
+
+        return $display;
+    }
+
+
+    /**
+     * Initialize dependencies.
+     *
+     * Sure I could inject these dependencies, but for requests where no
+     * exception occurs does it make sense to create these objects if they'll
+     * never actually be used?
+     *
+     * I could inject the names of the classes in and use the supplied names
+     * to lazily create the dependencies. I could even use is_subclass_of()
+     * and class_implements() to enforce type safety.... It's worth further
+     * consideration.
+     */
+    private function init()
+    {
+        if (!$this->initialized) {
+            $this->pathShortener = new PathShortener();
+            $this->previewer     = new FilePreviewer();
+
+            $this->mainOutput = new StreamOutput(
+                fopen('php://memory', 'w', false),
+                ConsoleOutput::VERBOSITY_NORMAL,
+                true,
+                new ConsoleFormatter(true)
+            );
+
+            $this->frameOutput = new StreamOutput(
+                fopen('php://memory', 'w', false),
+                ConsoleOutput::VERBOSITY_NORMAL,
+                true,
+                new ConsoleFormatter(true)
+            );
+        }
+
+        $this->initialized = true;
+    }
+
+
+    private function getNewStyle(StreamOutput $output)
+    {
+        $style = new SymfonyStyle(new StringInput(''), $output);
+
+        return $style->getErrorStyle();
+    }
+
+
+    private function summarizeFrame(array $frame): string
+    {
+        $file        = $this->pathShortener->elideStartingPath($frame['file'], getcwd());
+        $line        = $frame['line'];
+        $fileAndLine = "<file>$file</file><joiner>:</joiner><line>$line</line>";
+        $separator   = '-';
+
+        if (isset($frame['function'])) {
+            $function = "<function>{$frame['function']}()</function>";
+
+            if (isset($frame['class'])) {
+                $class         = $frame['class'];
+                $type          = $frame['type'];
+                $icon          = '👁';
+                $visibilityTag = 'public';
+
+                try {
+                    $reflection = new \ReflectionClass($class);
+                    $method     = $reflection->getMethod($frame['function']);
+                    if ($method->isProtected()) {
+                        $visibilityTag = 'protected';
+                    } else {
+                        if ($method->isPrivate()) {
+                            $visibilityTag = 'private';
+                        }
+                    }
+                    // @codeCoverageIgnoreStart
+                } catch (\ReflectionException $exception) {
+                    $icon          = '✘';
+                    $visibilityTag = 'indeterminate';
+                }
+                // @codeCoverageIgnoreEnd
+
+                $visibilityIndicator = "<$visibilityTag>$icon</$visibilityTag>";
+                $methodInfo          = "<class>$class</class>"
+                    . "<type>$type</type>"
+                    . "$function";
+
+                /** @lang text */
+                return "$visibilityIndicator $methodInfo $separator" .
+                    " $fileAndLine";
+            }
+
+            return "$function $separator $fileAndLine";
+        }
+
+        return $fileAndLine;
     }
 }

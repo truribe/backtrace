@@ -1,12 +1,12 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
-use tvanc\backtrace\Render\ExceptionRendererInterface;
-use tvanc\backtrace\Render\HtmlExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\HtmlExceptionRenderer;
 
 /**
  * Test for HtmlExceptionRenderer. Tests are actually defined in the parent
@@ -26,7 +26,7 @@ class HtmlExceptionRendererTest extends AbstractExceptionRendererTest
             realpath(__DIR__ . '/../../view'),
             realpath(__DIR__ . '/../../public/assets'),
             'throwable.php',
-            'stage.php'
+            'frame.php'
         );
     }
 }

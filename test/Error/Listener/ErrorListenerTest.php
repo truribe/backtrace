@@ -1,15 +1,14 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Listener;
+namespace TVanC\Backtrace\Test\Error\Listener;
 
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Listener\ErrorListener;
-use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Error\Listener\Exception\NoResponderException;
+use TVanC\Backtrace\Test\Error\Responder\TestResponder;
 
 /**
  * Tests ErrorListener
@@ -18,6 +17,69 @@ use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
  */
 class ErrorListenerTest extends TestCase
 {
+    /**
+     * Test that the listener actually hears and delegates to the responder
+     */
+    public function testDelegation()
+    {
+        $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
+        $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
+
+        /** @var TestResponder $errorResponder */
+        /** @var TestResponder $exceptionResponder */
+        $errorResponder     = reset($errorListener->getResponders());
+        $exceptionResponder = reset($exceptionListener->getResponders());
+
+        $errorListener->handleError(\E_USER_ERROR, 'whatevs', 'any', 1);
+        $exceptionListener->catchThrowable(new \ErrorException());
+
+        $this->assertTrue($errorResponder->caughtThrowable());
+        $this->assertTrue($exceptionResponder->caughtThrowable());
+    }
+
+
+    /**
+     * @param int $type
+     *
+     * @return TestErrorListener
+     */
+    private function getListener(int $type)
+    {
+        $responder = new TestResponder();
+        $listener  = new TestErrorListener([
+            $responder
+        ], true);
+
+        $listener->listen($type);
+
+        return $listener;
+    }
+
+
+    /**
+     * Test that the listener starts listening for the right things
+     * according to the value passed to listen()
+     */
+    public function testListeningTypes()
+    {
+        $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
+        $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
+        $shutdownListener  = $this->getListener(ErrorListener::TYPE_SHUTDOWN);
+
+        $this->assertTrue($errorListener->isListeningForErrors());
+        $this->assertFalse($errorListener->isListeningForExceptions());
+        $this->assertFalse($errorListener->isListeningForShutdown());
+
+        $this->assertFalse($exceptionListener->isListeningForErrors());
+        $this->assertTrue($exceptionListener->isListeningForExceptions());
+        $this->assertFalse($exceptionListener->isListeningForShutdown());
+
+        $this->assertFalse($shutdownListener->isListeningForErrors());
+        $this->assertFalse($shutdownListener->isListeningForExceptions());
+        $this->assertTrue($shutdownListener->isListeningForShutdown());
+    }
+
+
     /**
      * Verify listener throws a special exception if it hears an exception and
      * has no associated responders.
@@ -34,59 +96,5 @@ class ErrorListenerTest extends TestCase
         $listener->catchThrowable(new \Exception(
             'Thrown an Exception; landed an UnhandledExceptionException'
         ));
-    }
-
-
-    /**
-     * Verify errors are passed back to PHP when override is disabled.
-     *
-     * Tested separately from the effects of enabling override to sidestep
-     * awkwardness of testing a single output buffer for mutually contradictory
-     * results.
-     *
-     * @see testOverrideOn()
-     */
-    public function testOverrideOff()
-    {
-        // Create listener with override enabled and noop responder
-        $listener = new ErrorListener([
-            $this->createMock(ErrorResponderInterface::class)
-        ], false);
-
-        // Register the listener as an error handler
-        $listener->listenForErrors();
-
-        $message = 'This error should go to native error handler.';
-
-        $this->expectException(Warning::class);
-        $this->expectExceptionMessage($message);
-
-        trigger_error($message, E_USER_WARNING);
-    }
-
-
-    /**
-     * Verify that errors are NOT passed back to PHP when override is enabled.
-     *
-     * Tested separately from the effects of disabling override to sidestep
-     * awkwardness of testing a single output buffer for mutually contradictory
-     * results.
-     *
-     * @see testOverrideOff()
-     * @see ErrorListener::override
-     */
-    public function testOverrideOn()
-    {
-        // Create listener with override enabled and noop responder
-        $listener = new ErrorListener([
-            $this->createMock(ErrorResponderInterface::class)
-        ], true);
-
-        // Register the listener as an error handler
-        $listener->listenForErrors();
-
-        $message = 'This error should NOT go to native error handler.';
-        $this->expectOutputString('');
-        trigger_error($message, E_USER_WARNING);
     }
 }

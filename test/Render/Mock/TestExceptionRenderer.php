@@ -1,12 +1,12 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render\Mock;
 
-use tvanc\backtrace\Render\AbstractExceptionRenderer;
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\AbstractExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A no-op class that satisfies test conditions.
@@ -14,6 +14,7 @@ use tvanc\backtrace\Render\ExceptionRendererInterface;
 class TestExceptionRenderer extends AbstractExceptionRenderer implements ExceptionRendererInterface
 {
     private $rendered = false;
+    private $frameRendered = false;
 
 
     /**
@@ -33,12 +34,39 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
      * pretend it was. Whatever floats your boat.
      *
      * @param bool $rendered
+     * @param bool $frameRendered
      *
      * @return TestExceptionRenderer
      */
-    public function setRendered(bool $rendered): TestExceptionRenderer
-    {
+    public function setRendered(
+        bool $rendered,
+        bool $frameRendered = null
+    ): TestExceptionRenderer {
         $this->rendered = $rendered;
+
+        if (isset($frameRendered)) {
+            $this->frameRendered = $frameRendered;
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Did renderFrame() get called?
+     *
+     * @return bool
+     * True if yes, false if no.
+     */
+    public function isFrameRendered(): bool
+    {
+        return $this->frameRendered;
+    }
+
+
+    public function setFrameRendered(bool $frameRendered): TestExceptionRenderer
+    {
+        $this->frameRendered = $frameRendered;
 
         return $this;
     }
@@ -63,12 +91,14 @@ class TestExceptionRenderer extends AbstractExceptionRenderer implements Excepti
     /**
      * Don't render anything. Just implementing to fulfill conditions.
      *
-     * @param array $stage
+     * @param array $frame
      *
      * @return string
      */
-    public function renderStage(array $stage): string
+    public function renderFrame(array $frame): string
     {
+        $this->frameRendered = true;
+
         return '';
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener\Exception;
+namespace TVanC\Backtrace\Error\Listener\Exception;
 
-use tvanc\backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * An exception just for when a listener "hears" a shutdown "event".

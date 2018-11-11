@@ -1,38 +1,58 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener;
+namespace TVanC\Backtrace\Error\Listener;
 
-use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
-use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Listener\Exception\NoResponderException;
+use TVanC\Backtrace\Error\Listener\Exception\ShutdownException;
+use TVanC\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * A utility class for delegating errors and exceptions to responders.
  */
 class ErrorListener implements ErrorListenerInterface
 {
+    private const FATAL_ERRORS = [
+        \E_ERROR,
+        \E_PARSE,
+        \E_CORE_ERROR,
+        \E_CORE_WARNING,
+        \E_COMPILE_ERROR,
+        \E_COMPILE_WARNING,
+    ];
     /**
      * @var bool Whether to escalate errors to exceptions.
      */
     protected $errorEscalation;
-
     /**
-     * @var bool Whether to override PHP's internal error handler.
+     * @var bool
+     * Whether to override PHP's internal error handler.
+     * False indicates do NOT override: Native error handling WILL resume.
+     * True indicates DO override: Native error handling will NOT resume.
      */
     protected $override;
-
     /**
      * @var ErrorResponderInterface[] Error responders.
      */
     private $responders;
-
     /**
      * @var int
+     * The types of errors to handle. This will be the second parameter to
+     * `\set_error_handler()`. And to determine whether to trigger responders
+     * if an error occurred before shutdown.
+     *
+     * @see \set_error_handler()
+     * @see ErrorListener::handleShutdown()
      */
     private $mode;
+    /**
+     * @var bool
+     * Whether to halt execution immediately after detecting an error
+     * or exception.
+     */
+    private $exitAfterTrigger;
 
 
     public function __construct(
@@ -42,12 +62,7 @@ class ErrorListener implements ErrorListenerInterface
     ) {
         $this->responders = $responders;
         $this->override   = $override;
-
-        if (!\is_int($mode) && !\is_null($mode)) {
-            throw new \InvalidArgumentException('Argument $mode has to be integer or null!');
-        }
-
-        $this->mode = $mode;
+        $this->mode       = $mode;
     }
 
 
@@ -58,15 +73,13 @@ class ErrorListener implements ErrorListenerInterface
             $this->listenForErrors();
         }
 
-        // @codeCoverageIgnoreStart
         if ($types & static::TYPE_EXCEPTION) {
             $this->listenForExceptions();
         }
-        if ($types & static::TYPE_FATAL_ERROR) {
-            $this->listenForErrors();
-        }
 
-        // @codeCoverageIgnoreEnd
+        if ($types & static::TYPE_SHUTDOWN) {
+            $this->listenForShutdown();
+        }
 
         return $this;
     }
@@ -85,9 +98,7 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function listenForExceptions(): ErrorListenerInterface
     {
-        \set_exception_handler(
-            [$this, 'catchThrowable']
-        );
+        \set_exception_handler([$this, 'catchThrowable']);
 
         return $this;
     }
@@ -121,6 +132,13 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @param bool $override
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function setOverride(bool $override): ErrorListenerInterface
     {
         $this->override = $override;
@@ -129,6 +147,13 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @param ErrorResponderInterface $responder
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function addResponder(ErrorResponderInterface $responder): ErrorListenerInterface
     {
         $this->responders[] = $responder;
@@ -137,12 +162,24 @@ class ErrorListener implements ErrorListenerInterface
     }
 
 
+    /**
+     * @return ErrorResponderInterface[]
+     *
+     * @codeCoverageIgnore
+     */
     public function getResponders(): array
     {
         return $this->responders;
     }
 
 
+    /**
+     * @param array $responders
+     *
+     * @return ErrorListenerInterface
+     *
+     * @codeCoverageIgnore
+     */
     public function setResponders(array $responders): ErrorListenerInterface
     {
         $this->setResponders($responders);
@@ -179,10 +216,6 @@ class ErrorListener implements ErrorListenerInterface
      */
     public function catchThrowable(\Throwable $throwable)
     {
-        if ($throwable instanceof NoResponderException) {
-            exit($throwable->__toString());
-        }
-
         if (!$this->responders) {
             throw new NoResponderException($throwable);
         }
@@ -190,14 +223,19 @@ class ErrorListener implements ErrorListenerInterface
         foreach ($this->responders as $responder) {
             $responder->catchThrowable($throwable);
         }
+
+        // @codeCoverageIgnoreStart
+        if ($this->exitAfterTrigger) {
+            exit(1);
+        }
+        // @codeCoverageIgnoreEnd
     }
 
 
     /**
-     * @param array $error
-     *
-     * @return mixed
      * @throws NoResponderException
+     *
+     * @codeCoverageIgnore
      */
     public function handleShutdown()
     {
@@ -205,6 +243,7 @@ class ErrorListener implements ErrorListenerInterface
         if (!$error || !($error['type'] & $this->mode)) {
             return;
         }
+
         if ($this->isFatalError($error['type'])) {
             $this->catchThrowable(
                 new ShutdownException($error['message'], 0, $error['type'], $error['file'], $error['line'])
@@ -222,17 +261,7 @@ class ErrorListener implements ErrorListenerInterface
      */
     private function isFatalError($code)
     {
-        // Constant can be an array in PHP >=5.6
-        $fatalErrors = array(
-            \E_ERROR,
-            \E_PARSE,
-            \E_CORE_ERROR,
-            \E_CORE_WARNING,
-            \E_COMPILE_ERROR,
-            \E_COMPILE_WARNING,
-        );
-
-        foreach ($fatalErrors as $fatalCode) {
+        foreach (self::FATAL_ERRORS as $fatalCode) {
             if ($code & $fatalCode) {
                 return true;
             }

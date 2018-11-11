@@ -1,13 +1,13 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Responder;
+namespace TVanC\Backtrace\Test\Error\Responder;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Responder\DebugResponder;
-use tvanc\backtrace\Test\Render\TestExceptionRenderer;
+use TVanC\Backtrace\Error\Responder\DebugResponder;
+use TVanC\Backtrace\Test\Render\Mock\TestExceptionRenderer;
 
 /**
  * Covers DebugResponder

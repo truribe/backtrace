@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Environment;
+namespace TVanC\Backtrace\Test\Environment;
 
-use tvanc\backtrace\Environment\EnvironmentInterface;
+use TVanC\Backtrace\Environment\EnvironmentInterface;
 
 /**
  * A mock of EnvironmentInterface for when you need your test to "believe"

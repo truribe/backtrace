@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Responder;
+namespace TVanC\Backtrace\Error\Responder;
 
-use tvanc\backtrace\Error\Listener\ErrorListenerInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
  * Interface for responders to errors heard by a listener.

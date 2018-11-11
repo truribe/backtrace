@@ -44,16 +44,16 @@ body {
     width: 200px;
 }
 
-.backtrace__stages {
+.backtrace__frames {
     padding: 0;
     list-style-position: inside;
 }
 
-.backtrace__stages > li {
+.backtrace__frames > li {
     margin: 0 0 15px;
 }
 
-.backtrace__stages .backtrace-empty {
+.backtrace__frames .backtrace-empty {
     margin: 10px 0;
     list-style-type: none;
     text-align: center;
@@ -62,7 +62,7 @@ body {
     color: gray;
 }
 
-.backtrace__stage .err-info {
+.backtrace__frame .err-info {
     display: inline-block;
 }
 

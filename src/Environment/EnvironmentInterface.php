@@ -1,9 +1,9 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Environment;
+namespace TVanC\Backtrace\Environment;
 
 
 /**

@@ -12,21 +12,43 @@ Install via `composer`:
 composer require --dev tvanc/backtrace @dev
 ```
 
-## Coming Soon
-- More sophisticated CLI formatting.
-- A dedicated plaintext format, to be used within AJAX requests (by default).
-- Arguments in the backtrace.
+Or clone this repository:
+```bash
+git clone https://github.com/tvanc/backtrace.git
+```
 
 ## Usage
+
+### Default usage
 Display an error message and backtrace for exceptions, with the optimal
 format automatically selected according to the environment in which the error
 or exception is thrown.
 
 ```php
-use tvanc\backtrace\Backtrace;
+use TVanC\Backtrace\Backtrace;
 
 // Register a listener that detects your environment type and automatically
 // selects the appropriate format to use for rendering errors.
 Backtrace::createListener()->listen();
 ```
 
+### Custom usage
+Configure your own listener, responder, and renderer.
+```php
+use tvanc/Backtrace as Backtrace;
+
+$renderer  = new Backtrace\Render\PlaintextExceptionRenderer();
+$responder = new Backtrace\Error\Responder\DebugResponder($renderer);
+$listener  = new Backtrace\Error\Listener\ErrorListener([$responder], true); 
+```
+
+To create your own renderer, implement
+`TVanC\Backtrace\Render\ExceptionRendererInterface` 
+or extend `TVanC\Backtrace\Render\AbstractExceptionRenderer`.
+
+Technically you don't even have to render exceptions if you don't want to.
+Implement `TVanC\Backtrace\Error\Responder\ErrorResponderInterface` and add it 
+to your listener.
+
+## Coming Soon
+- Arguments in the backtrace.

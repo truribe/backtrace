@@ -1,20 +1,19 @@
 <?php
 /**
- * @author Travis Raymond Uribe <turibe@rentecdirect.com>
- * @copyright 2018 Rentec Direct
- * @license Proprietary
+ * @author Travis Van Couvering <travis@tvanc.com>
+ * @copyright 2018 Travis Van Couvering
+ * @license MIT
  */
 
-namespace tvanc\backtrace;
+namespace TVanC\Backtrace;
 
-use tvanc\backtrace\Environment\CliInfoProvider;
-use tvanc\backtrace\Environment\Environment;
-use tvanc\backtrace\Error\Listener\ErrorListener;
-use tvanc\backtrace\Error\Responder\DebugResponder;
-use tvanc\backtrace\Render\CliExceptionRenderer;
-use tvanc\backtrace\Render\EnvironmentAwareRenderer;
-use tvanc\backtrace\Render\HtmlExceptionRenderer;
-use tvanc\backtrace\Render\PlaintextExceptionRenderer;
+use TVanC\Backtrace\Environment\Environment;
+use TVanC\Backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Error\Responder\DebugResponder;
+use TVanC\Backtrace\Render\CliExceptionRenderer;
+use TVanC\Backtrace\Render\EnvironmentAwareRenderer;
+use TVanC\Backtrace\Render\HtmlExceptionRenderer;
+use TVanC\Backtrace\Render\PlaintextExceptionRenderer;
 
 /**
  * Provides convenience methods for interacting with this package.
@@ -25,13 +24,13 @@ final class Backtrace
     {
         $responder = new DebugResponder(new EnvironmentAwareRenderer(
             new Environment(),
-            new CliExceptionRenderer(new CliInfoProvider()),
+            new CliExceptionRenderer(),
             new PlaintextExceptionRenderer(),
             new HtmlExceptionRenderer(
                 realpath(__DIR__ . '/../view'),
                 realpath(__DIR__ . '/../public/assets'),
                 'throwable.php',
-                'stage.php'
+                'frame.php'
             )
         ));
 

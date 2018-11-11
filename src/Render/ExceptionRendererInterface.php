@@ -1,9 +1,9 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render;
+namespace TVanC\Backtrace\Render;
 
 
 /**
@@ -11,11 +11,20 @@ namespace tvanc\backtrace\Render;
  */
 interface ExceptionRendererInterface
 {
-    public static function getErrorType(\Throwable $throwable): string;
+    /**
+     * @param \Throwable $throwable
+     * @param bool       $pretty
+     *
+     * @return string
+     */
+    public static function getErrorDisplayType(
+        \Throwable $throwable,
+        bool $pretty = true
+    ): string;
 
 
     public function render(\Throwable $throwable): string;
 
 
-    public function renderStage(array $stage): string;
+    public function renderFrame(array $frame): string;
 }

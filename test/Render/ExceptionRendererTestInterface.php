@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * Standard protocol for renderer tests.
@@ -26,11 +26,11 @@ interface ExceptionRendererTestInterface
 
 
     /**
-     * Test the rendered stage for the expected info.
+     * Test the rendered frame for the expected info.
      *
-     * @see ExceptionRendererInterface::renderStage()
+     * @see ExceptionRendererInterface::renderFrame()
      */
-    public function testRenderStage();
+    public function testRenderFrame();
 
 
     /**

@@ -1,13 +1,14 @@
 <?php
 /**
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace TVanC\Backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Render\ExceptionRendererInterface;
-use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
+use TVanC\Backtrace\Render\AbstractExceptionRenderer;
+use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
  * Tests any basic exception-renderer implementation. We care about the
@@ -21,18 +22,72 @@ use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 abstract class AbstractExceptionRendererTest extends TestCase
     implements ExceptionRendererTestInterface
 {
+    public static function setUpBeforeClass()
+    {
+        $path = implode(\DIRECTORY_SEPARATOR, [
+            __DIR__,
+            '..',
+            'Fixture',
+            'functions.php'
+        ]);
+
+        /** @noinspection PhpIncludeInspection */
+        require_once realpath($path);
+    }
+
+
     /**
-     * Test the render output. How do you test render output? You check that
-     * the things you care about are somewhere in the output.
+     * Test the static getErrorDisplayType() method
+     *
+     * @see ExceptionRendererInterface::getErrorDisplayType()
+     * @see AbstractExceptionRenderer::getErrorDisplayType()
+     */
+    public function testGetErrorDisplayType()
+    {
+        /** @var ExceptionRendererInterface $class */
+        $class        = get_class($this->getRenderer());
+        $regException = new ExceptionWithUnlikelyStringForName('');
+        $errException = new \ErrorException('', 0, \E_USER_ERROR);
+
+        $regExceptionReflection = new \ReflectionClass($regException);
+        $regExceptionShortName  = $regExceptionReflection->getShortName();
+
+        $this->assertEquals(
+            ExceptionWithUnlikelyStringForName::class,
+            $class::getErrorDisplayType($regException, false),
+            'Name is left "ugly"'
+        );
+
+        $this->assertEquals(
+            $regExceptionShortName,
+            $class::getErrorDisplayType($regException, true),
+            'Name  is made "pretty" by reducing to short name'
+        );
+
+        $this->assertEquals(
+            \ErrorException::class,
+            $class::getErrorDisplayType($errException, false),
+            'Even ErrorException is left "ugly" when specified'
+        );
+
+        $this->assertNotEquals(
+            \ErrorException::class,
+            $class::getErrorDisplayType($errException, true),
+            'For `ErrorException`s, a friendly string is used instead'
+        );
+    }
+
+
+    /**
+     * Test the render output. How do you test output? You test that the
+     * information you care about is in the output.
      *
      * @throws \ReflectionException
      */
     public function testRender()
     {
         $testMessage = \uniqid('boogiewoogie-test-blarp');
-        $exception   = new ExceptionWithUnlikelyStringForName(
-            $testMessage
-        );
+        $exception   = $this->getException($testMessage);
 
         $renderer  = $this->getRenderer();
         $render    = $renderer->render($exception);
@@ -51,40 +106,52 @@ abstract class AbstractExceptionRendererTest extends TestCase
             'Render contains (at least) the full exception message'
         );
 
-        foreach ($trace as $stage) {
+        foreach ($trace as $frame) {
             $this->assertContains(
-                $renderer->renderStage($stage),
+                $renderer->renderFrame($frame),
                 $render,
-                'The full render contains each rendered stage'
+                'The full render contains each rendered frame'
             );
         }
     }
 
 
     /**
-     * Test that the renderStage() method outputs all the right info.
+     * Test that the renderFrame() method outputs all the right info.
      *
      * @see \debug_backtrace()
      * @see http://php.net/manual/en/function.debug-backtrace.php
      */
-    public function testRenderStage()
+    public function testRenderFrame()
     {
         $renderer = $this->getRenderer();
 
-        foreach (\debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS) as $stage) {
-            $render = $renderer->renderStage($stage);
+        foreach (\debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS) as $frame) {
+            $render = $renderer->renderFrame($frame);
 
             $this->assertContains(
-                basename($stage['file']),
+                basename($frame['file']),
                 $render,
                 'Render contains at least the basename (path may be ellided)'
             );
 
             $this->assertContains(
-                $stage['line'] . '',
+                $frame['line'] . '',
                 $render,
-                'Render of each stage contains the line number'
+                'Render of each frame contains the line number'
             );
         }
+    }
+
+
+    private function getException(string $message)
+    {
+        try {
+            \TVanC\Backtrace\Fixture\foo($message);
+        } catch (ExceptionWithUnlikelyStringForName $ex) {
+            return $ex;
+        }
+
+        throw new \Exception('Excepted exception not caught.');
     }
 }

@@ -5,14 +5,13 @@
 
 namespace TVanC\Backtrace\Test\Render;
 
-use TVanC\Backtrace\Render\CliExceptionRenderer;
 use TVanC\Backtrace\Render\ExceptionRendererInterface;
+use TVanC\Backtrace\Render\PlaintextExceptionRenderer;
 
 /**
- * A test case to verify that exceptions rendered for CLI output are rendered
- * correctly.
+ * Test formatting of plaintext exception rendering
  */
-class CliExceptionRendererTest extends AbstractExceptionRendererTest
+class PlaintextExceptionRendererTest extends AbstractExceptionRendererTest
 {
     /**
      * Get the renderer implementation for this suite of tests.
@@ -21,6 +20,6 @@ class CliExceptionRendererTest extends AbstractExceptionRendererTest
      */
     public function getRenderer(): ExceptionRendererInterface
     {
-        return new CliExceptionRenderer();
+        return new PlaintextExceptionRenderer();
     }
 }
