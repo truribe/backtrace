@@ -1,16 +1,15 @@
 <?php
 /**
- * TODO Add @file documentation
- *
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Environment;
+namespace TVanC\Backtrace\Test\Environment;
 
-use tvanc\backtrace\Environment\EnvironmentInterface;
+use TVanC\Backtrace\Environment\EnvironmentInterface;
 
 /**
- * Class MockEnvironment
+ * A mock of EnvironmentInterface for when you need your test to "believe"
+ * in it's in whatever environment you say it is.
  */
 class TestEnvironment implements EnvironmentInterface
 {
@@ -21,7 +20,7 @@ class TestEnvironment implements EnvironmentInterface
 
     public function __construct(bool $isCli, bool $isAjaxRequest)
     {
-        $this->isCli = $isCli;
+        $this->isCli         = $isCli;
         $this->isAjaxRequest = $isAjaxRequest;
     }
 

@@ -1,13 +1,21 @@
 <?php
 /**
- * @file Provide an alternate file with more code for a pretty example.
- * @author Travis Uribe <travis@tvanc.com>
+ * @file Provide another file with plenty of code for a pretty example.
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
+require 'Demonstration.php';
 
 
 /**
  * Throw an example exception.
  */
-function baz () {
-    throw new \Exception('How about a nice crispy backtrace?');
+function bar()
+{
+    $demo = new Demonstration();
+    $demo->executePrimeDirective();
+}
+
+function filler_content_for_looks()
+{
+    echo 'I never get called but I look pretty';
 }

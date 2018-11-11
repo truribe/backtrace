@@ -1,13 +1,15 @@
 <?php
 /**
- * TODO Add @file documentation
- *
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Environment;
+namespace TVanC\Backtrace\Environment;
 
 
+/**
+ * Interface for classes purporting to provide information about PHP's
+ * environment.
+ */
 interface EnvironmentInterface
 {
     public function isCli(): bool;

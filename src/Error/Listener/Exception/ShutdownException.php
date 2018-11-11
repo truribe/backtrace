@@ -1,14 +1,16 @@
 <?php
 /**
- * TODO Add @file block for ShutdownException.php
- *
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener\Exception;
+namespace TVanC\Backtrace\Error\Listener\Exception;
+
+use TVanC\Backtrace\Error\Listener\ErrorListenerInterface;
 
 /**
- * TODO Document class ShutdownException
+ * An exception just for when a listener "hears" a shutdown "event".
+ *
+ * @see ErrorListenerInterface::listenForShutdown()
  */
 class ShutdownException extends \ErrorException
 {

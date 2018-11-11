@@ -1,57 +1,80 @@
 <?php
 /**
- * TODO Add @file documentation
- *
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener;
+namespace TVanC\Backtrace\Error\Listener;
 
 
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
- * Interface ErrorListenerInterface
+ * Defines a protocol for classes that delegate errors to one or more responders.
  */
-interface ErrorListenerInterface
+interface ErrorListenerInterface extends ErrorResponderInterface
 {
-    const FATAL_ERRORS = [
-        \E_ERROR,
-        \E_PARSE,
-        \E_CORE_ERROR,
-        \E_CORE_WARNING,
-        \E_COMPILE_ERROR,
-        \E_COMPILE_WARNING,
-    ];
-
-    const TYPE_ERROR       = 1; // 0b0001
-    const TYPE_EXCEPTION   = 2; // 0b0010
-    const TYPE_FATAL_ERROR = 4; // 0b0100
-    const TYPE_ALL         = 7; // 0b0111
+    const TYPE_ERROR = 1; // 0b0001
+    const TYPE_EXCEPTION = 2; // 0b0010
+    const TYPE_SHUTDOWN = 4; // 0b0100
+    const TYPE_ALL = self::TYPE_ERROR | self::TYPE_EXCEPTION | self::TYPE_SHUTDOWN; // 0b0111
 
 
+    /**
+     * Set all responders at once, overwriting ALL that may have been previously
+     * set.
+     *
+     * @param ErrorResponderInterface[] $responders
+     * An array of error responders.
+     *
+     * @return $this
+     */
+    public function setResponders(array $responders): self;
 
-    public function setResponders(array $handlers);
+
+    /**
+     * Add a single error responder, without displacing or overwriting any
+     * previously set responders.
+     *
+     * @param ErrorResponderInterface $responder
+     *
+     * @return $this
+     */
+    public function addResponder(ErrorResponderInterface $responder): self;
 
 
-    public function addResponder(ErrorResponderInterface $handler);
-
-
+    /**
+     * Get all responders previously registered to this listener.
+     *
+     * @return array
+     */
     public function getResponders(): array;
 
 
     /**
-     * @param ErrorResponderInterface $responder
+     * Listen for exceptions and errors.
      *
-     * @return ErrorListenerInterface
+     * @param int $types
+     * A bitmask of one or more of the following:
+     * - ErrorListenerInterface::TYPE_ERROR
+     * - ErrorListenerInterface::TYPE_EXCEPTION
+     * - ErrorListenerInterface::TYPE_FATAL_ERROR
+     * Additionally, you can simply provide ErrorListenerInterface::TYPE_ALL,
+     * which is a shortcut for the following:
+     * ErrorListenerInterface::TYPE_ERROR
+     * | ErrorListenerInterface::TYPE_EXCEPTION
+     * | ErrorListenerInterface::TYPE_FATAL_ERROR
+     *
+     * @return $this
      */
-    public function setDefaultResponder(ErrorResponderInterface $responder): self;
+    public function listen($types = ErrorListenerInterface::TYPE_ALL): self;
 
 
     /**
      * Listen for exceptions.
      *
-     * @return ErrorListenerInterface
+     * @see \set_exception_handler()
+     *
+     * @return $this
      */
     public function listenForExceptions(): self;
 
@@ -59,24 +82,21 @@ interface ErrorListenerInterface
     /**
      * Listen for errors.
      *
-     * @return ErrorListenerInterface
+     * @see \set_error_handler()
+     *
+     * @return $this
      */
     public function listenForErrors(): self;
 
 
     /**
-     * Listen for shutdown.
+     * Register this listener as a shutdown responder.
      *
-     * @return ErrorListenerInterface
+     * @see \register_shutdown_function()
+     *
+     * @return $this
      */
     public function listenForShutdown(): self;
-
-
-    public function handleException(\Throwable $throwable);
-
-    public function handleError($severity, $message, $file, $lineNumber);
-
-    public function handleShutdown();
 
 
     /**
@@ -87,7 +107,7 @@ interface ErrorListenerInterface
      * - `true` to override
      * - `false` not to override
      *
-     * @return ErrorListenerInterface
+     * @return $this
      */
     public function setOverride(bool $override): self;
 }

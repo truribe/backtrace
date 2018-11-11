@@ -11,15 +11,18 @@
   ],
   "autoload": {
     "psr-4": {
-      "tvanc\\backtrace\\": "src/"
+      "TVanC\\Backtrace\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "tvanc\\backtrace\\Test\\": "test/"
+      "TVanC\\Backtrace\\Test\\": "test/"
     }
   },
   "require-dev": {
     "phpunit/phpunit": "^7.4"
+  },
+  "require": {
+    "symfony/console": "^4.1"
   }
 }

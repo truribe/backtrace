@@ -1,20 +1,15 @@
 <?php
 /**
- * @file Demonstrate simple error handler usage and utility.
- * @author Travis Uribe <travis@tvanc.com>
+ * @file Demonstrate simple error responder usage and utility.
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-use tvanc\backtrace\Error\Responder\HtmlErrorResponder;
-use tvanc\backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Backtrace;
 
-require '../vendor/autoload.php';
-require '../inc/example-include-1.php';
-require '../inc/example-include-2.php';
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../inc/example-include-1.php';
+require __DIR__ . '/../inc/example-include-2.php';
 
-$listener = new ErrorListener([
-    // Use an error handler that generates HTML
-    new HtmlErrorResponder()
-]);
-$listener->listenForExceptions();
+Backtrace::createListener()->listen();
 
 foo();

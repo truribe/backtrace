@@ -1,7 +1,7 @@
 <?php
 /**
  * @file Provides code for a pretty example.
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
 /**
@@ -10,14 +10,4 @@
 function foo()
 {
     bar();
-}
-
-/**
- * Call a function that throws an exception so we can get a backtrace.
- *
- * @throws \Exception
- */
-function bar()
-{
-    baz();
 }

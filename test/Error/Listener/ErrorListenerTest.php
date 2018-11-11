@@ -1,106 +1,100 @@
 <?php
 /**
- * TODO Add @file documentation
- *
- * @author Travis Uribe <travis@tvanc.com>
+ * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Listener;
+namespace TVanC\Backtrace\Test\Error\Listener;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Error\Listener\ErrorListener;
-use tvanc\backtrace\Error\Listener\Exception\UnhandledErrorException;
-use tvanc\backtrace\Error\Listener\Exception\UnhandledExceptionException;
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use TVanC\Backtrace\Error\Listener\ErrorListener;
+use TVanC\Backtrace\Error\Listener\Exception\NoResponderException;
+use TVanC\Backtrace\Test\Error\Responder\TestResponder;
 
 /**
- * Class ErrorListenerTest
+ * Tests ErrorListener
+ *
+ * @see ErrorListener
  */
 class ErrorListenerTest extends TestCase
 {
     /**
-     * Verify listener throws a special exception if it hears an error and has
-     * no associated handlers.
+     * Test that the listener actually hears and delegates to the responder
      */
-    public function testUnhandledError()
+    public function testDelegation()
     {
-        $listener = new ErrorListener();
+        $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
+        $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
 
-        $listener->listen();
+        /** @var TestResponder $errorResponder */
+        /** @var TestResponder $exceptionResponder */
+        $errorResponder     = reset($errorListener->getResponders());
+        $exceptionResponder = reset($exceptionListener->getResponders());
 
-        $this->expectException(UnhandledExceptionException::class);
+        $errorListener->handleError(\E_USER_ERROR, 'whatevs', 'any', 1);
+        $exceptionListener->catchThrowable(new \ErrorException());
 
-        trigger_error('Testing', E_USER_NOTICE);
+        $this->assertTrue($errorResponder->caughtThrowable());
+        $this->assertTrue($exceptionResponder->caughtThrowable());
+    }
+
+
+    /**
+     * @param int $type
+     *
+     * @return TestErrorListener
+     */
+    private function getListener(int $type)
+    {
+        $responder = new TestResponder();
+        $listener  = new TestErrorListener([
+            $responder
+        ], true);
+
+        $listener->listen($type);
+
+        return $listener;
+    }
+
+
+    /**
+     * Test that the listener starts listening for the right things
+     * according to the value passed to listen()
+     */
+    public function testListeningTypes()
+    {
+        $errorListener     = $this->getListener(ErrorListener::TYPE_ERROR);
+        $exceptionListener = $this->getListener(ErrorListener::TYPE_EXCEPTION);
+        $shutdownListener  = $this->getListener(ErrorListener::TYPE_SHUTDOWN);
+
+        $this->assertTrue($errorListener->isListeningForErrors());
+        $this->assertFalse($errorListener->isListeningForExceptions());
+        $this->assertFalse($errorListener->isListeningForShutdown());
+
+        $this->assertFalse($exceptionListener->isListeningForErrors());
+        $this->assertTrue($exceptionListener->isListeningForExceptions());
+        $this->assertFalse($exceptionListener->isListeningForShutdown());
+
+        $this->assertFalse($shutdownListener->isListeningForErrors());
+        $this->assertFalse($shutdownListener->isListeningForExceptions());
+        $this->assertTrue($shutdownListener->isListeningForShutdown());
     }
 
 
     /**
      * Verify listener throws a special exception if it hears an exception and
-     * has no associated handlers.
+     * has no associated responders.
      *
-     * @throws UnhandledExceptionException
+     * @throws NoResponderException
      */
-    public function testUnhandledException()
+    public function testNoResponders()
     {
-        // Create listener without handlers
+        // Create listener without responders
         $listener = new ErrorListener([], false);
 
-        $this->expectException(UnhandledExceptionException::class);
+        $this->expectException(NoResponderException::class);
 
-        $listener->handleException(new \Exception(
+        $listener->catchThrowable(new \Exception(
             'Thrown an Exception; landed an UnhandledExceptionException'
         ));
-    }
-
-
-    /**
-     * Verify errors are passed back to PHP when override is disabled.
-     *
-     * Tested separately from the effects of enabling override to sidestep
-     * awkwardness of testing a single output buffer for mutually contradictory
-     * results.
-     *
-     * @see testOverrideOn()
-     */
-    public function testOverrideOff()
-    {
-        // Create listener with override enabled and noop handler
-        $listener = new ErrorListener([
-            $this->createMock(ErrorResponderInterface::class)
-        ], false);
-
-        // Register the error handler
-        $listener->listenForErrors();
-
-        $message = 'This error should go to native error handler.';
-        $this->expectOutputRegex("/Warning: $message/");
-        trigger_error($message, E_USER_WARNING);
-    }
-
-
-    /**
-     * Verify that errors are NOT passed back to PHP when override is enabled.
-     *
-     * Tested separately from the effects of disabling override to sidestep
-     * awkwardness of testing a single output buffer for mutually contradictory
-     * results.
-     *
-     * @see testOverrideOff()
-     * @see ErrorListener::override
-     */
-    public function testOverrideOn()
-    {
-        $stub = $this->createMock(ErrorResponderInterface::class);
-        $stub->method('considerException')->willReturn(true);
-
-        // Create listener with override enabled and noop handler
-        $listener = new ErrorListener([$stub], \E_ALL | \E_STRICT, true);
-
-        // Register the error handler
-        $listener->listenForErrors();
-
-        $message = 'This error should NOT go to native error handler.';
-        $this->expectOutputString('');
-        trigger_error($message, E_USER_WARNING);
     }
 }
