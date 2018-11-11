@@ -22,6 +22,31 @@ use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 abstract class AbstractExceptionRendererTest extends TestCase
     implements ExceptionRendererTestInterface
 {
+    public static function setUpBeforeClass()
+    {
+        $path = implode(\DIRECTORY_SEPARATOR, [
+            __DIR__,
+            '..',
+            'Fixture',
+            'functions.php'
+        ]);
+
+        /** @noinspection PhpIncludeInspection */
+        require_once realpath($path);
+    }
+
+
+    private function getException (string $message) {
+        try {
+            \tvanc\backtrace\Fixture\foo($message);
+        }
+        catch (ExceptionWithUnlikelyStringForName $ex) {
+            return $ex;
+        }
+
+        throw new \Exception('Excepted exception not caught.');
+    }
+
     /**
      * Test the static getErrorDisplayType() method
      *
@@ -73,9 +98,7 @@ abstract class AbstractExceptionRendererTest extends TestCase
     public function testRender()
     {
         $testMessage = \uniqid('boogiewoogie-test-blarp');
-        $exception   = new ExceptionWithUnlikelyStringForName(
-            $testMessage
-        );
+        $exception   = $this->getException($testMessage);
 
         $renderer  = $this->getRenderer();
         $render    = $renderer->render($exception);
