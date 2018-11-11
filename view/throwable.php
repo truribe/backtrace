@@ -9,33 +9,39 @@
  * @var Throwable             $throwable
  * The throwable object being rendered.
  *
- * @var string                $assetsDir
+ * @var string                $assets_dir
  * The path to the assets directory.
+ *
+ * @var string                $pretty_type
+ * The 'prettified' name of the exception. May be the non-FQCN, or a "human"
+ * description of an error, like "User error" instead of ErrorException.
+ *
+ * @var string                $type
+ * The plain-ol' class name of the exception. May or may not be the
+ * fully qualified class name.
+ *
+ * @var array[]               $trace
+ * The backtrace for the throwable being rendered.
  */
 
 use tvanc\backtrace\Render\HtmlExceptionRenderer;
 
-$trace      = $throwable->getTrace();
-$reflection = new \ReflectionClass($throwable);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= $reflection->getShortName() ?>: <?= $throwable->getMessage() ?></title>
+    <title><?= $pretty_type ?>: <?= $throwable->getMessage() ?></title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
           crossorigin="anonymous">
-    <style><?= file_get_contents($assetsDir . '/css/prism.css') ?></style>
-    <style><?= file_get_contents($assetsDir . '/css/backtrace.css') ?></style>
+    <style><?= file_get_contents($assets_dir . '/css/prism.css') ?></style>
+    <style><?= file_get_contents($assets_dir . '/css/backtrace.css') ?></style>
 </head>
 <body>
 <main class="container">
     <header class="page-header error-header">
-        <h1 class="error-type flex-big"><?=
-            /** @noinspection PhpUndefinedClassInspection */
-            static::getErrorDisplayType($throwable, false);
-            ?></h1>
+        <h1 class="error-type flex-big"><?= $type ?></h1>
     </header>
 
     <p class="err-msg lead"><?= $throwable->getMessage(); ?></p>
@@ -68,8 +74,8 @@ $reflection = new \ReflectionClass($throwable);
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"
         integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
         crossorigin="anonymous"></script>
-<script><?= file_get_contents($assetsDir . '/js/prism.js') ?></script>
-<script><?= file_get_contents($assetsDir . '/js/backtrace.js') ?></script>
+<script><?= file_get_contents($assets_dir . '/js/prism.js') ?></script>
+<script><?= file_get_contents($assets_dir . '/js/backtrace.js') ?></script>
 </body>
 </html>
 

@@ -79,8 +79,11 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     public function render(\Throwable $throwable): string
     {
         return $this->loadTemplate($this->traceTemplate, [
-            'assetsDir' => $this->assetsDir,
-            'throwable' => $throwable,
+            'pretty_type' => self::getErrorDisplayType($throwable, true),
+            'type'        => self::getErrorDisplayType($throwable, false),
+            'trace'       => $throwable->getTrace(),
+            'assets_dir'  => $this->assetsDir,
+            'throwable'   => $throwable,
         ]);
     }
 
