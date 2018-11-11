@@ -13,17 +13,21 @@ class Demonstration
         $this->performBehindTheScenesMagic();
     }
 
+
     protected function performBehindTheScenesMagic()
     {
         self::staticDemo();
     }
+
 
     private static function staticDemo()
     {
         throw new \Exception('How about a nice crispy backtrace?');
     }
 
-    public function doNothing () {
+
+    public function doNothing()
+    {
         // That's too much pressure!
     }
 }
