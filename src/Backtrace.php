@@ -5,15 +5,15 @@
  * @license MIT
  */
 
-namespace tvanc\backtrace;
+namespace tvanc\Backtrace;
 
-use tvanc\backtrace\Environment\Environment;
-use tvanc\backtrace\Error\Listener\ErrorListener;
-use tvanc\backtrace\Error\Responder\DebugResponder;
-use tvanc\backtrace\Render\CliExceptionRenderer;
-use tvanc\backtrace\Render\EnvironmentAwareRenderer;
-use tvanc\backtrace\Render\HtmlExceptionRenderer;
-use tvanc\backtrace\Render\PlaintextExceptionRenderer;
+use tvanc\Backtrace\Environment\Environment;
+use tvanc\Backtrace\Error\Listener\ErrorListener;
+use tvanc\Backtrace\Error\Responder\DebugResponder;
+use tvanc\Backtrace\Render\CliExceptionRenderer;
+use tvanc\Backtrace\Render\EnvironmentAwareRenderer;
+use tvanc\Backtrace\Render\HtmlExceptionRenderer;
+use tvanc\Backtrace\Render\PlaintextExceptionRenderer;
 
 /**
  * Provides convenience methods for interacting with this package.

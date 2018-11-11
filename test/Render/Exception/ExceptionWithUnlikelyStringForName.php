@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render\Exception;
+namespace tvanc\Backtrace\Test\Render\Exception;
 
 /**
  * This class exists to aid in verifying that implementations of

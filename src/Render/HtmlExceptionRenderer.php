@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render;
+namespace tvanc\Backtrace\Render;
 
-use tvanc\backtrace\Render\Utility\FilePreviewer;
+use tvanc\Backtrace\Render\Utility\FilePreviewer;
 
 /**
  * Renders exceptions in glorious HTML format.

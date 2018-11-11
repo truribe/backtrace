@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Fixture;
+namespace tvanc\Backtrace\Test\Fixture;
 
-use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
+use tvanc\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
  * This class exists just to ensure that a class-method frame exists

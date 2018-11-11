@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render\Utility\Exception;
+namespace tvanc\Backtrace\Render\Utility\Exception;
 
 use Throwable;
 

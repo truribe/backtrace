@@ -11,12 +11,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "tvanc\\backtrace\\": "src/"
+      "tvanc\\Backtrace\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "tvanc\\backtrace\\Test\\": "test/"
+      "tvanc\\Backtrace\\Test\\": "test/"
     }
   },
   "require-dev": {

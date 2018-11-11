@@ -3,12 +3,12 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace tvanc\Backtrace\Test\Render;
 
 use PHPUnit\Framework\TestCase;
-use tvanc\backtrace\Render\AbstractExceptionRenderer;
-use tvanc\backtrace\Render\ExceptionRendererInterface;
-use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
+use tvanc\Backtrace\Render\AbstractExceptionRenderer;
+use tvanc\Backtrace\Render\ExceptionRendererInterface;
+use tvanc\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
  * Tests any basic exception-renderer implementation. We care about the
@@ -38,7 +38,7 @@ abstract class AbstractExceptionRendererTest extends TestCase
 
     private function getException (string $message) {
         try {
-            \tvanc\backtrace\Fixture\foo($message);
+            \tvanc\Backtrace\Fixture\foo($message);
         }
         catch (ExceptionWithUnlikelyStringForName $ex) {
             return $ex;

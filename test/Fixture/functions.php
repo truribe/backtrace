@@ -5,10 +5,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Fixture;
+namespace tvanc\Backtrace\Fixture;
 
-use tvanc\backtrace\Test\Fixture\ExceptionThrowingClass;
-use tvanc\backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
+use tvanc\Backtrace\Test\Fixture\ExceptionThrowingClass;
+use tvanc\Backtrace\Test\Render\Exception\ExceptionWithUnlikelyStringForName;
 
 /**
  * @param string $message

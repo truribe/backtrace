@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render\Exception;
+namespace tvanc\Backtrace\Render\Exception;
 
-use tvanc\backtrace\Render\EnvironmentAwareRenderer;
+use tvanc\Backtrace\Render\EnvironmentAwareRenderer;
 
 /**
  * An exception for when an EnvironmentAwareRenderer doesn't have a responder

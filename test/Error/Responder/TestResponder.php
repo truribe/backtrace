@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Error\Responder;
+namespace tvanc\Backtrace\Test\Error\Responder;
 
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use tvanc\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * A responder implementation to use in test cases because it allows you to

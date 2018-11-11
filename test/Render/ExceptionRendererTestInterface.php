@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render;
+namespace tvanc\Backtrace\Test\Render;
 
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use tvanc\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * Standard protocol for renderer tests.

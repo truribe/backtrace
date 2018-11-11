@@ -3,7 +3,7 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render\Utility;
+namespace tvanc\Backtrace\Render\Utility;
 
 /**
  * A class for opening and extracting excerpts from files.

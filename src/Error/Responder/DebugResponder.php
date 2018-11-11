@@ -3,9 +3,9 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Responder;
+namespace tvanc\Backtrace\Error\Responder;
 
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use tvanc\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A responder to aid in debugging errors by passing the errors to a renderer

@@ -3,10 +3,10 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Test\Render\Mock;
+namespace tvanc\Backtrace\Test\Render\Mock;
 
-use tvanc\backtrace\Render\AbstractExceptionRenderer;
-use tvanc\backtrace\Render\ExceptionRendererInterface;
+use tvanc\Backtrace\Render\AbstractExceptionRenderer;
+use tvanc\Backtrace\Render\ExceptionRendererInterface;
 
 /**
  * A no-op class that satisfies test conditions.

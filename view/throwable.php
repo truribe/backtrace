@@ -24,7 +24,7 @@
  * The backtrace for the throwable being rendered.
  */
 
-use tvanc\backtrace\Render\HtmlExceptionRenderer;
+use tvanc\Backtrace\Render\HtmlExceptionRenderer;
 
 ?>
 <!DOCTYPE html>

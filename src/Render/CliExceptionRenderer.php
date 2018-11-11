@@ -3,16 +3,16 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Render;
+namespace tvanc\Backtrace\Render;
 
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Terminal;
-use tvanc\backtrace\Render\Utility\ConsoleFormatter;
-use tvanc\backtrace\Render\Utility\FilePreviewer;
-use tvanc\backtrace\Render\Utility\PathShortener;
+use tvanc\Backtrace\Render\Utility\ConsoleFormatter;
+use tvanc\Backtrace\Render\Utility\FilePreviewer;
+use tvanc\Backtrace\Render\Utility\PathShortener;
 
 /**
  * Renders an exception in a CLI-optimized format.

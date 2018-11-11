@@ -3,11 +3,11 @@
  * @author Travis Van Couvering <travis@tvanc.com>
  */
 
-namespace tvanc\backtrace\Error\Listener;
+namespace tvanc\Backtrace\Error\Listener;
 
-use tvanc\backtrace\Error\Listener\Exception\NoResponderException;
-use tvanc\backtrace\Error\Listener\Exception\ShutdownException;
-use tvanc\backtrace\Error\Responder\ErrorResponderInterface;
+use tvanc\Backtrace\Error\Listener\Exception\NoResponderException;
+use tvanc\Backtrace\Error\Listener\Exception\ShutdownException;
+use tvanc\Backtrace\Error\Responder\ErrorResponderInterface;
 
 /**
  * A utility class for delegating errors and exceptions to responders.
