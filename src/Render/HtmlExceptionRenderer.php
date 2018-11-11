@@ -85,26 +85,6 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
     }
 
 
-    /**
-     * Load and return the result of an executed template file.
-     *
-     * @param string $templateFile
-     * @param array  $vars
-     *
-     * @return string
-     */
-    private function loadTemplate(string $templateFile, array $vars): string
-    {
-        extract($vars);
-
-        ob_start();
-        /** @noinspection PhpIncludeInspection */
-        require $this->templatePath . \DIRECTORY_SEPARATOR . $templateFile;
-
-        return ob_get_clean();
-    }
-
-
     public function renderSourcePreview(array $stage)
     {
         $this->previewRadius = $this->sourceRadius;
@@ -136,5 +116,25 @@ class HtmlExceptionRenderer extends AbstractExceptionRenderer
         $this->previewRadius = $this->frameRadius;
 
         return $this->renderStage($stage);
+    }
+
+
+    /**
+     * Load and return the result of an executed template file.
+     *
+     * @param string $templateFile
+     * @param array  $vars
+     *
+     * @return string
+     */
+    private function loadTemplate(string $templateFile, array $vars): string
+    {
+        extract($vars);
+
+        ob_start();
+        /** @noinspection PhpIncludeInspection */
+        require $this->templatePath . \DIRECTORY_SEPARATOR . $templateFile;
+
+        return ob_get_clean();
     }
 }

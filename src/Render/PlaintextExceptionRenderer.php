@@ -66,6 +66,23 @@ MSG;
     }
 
 
+    /**
+     * Render an indivual backtrace stage in CLI-optimized format.
+     *
+     * @param array $stage
+     *
+     * @return string
+     */
+    public function renderStage(array $stage): string
+    {
+        return <<<STAGE_RENDER
+File:  {$stage['file']}
+Line:  {$stage['line']}
+Calls: {$stage['function']}
+STAGE_RENDER;
+    }
+
+
     private function makeDivider($char = '-', $len = null)
     {
         return $this->makeLine('', $char, $len);
@@ -97,22 +114,5 @@ MSG;
         }
 
         return str_pad($label, $len, $char, STR_PAD_RIGHT);
-    }
-
-
-    /**
-     * Render an indivual backtrace stage in CLI-optimized format.
-     *
-     * @param array $stage
-     *
-     * @return string
-     */
-    public function renderStage(array $stage): string
-    {
-        return <<<STAGE_RENDER
-File:  {$stage['file']}
-Line:  {$stage['line']}
-Calls: {$stage['function']}
-STAGE_RENDER;
     }
 }

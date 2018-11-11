@@ -107,6 +107,18 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
 
 
     /**
+     * @param array $stage
+     *
+     * @return string
+     * @throws NoRendererException
+     */
+    public function renderStage(array $stage): string
+    {
+        return $this->selectRenderer()->renderStage($stage);
+    }
+
+
+    /**
      * Select the appropriate renderer for the current environment.
      *
      * @param \Throwable $throwable
@@ -138,17 +150,5 @@ class EnvironmentAwareRenderer extends AbstractExceptionRenderer
         } else {
             throw new NoRendererException("No renderer is configured");
         }
-    }
-
-
-    /**
-     * @param array $stage
-     *
-     * @return string
-     * @throws NoRendererException
-     */
-    public function renderStage(array $stage): string
-    {
-        return $this->selectRenderer()->renderStage($stage);
     }
 }
