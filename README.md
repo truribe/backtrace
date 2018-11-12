@@ -1,10 +1,7 @@
 # Backtrace
-Get useful error messages with file previews and syntax highlighting.
-![alt](docs/assets/html-backtrace.png)
+[![Build Status](https://travis-ci.org/tvanc/backtrace.svg?branch=master)](https://travis-ci.org/tvanc/backtrace)
 
-In CLI mode or in the context of AJAX requests you'll get a simplified
-plaintext backtrace like this:
-![alt](docs/assets/cli-backtrace.png)
+Get useful error messages with file previews and syntax highlighting.
 
 ## Installation
 Install via `composer`:
@@ -15,6 +12,50 @@ composer require --dev tvanc/backtrace @dev
 Or clone this repository:
 ```bash
 git clone https://github.com/tvanc/backtrace.git
+```
+
+## Formats
+
+### HTML
+By default, Backtrace renders errors in HTML.
+![alt](docs/assets/html-backtrace.png)
+
+### Console
+If Backtrace detects that you're using PHP from the command line it will
+optimize the display of exceptions for console output.
+![alt](docs/assets/cli-backtrace.png)
+
+### Plaintext
+If PHP is serving an XHR, Backtrace will format errors in plaintext.
+
+```text
+===========================================================================
+Exception
+---------
+How about a nice, crispy backtrace?
+
+#0 ------------------------------------------------------------------------
+File:  /Users/tru/Documents/Projects/truribe/backtrace/inc/Demonstration.php
+Line:  19
+Calls: staticDemo
+#1 ------------------------------------------------------------------------
+File:  /Users/tru/Documents/Projects/truribe/backtrace/inc/Demonstration.php
+Line:  13
+Calls: performBehindTheScenesMagic
+#2 ------------------------------------------------------------------------
+File:  /Users/tru/Documents/Projects/truribe/backtrace/inc/example-include-2.php
+Line:  15
+Calls: executePrimeDirective
+#3 ------------------------------------------------------------------------
+File:  /Users/tru/Documents/Projects/truribe/backtrace/inc/example-include-1.php
+Line:  12
+Calls: bar
+#4 ------------------------------------------------------------------------
+File:  /Users/tru/Documents/Projects/truribe/backtrace/public/demo.php
+Line:  15
+Calls: foo
+===========================================================================
+
 ```
 
 ## Usage
